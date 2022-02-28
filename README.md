@@ -12,8 +12,8 @@
 #### Diego Mojarro Tapia A01638460 Design
 #### Diego Alberto Ortiz Mariscal A01552000 Squad leader
 #### Félix David De Haro Soto A01637589 Backend
-#### Enrique Israel Delgado Joaquin A01638258 Frontend
-#### Alexis Sahagún A01637885 Database
+#### Enrique Israel Delgado Joaquin A01638258 Database
+#### Alexis Sahagún A01637885 Front End
 
 
 
