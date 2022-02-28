@@ -8,6 +8,14 @@
 ## Values
 #### Our Values are: Integrity, Quality, Honesty, Positivity, Responsability and Respect
 
+#### Andrés Refugio Contreras Gutiérrez A01632990 Tester
+#### Diego Mojarro Tapia A01638460 Design
+#### Diego Alberto Ortiz Mariscal A01552000 Squad leader
+#### Félix David De Haro Soto A01637589 Backend
+#### Enrique Israel Delgado Joaquin A01638258 Frontend
+#### Alexis Sahagún A01637885 Database
+
+
 
 
 ![DMT](https://user-images.githubusercontent.com/22480822/154773535-b14b5d13-d55b-4a37-9970-bb5ae5d19465.png)
