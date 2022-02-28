@@ -7,7 +7,7 @@
 #### Our Vision is to create work environment where as much friction as possible is removed from the user in all sorts of applications, making their relationship with their tools easier and improving work-life balance.
 ## Values
 #### Our Values are: Integrity, Quality, Honesty, Positivity, Responsability and Respect
-
+## Squad
 #### Andrés Refugio Contreras Gutiérrez A01632990 Tester
 #### Diego Mojarro Tapia A01638460 Design
 #### Diego Alberto Ortiz Mariscal A01552000 Squad leader
