@@ -1,5 +1,6 @@
 # DMT Enterprise solutions
 #### Wall of work https://github.com/users/Cosmonaut-itc/projects/1
+#### WBS https://drive.google.com/file/d/1ZLmiXiMIRUtKus6OVv1tLjW8u6-roZRx/view?usp=sharing
 ## Mission
 #### Our mission is to make users live easier by improving the LERT (Labor Expenses Recovery Tool) project
 ## Vision
