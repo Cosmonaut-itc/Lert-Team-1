@@ -2,9 +2,9 @@
 #### Wall of work https://github.com/users/Cosmonaut-itc/projects/1
 #### WBS https://drive.google.com/file/d/1ZLmiXiMIRUtKus6OVv1tLjW8u6-roZRx/view?usp=sharing
 ## Mission
-#### Our mission is to make users live easier by improving the LERT (Labor Expenses Recovery Tool) project
+#### Our mission is to make users live easier by improving the tools they use in a daily basis in an enterprise environment.
 ## Vision
-#### Our Vision is to be the best office and deliver a quality and intutive LERT project. We want to be a healthy and productive office, giving the best and being there for each member of the team 
+#### Our Vision is to create work environment where as much friction as possible is removed from the user in all sorts of applications, making their relationship with their tools easier and improving work-life balance.
 ## Values
 #### Our Values are: Integrity, Quality, Honesty, Positivity, Responsability and Respect
 
