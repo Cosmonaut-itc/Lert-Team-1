@@ -8,7 +8,7 @@
 ## Values
 #### Our Values are: Integrity, Quality, Honesty, Positivity, Responsability and Respect
 ## Squad
-#### Andrés Refugio Contreras Gutiérrez A01632990 Tester
+#### Andrés Refugio Contreras Gutiérrez A01632990 Tester, Backend
 #### Diego Mojarro Tapia A01638460 Design, Front End
 #### Diego Alberto Ortiz Mariscal A01552000 Squad leader
 #### Félix David De Haro Soto A01637589 Backend
