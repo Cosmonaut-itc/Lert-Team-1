@@ -67,6 +67,9 @@ As well as a communication plan with the product owner and technical stakeholder
 
 ![DMT](https://user-images.githubusercontent.com/22480822/154773535-b14b5d13-d55b-4a37-9970-bb5ae5d19465.png)
 
+## Timelog
+
+We will use toggl track as a group timelog, on a daily basis
 
 # Getting Started with Create React App
 
