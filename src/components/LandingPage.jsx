@@ -2,7 +2,7 @@ import graphicsIcon from '../assets/icons/graphicsIcon.png'
 
 function LandingPage() {
   return (
-    <div className='flex flex-col h-full mt-32 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
+    <div className='flex flex-col h-full mt-14 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
       <div className='sm:text-5xl text-4xl font-bold whitespace-nowrap'>
         <p>Data to enrich</p>
         <p className='text-blue-700'>your finance</p>
@@ -21,7 +21,11 @@ function LandingPage() {
         </button>
       </div>
       <div className='flex sm:justify-end justify-center mt-5'>
-        <img src={graphicsIcon} alt='GraphicsIcon' className='w-72 h-72'></img>
+        <img
+          src={graphicsIcon}
+          alt='GraphicsIcon'
+          className='sm:w-72 sm:h-72'
+        ></img>
       </div>
     </div>
   )
