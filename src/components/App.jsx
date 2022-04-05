@@ -3,11 +3,12 @@ import LandingPage from './LandingPage'
 
 function App() {
   return (
-    <div className='bg-slate-100 h-screen'>
+    <div className='bg-slate-100 h-max'>
       <div className='flex'>
-        <div className='h-full'>
+        <div className='h-max'>
           <SideMenu />
         </div>
+
         <LandingPage />
       </div>
     </div>
