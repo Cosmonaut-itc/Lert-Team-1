@@ -39,7 +39,7 @@ export default function SideMenu() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className={isSideMenuClose ? 'md:ml-20' : 'ml-52'}>
+    <div className={isSideMenuClose ? 'md:ml-20' : 'md:ml-52'}>
       <div className='fixed top-0 left-0 overflow-hidden'>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
