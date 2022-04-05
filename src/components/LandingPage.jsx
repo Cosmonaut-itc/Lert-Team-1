@@ -2,12 +2,12 @@ import graphicsIcon from '../assets/icons/graphicsIcon.png'
 
 function LandingPage() {
   return (
-    <div className='flex flex-col h-full mt-14 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
+    <div className='flex flex-col h-full mt-20 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
       <div className='sm:text-5xl text-4xl font-bold whitespace-nowrap'>
         <p>Data to enrich</p>
         <p className='text-blue-700'>your finance</p>
       </div>
-      <p className='text-gray-500 text-md sm:text-xl mt-6'>
+      <p className='text-gray-500 text-md sm:text-xl mt-6 sm:mx-0 mx-20'>
         LERT - labor expenses recovery tool is an aid in the finances of the
         manager, it manages squad, employees and create the fall plan planning
         expenses and financial recoveries.
@@ -21,11 +21,7 @@ function LandingPage() {
         </button>
       </div>
       <div className='flex sm:justify-end justify-center mt-5'>
-        <img
-          src={graphicsIcon}
-          alt='GraphicsIcon'
-          className='sm:w-72 sm:h-72'
-        ></img>
+        <img src={graphicsIcon} alt='GraphicsIcon' className='w-72 h-72'></img>
       </div>
     </div>
   )
