@@ -24,7 +24,7 @@ function LandingPage() {
         <img
           src={graphicsIcon}
           alt='GraphicsIcon'
-          className='w-56 h-56 md:w-72 md:h-72'
+          className='w-60 h-60 md:w-72 md:h-72'
         ></img>
       </div>
     </div>
