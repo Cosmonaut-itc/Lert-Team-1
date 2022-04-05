@@ -7,7 +7,7 @@ function LandingPage() {
         <p>Data to enrich</p>
         <p className='text-blue-700'>your finance</p>
       </div>
-      <p className='text-gray-500 text-md sm:text-xl mt-6 sm:mx-0 mx-20'>
+      <p className='text-gray-500 text-md sm:text-xl mt-6 sm:mx-0 mx-10'>
         LERT - labor expenses recovery tool is an aid in the finances of the
         manager, it manages squad, employees and create the fall plan planning
         expenses and financial recoveries.
@@ -20,8 +20,12 @@ function LandingPage() {
           Live demo
         </button>
       </div>
-      <div className='flex sm:justify-end justify-center mt-5'>
-        <img src={graphicsIcon} alt='GraphicsIcon' className='w-72 h-72'></img>
+      <div className='flex sm:justify-end justify-center mt-8'>
+        <img
+          src={graphicsIcon}
+          alt='GraphicsIcon'
+          className='w-56 h-56 md:w-72 md:h-72'
+        ></img>
       </div>
     </div>
   )
