@@ -60,10 +60,11 @@ export default function LiveDemo() {
             >
               <div className='inline-block h-96 w-3/6 overflow-hidden text-center align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
                 <ReactPlayer
-                  url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                  url='https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley'
                   width='100%'
                   height='100%'
                   controls
+                  playing
                 />
               </div>
             </Transition.Child>
