@@ -1,4 +1,5 @@
 import graphicsIcon from '../assets/icons/graphicsIcon.png'
+import LiveDemo from './LiveDemo'
 
 function LandingPage() {
   return (
@@ -16,9 +17,7 @@ function LandingPage() {
         <button className='bg-blue-600 rounded p-2 sm:px-8 px-4 text-white'>
           Get started
         </button>
-        <button className='bg-blue-200 rounded p-2 sm:px-8 px-4 text-blue-600'>
-          Live demo
-        </button>
+        <LiveDemo />
       </div>
       <div className='flex sm:justify-end justify-center mt-8'>
         <img

@@ -12,9 +12,9 @@ import Logo from './Logo'
 import { Fragment, useState } from 'react'
 
 const navigation = [
-  { name: 'Dashboard', icon: HomeIcon, href: '#', current: false },
-  { name: 'Team', icon: UsersIcon, href: '#', count: 3, current: false },
-  { name: 'Reports', icon: ChartBarIcon, href: '#', current: false },
+  { name: 'Dashboard', icon: HomeIcon, href: '/home', current: false },
+  { name: 'Team', icon: UsersIcon, href: 'team', count: 3, current: false },
+  { name: 'Reports', icon: ChartBarIcon, href: 'reports', current: false },
 ]
 
 function classNames(...classes) {
