@@ -1,5 +1,6 @@
 import SideMenu from './SideMenu'
 import LandingPage from './LandingPage'
+import ManagerCard from './ManagerCard'
 
 function App() {
   return (
@@ -9,8 +10,12 @@ function App() {
           <SideMenu />
         </div>
         <LandingPage />
+        
       </div>
+      <ManagerCard/>
     </div>
+
+   
   )
 }
 
