@@ -89,9 +89,7 @@ export default function SideMenu() {
                 </Transition.Child>
                 <div className='flex-1 h-0 pt-5 pb-4 overflow-y-auto'>
                   <div className='flex border-b pb-4 border-gray-200 items-center flex-shrink-0 px-4 justify-center'>
-                    <button onClick={() => CloseMenu()}>
-                      <Logo />
-                    </button>
+                    <Logo />
                   </div>
                   <nav
                     className='mt-5 flex-1 px-2 bg-white space-y-10'

@@ -10,12 +10,9 @@ function App() {
           <SideMenu />
         </div>
         <LandingPage />
-        
       </div>
-      <ManagerCard/>
+      {/* <ManagerCard /> */}
     </div>
-
-   
   )
 }
 
