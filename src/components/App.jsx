@@ -14,7 +14,7 @@ function App() {
     //     <LandingPage />
     //   </div> */}
         <Login/>
-    // </div>
+      </div>
     
   )
 }

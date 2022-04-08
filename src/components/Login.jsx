@@ -44,7 +44,7 @@ export default function Login() {
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a href="#" className="font-base text-indigo-600 cursor-pointer">
+              <a href="/register" className="font-base text-indigo-600 cursor-pointer">
                 Create new account
               </a>
             </div>
