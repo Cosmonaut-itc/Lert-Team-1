@@ -1,6 +1,6 @@
-import SideMenu from './SideMenu'
-import LandingPage from './LandingPage'
-import ManagerCard from './ManagerCard'
+// import SideMenu from './SideMenu'
+// import LandingPage from './LandingPage'
+// import ManagerCard from './ManagerCard'
 import Login from './Login'
 
 function App() {
