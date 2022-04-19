@@ -12,7 +12,7 @@ export default function Login() {
         <div>
           <h2 className="mt-6 text-left text-3xl font-base text-gray-900">Log in to IBM</h2>
         </div>
-        <form className="mt-2 space-y-6" action="#" method="POST" onSubmit={console.log("You are logged in")}>
+        <form className="mt-2 space-y-6" action="#" method="POST">
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <p className="flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer">Forgot IBMid?</p>
