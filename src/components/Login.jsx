@@ -12,7 +12,7 @@ export default function Login() {
         <div>
           <h2 className="mt-6 text-left text-3xl font-base text-gray-900">Log in to IBM</h2>
         </div>
-        <form className="mt-2 space-y-6" action="#" method="POST">
+        <form className="mt-2 space-y-6" action="#" method="POST" onSubmit={console.log("You are logged in")}>
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <p className="flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer">Forgot IBMid?</p>
@@ -59,7 +59,6 @@ export default function Login() {
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-10 rounded-2xl border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={console.log("You logged in succesfully")}
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 {/* <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" /> */}
