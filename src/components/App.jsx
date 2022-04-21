@@ -1,6 +1,11 @@
 import SideMenu from './SideMenu'
+// import ManagerCard from './ManagerCard'
 import LandingPage from './LandingPage'
+<<<<<<< HEAD
 import Home from './Home'
+=======
+import Login from './Login'
+>>>>>>> Development
 
 function App() {
   return (

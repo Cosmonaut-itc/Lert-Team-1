@@ -7,9 +7,9 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
-
 import Logo from './Logo'
 import { Fragment, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, href: '/home', current: false },
@@ -89,18 +89,16 @@ export default function SideMenu() {
                 </Transition.Child>
                 <div className='flex-1 h-0 pt-5 pb-4 overflow-y-auto'>
                   <div className='flex border-b pb-4 border-gray-200 items-center flex-shrink-0 px-4 justify-center'>
-                    <button onClick={() => CloseMenu()}>
-                      <Logo />
-                    </button>
+                    <Logo />
                   </div>
                   <nav
                     className='mt-5 flex-1 px-2 bg-white space-y-10'
                     aria-label='Sidebar'
                   >
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current
                             ? 'bg-gray-100 text-gray-900 hover:text-gray-900 hover:bg-gray-100'
@@ -132,7 +130,7 @@ export default function SideMenu() {
                             {item.count}
                           </span>
                         ) : null}
-                      </a>
+                      </Link>
                     ))}
                   </nav>
                 </div>
