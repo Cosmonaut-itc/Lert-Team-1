@@ -10,7 +10,7 @@ export default function Login() {
       <div className='max-w-md w-full space-y-8'>
         <div>
           <h2 className='mt-6 text-left text-3xl font-base text-gray-900'>
-            Log in to IBM
+            Llog in to IBM
           </h2>
         </div>
         <form className='mt-2 space-y-6' action='#' method='POST'>
