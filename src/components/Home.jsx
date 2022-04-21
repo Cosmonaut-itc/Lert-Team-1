@@ -3,12 +3,27 @@ import SideMenu from './SideMenu'
 import LandingPage from './LandingPage'
 
 function Home() {
+  function ChangeWindow() {
+    if (window.location.pathname === '/home') {
+      console.log(window.location.pathname)
+      return <LandingPage />
+    } else if (window.location.pathname === '/team') {
+      console.log(window.location.pathname)
+      return 'Pantalla de Team'
+    } else if (window.location.pathname === '/reports') {
+      console.log(window.location.pathname)
+      return 'Pantalla de Reports'
+    }
+  }
+
   return (
     <div className='flex'>
       <div className='h-screen'>
         <SideMenu />
       </div>
-      <LandingPage />
+
+      {ChangeWindow()}
+
       <div></div>
     </div>
   )
