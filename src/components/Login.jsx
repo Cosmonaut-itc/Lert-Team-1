@@ -27,11 +27,8 @@ export default function Login() {
                 id='email-address'
                 name='email'
                 type='email'
-<<<<<<< HEAD
-=======
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
->>>>>>> Development
                 autoComplete='email'
                 required
                 className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
@@ -45,11 +42,8 @@ export default function Login() {
                 id='password'
                 name='password'
                 type='password'
-<<<<<<< HEAD
-=======
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
->>>>>>> Development
                 autoComplete='current-password'
                 required
                 className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
@@ -59,14 +53,14 @@ export default function Login() {
 
           <div className='flex items-center justify-between'>
             <div className='text-sm'>
-<<<<<<< HEAD
-              <a href='#' className='font-base text-indigo-600 cursor-pointer'>
-=======
+              <a
+                href='#'
+                className='font-base text-indigo-600 cursor-pointer'
+              />
               <a
                 href='/register'
                 className='font-base text-indigo-600 cursor-pointer'
               >
->>>>>>> Development
                 Create new account
               </a>
             </div>
