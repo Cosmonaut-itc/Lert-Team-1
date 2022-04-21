@@ -13,6 +13,9 @@ function Home() {
     } else if (window.location.pathname === '/reports') {
       console.log(window.location.pathname)
       return 'Pantalla de Reports'
+    } else if (window.location.pathname === '/') {
+      console.log(window.location.pathname)
+      return <LandingPage />
     }
   }
 
