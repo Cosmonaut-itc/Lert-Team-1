@@ -3,7 +3,7 @@ import LiveDemo from './LiveDemo'
 
 function LandingPage() {
   return (
-    <div className='flex flex-col h-full mt-10 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
+    <div className='flex flex-col h-screen md:h-full mt-10 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
       <div className='sm:text-5xl text-4xl font-bold whitespace-nowrap'>
         <p>Data to enrich</p>
         <p className='text-blue-700'>your finance</p>

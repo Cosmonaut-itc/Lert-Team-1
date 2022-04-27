@@ -244,10 +244,7 @@ export default function SideMenu() {
                   />
                 </a>
               </div>
-              <a
-                href='/'
-                className={`${isSideMenuClose === true ? 'hidden' : 'ml-3'}`}
-              >
+              <a href='/' className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}>
                 <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>
                   Diego Mojarro
                 </p>

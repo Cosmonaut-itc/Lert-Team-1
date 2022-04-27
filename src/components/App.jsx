@@ -7,9 +7,7 @@ function App() {
   return (
     <div className='bg-slate-100 h-max'>
       <div className='flex'>
-        <div className='h-screen'>
-          <SideMenu />
-        </div>
+        <SideMenu />
         <LandingPage />
       </div>
     </div>
