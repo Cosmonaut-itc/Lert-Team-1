@@ -41,7 +41,7 @@ def register_user():
         return jsonify({"error": "User already exists"}), 409
 
     hashed_password = bcrypt.generate_password_hash(password)
-    new_user = User(email=email, password=hashed_password)
+    new_user = User(id="2", email=email, password=hashed_password, rol="admin")
     db.session.add(new_user)
     db.session.commit()
 
