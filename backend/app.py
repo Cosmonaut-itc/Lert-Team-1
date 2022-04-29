@@ -71,6 +71,17 @@ def login_user():
         "email": user.email,
     })
 
+#Delete route
+@app.route('/delete/<int:id>')
+def delete_user(id):
+    user_to_delete = User.query.get_or_404(id)
+
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+    #   after this we could redirect to the frontpage with return redirect('/')
+    except:
+        return "There was a problem deleting that user..."
 
 if __name__ == "__main__":
     app.run(debug=True)
