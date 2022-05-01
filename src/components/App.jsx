@@ -1,16 +1,26 @@
 import SideMenu from './SideMenu'
 // import ManagerCard from './ManagerCard'
 import LandingPage from './LandingPage'
-import Login from './Login'
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+import Reports from '../routes/reports'
+import Home from '../routes/home'
+import Team from '../routes/team'
 
 function App() {
   return (
-    <div className='bg-slate-100 h-max'>
-      <div className='flex'>
+    <BrowserRouter>
+      <div className='flex bg-slate-100 h-max'>
         <SideMenu />
-        <LandingPage />
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='home' element={<Home />} />
+          <Route path='reports' element={<Reports />} />
+          <Route path='team' element={<Team />} />
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   )
 }
 
