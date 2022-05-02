@@ -4,6 +4,8 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 from config import AppConfig
 from models import db, User
+import psycopg2
+
 
 app = Flask(__name__)
 app.config.from_object(AppConfig)
