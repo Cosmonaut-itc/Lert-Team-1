@@ -1,5 +1,4 @@
 import SideMenu from './SideMenu'
-// import ManagerCard from './ManagerCard'
 import LandingPage from './LandingPage'
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 // import { LockClosedIcon } from '@heroicons/react/solid'
 
 export default function Login() {
-  const [email, setEmail] = useState < String > ''
-  const [password, setPassword] = useState < String > ''
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>

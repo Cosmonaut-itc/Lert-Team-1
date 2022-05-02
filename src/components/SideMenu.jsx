@@ -40,7 +40,7 @@ export default function SideMenu() {
 
   return (
     <div className={isSideMenuClose ? 'md:ml-28' : 'md:ml-60'}>
-      <div className='fixed top-0 left-0 overflow-hidden'>
+      <div className='fixed top-0 left-0 overflow-hidden z-50'>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as='div'
