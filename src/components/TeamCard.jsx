@@ -9,7 +9,7 @@ export default function TeamCard({ id, name, email, status }) {
       sx={{ borderRadius: 3 }}
       variant='outlined'
       className='m-4 pt-1 relative shadow-lg overflow-visible'
-      id={id}
+      key={id}
     >
       <div className='flex justify-between'>
         <div className='text-left pl-6 pt-2'>

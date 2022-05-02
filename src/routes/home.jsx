@@ -75,7 +75,7 @@ export default function Home() {
         <div className='flex'>
           {TeamDD.map((data) => (
             <TeamCard
-              id={data.id}
+              key={data.id}
               name={data.name}
               email={data.email}
               status={data.status}
@@ -96,7 +96,7 @@ export default function Home() {
         <div className='flex'>
           {ExpensesDD.map((data) => (
             <ExpensesCard
-              id={data.id}
+              key={data.id}
               item={data.item}
               email={data.email}
               date={data.date}
