@@ -4,8 +4,6 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 from config import AppConfig
 from models import db, User
-import psycopg2
-
 
 app = Flask(__name__)
 app.config.from_object(AppConfig)
@@ -42,8 +40,8 @@ def register_user():
     if user_exists:
         return jsonify({"error": "User already exists"}), 409
 
-    hashed_password = bcrypt.generate_password_hash(password)
-    new_user = User(id="2", email=email, password=hashed_password, rol="admin")
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    new_user = User(id="3", email=email, password=hashed_password, rol="admin")
     db.session.add(new_user)
     db.session.commit()
 
@@ -64,9 +62,10 @@ def login_user():
         return jsonify({"error": "Unauthorized"}), 401
 
     if not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Unauthorized"}), 401
+        return jsonify({"error": "Unauthorized",
+                        "user": user.id})
 
-    session ["user_id"] = user.id
+    session["user_id"] = user.id
 
     return jsonify({
         "id": user.id,
