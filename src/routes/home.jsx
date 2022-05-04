@@ -49,14 +49,6 @@ const ExpensesDD = [
     price: '200',
     section: 'Office Supplies',
   },
-  {
-    id: 4,
-    item: 'Monitor',
-    email: 'kenbauer@tec.mx',
-    date: '14/03/2022',
-    price: '200',
-    section: 'Office Supplies',
-  },
 ]
 
 export default function Home() {
