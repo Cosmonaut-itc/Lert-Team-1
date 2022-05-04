@@ -6,7 +6,7 @@ import SidebarLayout from './SidebarLayout'
 import Reports from '../routes/reports'
 import Home from '../routes/home'
 import Team from '../routes/team'
-import Login from './Login'
+import Login from '../routes/login'
 
 function App() {
   return (
@@ -14,12 +14,12 @@ function App() {
       <div className='flex bg-slate-100 h-max'>
         <Routes>
           <Route element={<SidebarLayout />}>
-            <Route path='/' element={<LandingPage />} />
+            <Route path='/landingpage' element={<LandingPage />} />
             <Route path='home' element={<Home />} />
             <Route path='reports' element={<Reports />} />
             <Route path='team' element={<Team />} />
           </Route>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>
