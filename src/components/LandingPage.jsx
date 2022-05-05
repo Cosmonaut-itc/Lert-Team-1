@@ -14,9 +14,12 @@ function LandingPage() {
         expenses and financial recoveries.
       </p>
       <div className='sm:flex space-x-4 mt-6 sm:text-lg whitespace-nowrap text-center'>
-        <button className='bg-blue-600 rounded p-2 sm:px-8 px-4 text-white'>
+        <a
+          className='bg-blue-600 rounded p-2 sm:px-8 px-4 text-white'
+          href='/home'
+        >
           Get started
-        </button>
+        </a>
         <LiveDemo />
       </div>
       <div className='flex sm:justify-end justify-center mt-8'>
