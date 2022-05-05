@@ -5,8 +5,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SidebarLayout from './SidebarLayout'
 import Reports from '../routes/reports'
 import Home from '../routes/home'
+import OpsManager from '../routes/OpsManager'
 import Team from '../routes/team'
 import Login from '../routes/login'
+import ExpensesCard from './ExpensesCard'
+import ManagerCard from './ManagerCard'
 
 function App() {
   return (
@@ -23,6 +26,12 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    // <div className='flex bg-slate-100 h-max'>
+    //   <SidebarLayout/>
+    //   {/* <LandingPage/> */}
+    //   <OpsManager/>
+      
+    // </div>
   )
 }
 
