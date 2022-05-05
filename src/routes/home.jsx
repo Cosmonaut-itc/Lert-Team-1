@@ -61,9 +61,11 @@ export default function Home() {
         </div>
       </div>
       <div className='flex pt-3'>
-        <button>
-          <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
-        </button>
+        <div className='items-center flex'>
+          <button>
+            <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
+          </button>
+        </div>
         <div className='flex'>
           {TeamDD.map((data) => (
             <TeamCard
@@ -82,9 +84,11 @@ export default function Home() {
         </div>
       </div>
       <div className='flex pt-3'>
-        <button>
-          <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
-        </button>
+        <div className='items-center flex'>
+          <button>
+            <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
+          </button>
+        </div>
         <div className='flex'>
           {ExpensesDD.map((data) => (
             <ExpensesCard
