@@ -1,6 +1,5 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/outline'
 import SelectMenu from './SelectMenu'
 
 export default function ManagerAdd({ open, cancelButtonRef, setOpen }) {
