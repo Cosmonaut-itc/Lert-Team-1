@@ -1,13 +1,14 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import SelectMenu from './SelectMenu'
+import { MailIcon } from '@heroicons/react/solid'
 
-export default function ManagerAdd({ open, cancelButtonRef, setOpen }) {
+export default function TeamAdd({ open, cancelButtonRef, setOpen }) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as='div'
-        className='fixed z-10 inset-0 overflow-y-auto'
+        className='fixed z-50 inset-0 overflow-y-auto'
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
@@ -97,12 +98,18 @@ export default function ManagerAdd({ open, cancelButtonRef, setOpen }) {
                       >
                         Email
                       </label>
-                      <div className='mt-1'>
+                      <div className='mt-1 relative rounded-md shadow-sm'>
+                        <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                          <MailIcon
+                            className='h-5 w-5 text-gray-400'
+                            aria-hidden='true'
+                          />
+                        </div>
                         <input
-                          type='email'
-                          name='text'
+                          type='text'
+                          name='email'
                           id='email'
-                          className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                          className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                           placeholder='examplemail@ibm.com'
                         />
                       </div>
