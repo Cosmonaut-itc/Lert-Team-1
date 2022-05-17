@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import SidebarLayout from './SidebarLayout'
 import Reports from '../routes/reports'
-import Home from '../routes/home'
+import Home from '../routes/manager'
 import Team from '../routes/team'
 import Login from '../routes/login'
 

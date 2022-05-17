@@ -1,7 +1,10 @@
+import { useRef, useState } from 'react'
+
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import TeamCard from '../components/TeamCard'
 import SearchBar from '../components/SearchBar'
 import ExpensesCard from '../components/ExpensesCard'
+import ManagerAdd from '../components/ManagerAdd'
 
 const TeamDD = [
   {
@@ -51,7 +54,10 @@ const ExpensesDD = [
   },
 ]
 
-export default function Home() {
+export default function Manager() {
+  const [open, setOpen] = useState(false)
+
+  const cancelButtonRef = useRef(null)
   return (
     <div className='pt-16 pl-10 h-screen'>
       <div className='flex items-center gap-7'>
@@ -62,8 +68,16 @@ export default function Home() {
       </div>
       <div className='flex pt-3'>
         <div className='items-center flex'>
+          <ManagerAdd
+            open={open}
+            setOpen={setOpen}
+            cancelButtonRef={cancelButtonRef}
+          />
           <button>
-            <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
+            <PlusCircleIcon
+              className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
+              onClick={() => setOpen(true)}
+            />
           </button>
         </div>
         <div className='flex'>
