@@ -7,18 +7,59 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
+import { NavLink } from 'react-router-dom'
 
 import Logo from './Logo'
 import { Fragment, useState } from 'react'
 
 const navigation = [
-  { name: 'Dashboard', icon: HomeIcon, href: '/home', current: false },
-  { name: 'Team', icon: UsersIcon, href: 'team', count: 3, current: false },
-  { name: 'Reports', icon: ChartBarIcon, href: 'reports', current: false },
+  { name: 'Dashboard', icon: HomeIcon, href: '/home' },
+  { name: 'Team', icon: UsersIcon, href: 'team', count: 3 },
+  { name: 'Reports', icon: ChartBarIcon, href: 'reports' },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
+}
+
+function NavLinksMobile({ item }) {
+  return (
+    <NavLink
+      key={item.name}
+      to={item.href}
+      className={({ isActive }) =>
+        classNames(
+          isActive
+            ? 'bg-gray-200 text-gray-900 hover:text-gray-900 hover:bg-gray-200'
+            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+          'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
+        )
+      }
+    >
+      <item.icon
+        className={classNames(
+          item.current
+            ? 'text-blue-500'
+            : 'text-blue-300 group-hover:text-blue-500',
+          'flex-shrink-0 h-6 w-6'
+        )}
+        aria-hidden='true'
+      />
+
+      <span className='flex-1 ml-2'>{item.name}</span>
+
+      {item.count ? (
+        <span
+          className={classNames(
+            item.current ? 'bg-white' : 'bg-gray-100 group-hover:bg-gray-200',
+            'inline-block py-0.5 ml-2 px-3 text-xs font-medium rounded-full'
+          )}
+        >
+          {item.count}
+        </span>
+      ) : null}
+    </NavLink>
+  )
 }
 
 export default function SideMenu() {
@@ -96,41 +137,7 @@ export default function SideMenu() {
                     aria-label='Sidebar'
                   >
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-100 text-gray-900 hover:text-gray-900 hover:bg-gray-100'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                          'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
-                        )}
-                      >
-                        <item.icon
-                          className={classNames(
-                            item.current
-                              ? 'text-blue-500'
-                              : 'text-blue-300 group-hover:text-blue-500',
-                            'flex-shrink-0 h-6 w-6'
-                          )}
-                          aria-hidden='true'
-                        />
-
-                        <span className='flex-1 ml-2'>{item.name}</span>
-
-                        {item.count ? (
-                          <span
-                            className={classNames(
-                              item.current
-                                ? 'bg-white'
-                                : 'bg-gray-100 group-hover:bg-gray-200',
-                              'inline-block py-0.5 ml-2 px-3 text-xs font-medium rounded-full'
-                            )}
-                          >
-                            {item.count}
-                          </span>
-                        ) : null}
-                      </a>
+                      <NavLinksMobile item={item} />
                     ))}
                   </nav>
                 </div>
@@ -191,21 +198,23 @@ export default function SideMenu() {
               aria-label='Sidebar'
             >
               {navigation.map((item) => (
-                <a
+                <NavLink
                   key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-gray-100 text-gray-900 hover:text-gray-900 hover:bg-gray-100'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
-                  )}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    classNames(
+                      isActive
+                        ? 'bg-gray-200 text-gray-900 hover:text-gray-900 hover:bg-gray-200'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
+                    )
+                  }
                 >
                   <item.icon
                     className={classNames(
                       item.current
                         ? 'text-blue-500'
-                        : 'text-blue-300 group-hover:text-blue-500',
+                        : 'text-blue-400 group-hover:text-blue-500',
                       'flex-shrink-0 h-6 w-6'
                     )}
                     aria-hidden='true'
@@ -229,7 +238,7 @@ export default function SideMenu() {
                       {item.count}
                     </span>
                   ) : null}
-                </a>
+                </NavLink>
               ))}
             </nav>
           </div>
