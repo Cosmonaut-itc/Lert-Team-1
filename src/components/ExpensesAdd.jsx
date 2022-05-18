@@ -48,7 +48,7 @@ export default function ExpensesAdd({ open, cancelButtonRef, setOpen }) {
                     as='h3'
                     className='text-2xl leading-6 font-semibold text-gray-900'
                   >
-                    Employee Information
+                    Expense
                   </Dialog.Title>
                   <div className='mt-10 grid grid-cols-2 gap-10'>
                     <div>
