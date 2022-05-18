@@ -2,7 +2,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 
 export default function SearchBar() {
   return (
-    <div className='max-w-xs mx-auto w-full lg:max-w-md'>
+    <div className='mx-auto w-full lg:max-w-md'>
       <label htmlFor='search' className='sr-only'>
         Search by name
       </label>
@@ -12,7 +12,7 @@ export default function SearchBar() {
         </div>
         <input
           id='search'
-          className='block w-full text-gray-600 bg-white py-2 pl-10 pr-3 border rounded-full leading-5 focus:text-gray-900 focus:placeholder-black focus:outline-none  focus:border-transparent placeholder-gray-500 focus:ring-0 sm:text-sm'
+          className='block w-full text-gray-600 bg-white py-2 pl-10 pr-3 border rounded-full leading-5 focus:text-gray-900 focus:placeholder-black focus:outline-none  border-transparent focus:border placeholder-gray-500 focus:ring-0 sm:text-sm'
           placeholder='Search by name'
           type='search'
           name='search'

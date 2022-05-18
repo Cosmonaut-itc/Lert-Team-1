@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { PlusCircleIcon } from '@heroicons/react/solid'
+import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../components/TeamCard'
 import SearchBar from '../components/SearchBar'
 import ExpensesCard from '../components/ExpensesCard'
@@ -63,10 +63,19 @@ export default function Manager() {
 
   return (
     <div className='pt-16 pl-10 h-screen'>
-      <div className='flex items-center gap-7'>
-        <div className='text-2xl font-semibold text-gray-600'>Team</div>
-        <div className='px-12 lg:px-0'>
-          <SearchBar />
+      <div className='flex justify-around'>
+        <div className='flex items-center gap-7 w-full'>
+          <div className='text-2xl font-semibold text-gray-600'>Team</div>
+          <div className='w-2/12'>
+            <SearchBar />
+          </div>
+        </div>
+        <div className='flex items-center'>
+          <div className='text-xl font-semibold text-gray-600'>Status: </div>
+          <div className='flex items-center pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'>
+            <p>In progress</p>
+            <ArrowDownIcon className='w-4 h-5 m-2' />
+          </div>
         </div>
       </div>
       <div className='flex pt-3'>
@@ -96,7 +105,7 @@ export default function Manager() {
       </div>
       <div className='flex items-center gap-7 pt-16'>
         <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
-        <div className='px-12 lg:px-0'>
+        <div className='w-2/12'>
           <SearchBar />
         </div>
       </div>
