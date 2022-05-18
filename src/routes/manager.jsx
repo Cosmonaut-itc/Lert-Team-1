@@ -1,7 +1,11 @@
+import { useRef, useState } from 'react'
+
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import TeamCard from '../components/TeamCard'
 import SearchBar from '../components/SearchBar'
 import ExpensesCard from '../components/ExpensesCard'
+import TeamAdd from '../components/TeamAdd'
+import ExpensesAdd from '../components/ExpensesAdd'
 
 const TeamDD = [
   {
@@ -51,7 +55,12 @@ const ExpensesDD = [
   },
 ]
 
-export default function Home() {
+export default function Manager() {
+  const [openTeamAdd, setOpenTeamAdd] = useState(false)
+  const cancelButtonRefTeam = useRef(null)
+  const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
+  const cancelButtonRefExpenses = useRef(null)
+
   return (
     <div className='pt-16 pl-10 h-screen'>
       <div className='flex items-center gap-7'>
@@ -62,8 +71,16 @@ export default function Home() {
       </div>
       <div className='flex pt-3'>
         <div className='items-center flex'>
+          <TeamAdd
+            open={openTeamAdd}
+            setOpen={setOpenTeamAdd}
+            cancelButtonRef={cancelButtonRefTeam}
+          />
           <button>
-            <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
+            <PlusCircleIcon
+              className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
+              onClick={() => setOpenTeamAdd(true)}
+            />
           </button>
         </div>
         <div className='flex'>
@@ -85,8 +102,16 @@ export default function Home() {
       </div>
       <div className='flex pt-3'>
         <div className='items-center flex'>
+          <ExpensesAdd
+            open={openExpensesAdd}
+            setOpen={setOpenExpensesAdd}
+            cancelButtonRef={cancelButtonRefExpenses}
+          />
           <button>
-            <PlusCircleIcon className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600' />
+            <PlusCircleIcon
+              className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
+              onClick={() => setOpenExpensesAdd(true)}
+            />
           </button>
         </div>
         <div className='flex'>
