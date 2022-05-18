@@ -16,7 +16,7 @@ with app.app_context():
     db.create_all()
 
 ## This route is used to authenticate the user once is inside the app.
-@app.route("/@me")
+@app.route("/@me", methods=["GET"])
 def get_current_user():
     user_id = session.get("user_id")
 
@@ -41,7 +41,7 @@ def register_user():
         return jsonify({"error": "User already exists"}), 409
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(id="3", email=email, password=hashed_password, rol="admin")
+    new_user = User(id="5", email=email, password=hashed_password, rol="admin")
     db.session.add(new_user)
     db.session.commit()
 
@@ -73,7 +73,7 @@ def login_user():
     })
 
 #Delete route
-@app.route('/delete/<int:id>')
+@app.route('/delete/<int:id>', methods=["DELETE"])
 def delete_user(id):
     user_to_delete = User.query.get_or_404(id)
 
