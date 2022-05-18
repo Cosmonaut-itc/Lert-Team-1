@@ -1,5 +1,5 @@
 import React from 'react'
-import IBM_LOGO from '../assets/icons/ibm_BW.png'
+import IBM_LOGO from '../../../assets/icons/ibm_BW.png'
 
 function Logo() {
   return (

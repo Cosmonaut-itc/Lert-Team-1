@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import SelectMenu from './SelectMenu'
+import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
 export default function TeamAdd({ open, cancelButtonRef, setOpen }) {

@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import TeamCard from '../components/TeamCard'
-import SearchBar from '../components/SearchBar'
-import ManagerCard from '../components/ManagerCard'
+import TeamCard from '../Shared/Components/TeamCard'
+import SearchBar from '../Shared/Components/SearchBar'
+import ManagerCard from './Components/ManagerCard'
 
 import Button from '@mui/material/Button'
 
@@ -64,7 +64,7 @@ const TeamDD = [
   },
 ]
 
-export default function OpsManager() {
+export default function Home() {
   return (
     <div className='pt-16 pl-10 h-screen'>
       <div className='flex items-center gap-7 justify-between'>
