@@ -14,12 +14,12 @@ function App() {
       <div className='flex bg-slate-100 h-screen'>
         <Routes>
           <Route element={<SidebarLayout />}>
-            <Route path='/landingpage' element={<LandingPage />} />
+            <Route path='/' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
             <Route path='/reports' element={<Reports />} />
             <Route path='/team' element={<Team />} />
           </Route>
-          <Route path='/' element={<Login />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>
