@@ -13,9 +13,9 @@ import Logo from './Logo'
 import { Fragment, useState } from 'react'
 
 const navigation = [
-  { name: 'Dashboard', icon: HomeIcon, href: '/home' },
-  { name: 'Team', icon: UsersIcon, href: 'team', count: 3 },
-  { name: 'Reports', icon: ChartBarIcon, href: 'reports' },
+  { name: 'Dashboard', icon: HomeIcon, href: '/manager/home' },
+  { name: 'Team', icon: UsersIcon, href: '/manager/team', count: 3 },
+  { name: 'Reports', icon: ChartBarIcon, href: '/manager/reports' },
 ]
 
 function classNames(...classes) {
@@ -161,7 +161,10 @@ export default function SideMenu() {
                       />
                     </a>
                   </div>
-                  <a href='/Users/diegoortiz/Documents/6to semestre/Proyecto/Lert-Team-1/public' className={'ml-3'}>
+                  <a
+                    href='/Users/diegoortiz/Documents/6to semestre/Proyecto/Lert-Team-1/public'
+                    className={'ml-3'}
+                  >
                     <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>
                       Diego Mojarro
                     </p>
@@ -253,7 +256,10 @@ export default function SideMenu() {
                   />
                 </a>
               </div>
-              <a href='src/components/Shared/Components/SideMenu#' className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}>
+              <a
+                href='src/components/Shared/Components/SideMenu#'
+                className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}
+              >
                 <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>
                   Diego Mojarro
                 </p>

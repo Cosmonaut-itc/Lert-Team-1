@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
@@ -80,7 +80,7 @@ export default function Home() {
       }
     }
 
-    fetchTeam();
+    fetchTeam()
   }, [])
 
   return (
@@ -115,7 +115,7 @@ export default function Home() {
           </button>
         </div>
         <div className='flex'>
-          {team.map((data) => (
+          {TeamDD.map((data) => (
             <TeamCard
               key={data.id}
               name={data.name}
