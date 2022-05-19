@@ -1,5 +1,5 @@
-import graphicsIcon from '../assets/icons/graphicsIcon.png'
-import LiveDemo from './LiveDemo'
+import graphicsIcon from '../../assets/icons/graphicsIcon.png'
+import LiveDemo from './Components/LiveDemo'
 
 function LandingPage() {
   return (

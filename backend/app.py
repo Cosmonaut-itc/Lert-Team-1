@@ -15,6 +15,31 @@ server_session = Session(app)
 with app.app_context():
     db.create_all()
 
+
+# Fake DB test
+TeamDD = [
+  {
+    'id': 1,
+    'name': 'Ken Bauer',
+    'email': 'kenbauer@tec.mx',
+    'status': 'Temp Down',
+  },
+  {
+    'id': 2,
+    'name': 'Ken LOL',
+    'email': 'kenbauer@tec.mx',
+    'status': 'Temp Down',
+  },
+  {
+    'id': 3,
+    'name': 'Ken Bauer',
+    'email': 'kenbauer@tec.mx',
+    'status': 'Temp Down',
+  },
+]
+
+TeamDDRes = json.dumps(TeamDD)
+
 ## This route is used to authenticate the user once is inside the app.
 @app.route("/@me", methods=["GET"])
 def get_current_user():
@@ -29,7 +54,7 @@ def get_current_user():
         "email": user.email,
     })
 
-# Register route 
+# Register route
 @app.route("/register", methods=["POST"])
 def register_user():
     email = request.json["email"]
@@ -56,7 +81,7 @@ def login_user():
     email = request.json["email"]
     password = request.json["password"]
 
-    user = User.query.filter_by(email=email).first() 
+    user = User.query.filter_by(email=email).first()
 
     if user is None:
         return jsonify({"error": "Unauthorized"}), 401
@@ -87,4 +112,9 @@ def delete_user(id):
 if __name__ == "__main__":
     app.run(debug=True)
 
+
+@app.route('/manager/team')
+@cross_origin()
+def manager_team():  # put application's code here
+    return TeamDDRes
 

@@ -28,7 +28,7 @@ export default function Login() {
             Log in to IBM
           </h2>
         </div>
-        <form className='mt-2 space-y-6' action='#' method='POST'>
+        <form className='mt-2 space-y-6' action='src/components/Shared/login#Login.jsx' method='POST'>
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <p className='flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer'>
@@ -69,7 +69,7 @@ export default function Login() {
           <div className='flex items-center justify-between'>
             <div className='text-sm'>
               <a
-                href='#'
+                href='src/components/Shared/login#Login.jsx'
                 className='font-base text-indigo-600 cursor-pointer'
               />
               <a

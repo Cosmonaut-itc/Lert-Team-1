@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { PlusCircleIcon } from '@heroicons/react/solid'
-import TeamCard from '../components/TeamCard'
-import SearchBar from '../components/SearchBar'
-import ExpensesCard from '../components/ExpensesCard'
-import TeamAdd from '../components/TeamAdd'
-import ExpensesAdd from '../components/ExpensesAdd'
+import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
+import TeamCard from '../Shared/Components/TeamCard'
+import SearchBar from '../Shared/Components/SearchBar'
+import ExpensesCard from './Components/ExpensesCard'
+import TeamAdd from './Components/TeamAdd'
+import ExpensesAdd from './Components/ExpensesAdd'
+import api from '../api/api'
 
 const TeamDD = [
   {
@@ -55,18 +56,48 @@ const ExpensesDD = [
   },
 ]
 
-export default function Manager() {
+export default function Home() {
   const [openTeamAdd, setOpenTeamAdd] = useState(false)
   const cancelButtonRefTeam = useRef(null)
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
+  const [team, setTeam] = useState([])
+
+  // Fetch example with axios
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const response = await api.get('/manager/team')
+        setTeam(response.data)
+      } catch (err) {
+        if (err.response) {
+          console.log(err.response.data)
+          console.log(err.response.status)
+          console.log(err.response.headers)
+        } else {
+          console.log(err.message)
+        }
+      }
+    }
+
+    fetchTeam()
+  }, [])
 
   return (
     <div className='pt-16 pl-10 h-screen'>
-      <div className='flex items-center gap-7'>
-        <div className='text-2xl font-semibold text-gray-600'>Team</div>
-        <div className='px-12 lg:px-0'>
-          <SearchBar />
+      <div className='flex justify-around'>
+        <div className='flex items-center gap-7 w-full'>
+          <div className='text-2xl font-semibold text-gray-600'>Team</div>
+          <div className='w-2/12'>
+            <SearchBar />
+          </div>
+        </div>
+        <div className='flex items-center'>
+          <div className='text-xl font-semibold text-gray-600'>Status: </div>
+          <div className='flex items-center pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'>
+            <p>In progress</p>
+            <ArrowDownIcon className='w-4 h-5 m-2' />
+          </div>
         </div>
       </div>
       <div className='flex pt-3'>
@@ -96,7 +127,7 @@ export default function Manager() {
       </div>
       <div className='flex items-center gap-7 pt-16'>
         <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
-        <div className='px-12 lg:px-0'>
+        <div className='w-2/12'>
           <SearchBar />
         </div>
       </div>
