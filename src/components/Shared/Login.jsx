@@ -1,9 +1,25 @@
 import React, { useState } from 'react'
+import httpClients from '../api/api'
+
 // import { LockClosedIcon } from '@heroicons/react/solid'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const logInUser = async () => {
+    const resp = await httpClients
+      .post('//127.0.0.1:5000/login', {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(resp)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
   return (
     <div className='min-h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
@@ -13,7 +29,11 @@ export default function Login() {
             Log in to IBM
           </h2>
         </div>
-        <form className='mt-2 space-y-6' action='src/components/Shared/login#Login.jsx' method='POST'>
+        <form
+          className='mt-2 space-y-6'
+          action='src/components/Shared/login#Login.jsx'
+          method='POST'
+        >
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <p className='flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer'>
@@ -68,6 +88,7 @@ export default function Login() {
               <button
                 type='submit'
                 className='group relative w-full flex justify-center py-2 px-10 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                onClick={logInUser}
               >
                 <span className='absolute left-0 inset-y-0 flex items-center pl-3'>
                   {/* <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" /> */}
