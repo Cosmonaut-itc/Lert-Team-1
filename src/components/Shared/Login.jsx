@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import httpClients from "../components/httpClients";
+import httpClients from '../api/api'
+
 // import { LockClosedIcon } from '@heroicons/react/solid'
 
 export default function Login() {
@@ -7,18 +8,18 @@ export default function Login() {
   const [password, setPassword] = useState('')
 
   const logInUser = async () => {
-    const resp = await httpClients.post("//127.0.0.1:5000/login", {
-      email: email,
-      password: password,
-    }).then(function (response){
-      console.log(resp)
-    }).catch(function (error){
-      console.log(error)
-    })
-
-
+    const resp = await httpClients
+      .post('//127.0.0.1:5000/login', {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(resp)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
-
 
   return (
     <div className='min-h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
@@ -28,7 +29,11 @@ export default function Login() {
             Log in to IBM
           </h2>
         </div>
-        <form className='mt-2 space-y-6' action='src/components/Shared/login#Login.jsx' method='POST'>
+        <form
+          className='mt-2 space-y-6'
+          action='src/components/Shared/login#Login.jsx'
+          method='POST'
+        >
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <p className='flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer'>
