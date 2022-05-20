@@ -23,7 +23,7 @@ function App() {
 
             {/* Manager routes */}
             <Route element={<RequireAuth allowedRole={0} />}>
-              <Route element={<SidebarLayout />}>
+              <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<Home />} />
                 <Route path='/manager/reports' element={<Reports />} />
                 <Route path='manager/team' element={<Team />} />
@@ -31,14 +31,12 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route element={<RequireAuth allowedRole={1} />}>
-              <Route element={<SidebarLayout />}>
+            <Route>
+              <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/OPSManager/home' element={<OPSManager />} />
               </Route>
             </Route>
             {/* Admin routes */}
-
-
           </Routes>
         </div>
       </BrowserRouter>

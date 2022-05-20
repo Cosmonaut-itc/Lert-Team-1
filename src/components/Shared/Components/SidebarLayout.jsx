@@ -1,10 +1,10 @@
 import SideMenu from './SideMenu'
 import { Outlet } from 'react-router-dom'
 
-function SidebarLayout() {
+function SidebarLayout({ role }) {
   return (
     <>
-      <SideMenu />
+      <SideMenu role={role} />
       <Outlet />
     </>
   )
