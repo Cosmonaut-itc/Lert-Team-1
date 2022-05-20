@@ -4,8 +4,8 @@ import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
-import TeamAdd from './Components/TeamAdd'
-import ExpensesAdd from './Components/ExpensesAdd'
+import ModalTeamAdd from './Components/ModalTeamAdd'
+import ModalExpensesAdd from './Components/ModalExpensesAdd'
 import api from '../api/api'
 import '../../styles/Home.css'
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
@@ -118,7 +118,7 @@ export default function Home() {
       </div>
       <div className='flex pt-3'>
         <div className='items-center flex'>
-          <TeamAdd
+          <ModalTeamAdd
             open={openTeamAdd}
             setOpen={setOpenTeamAdd}
             cancelButtonRef={cancelButtonRefTeam}
@@ -157,7 +157,7 @@ export default function Home() {
       </div>
       <div className='flex pt-3'>
         <div className='items-center flex'>
-          <ExpensesAdd
+          <ModalExpensesAdd
             open={openExpensesAdd}
             setOpen={setOpenExpensesAdd}
             cancelButtonRef={cancelButtonRefExpenses}

@@ -21,7 +21,7 @@ function App() {
             <Route path='manager/team' element={<Team />} />
             <Route path='/opsmanager/home' element={<OpsHome />} />
           </Route>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>
