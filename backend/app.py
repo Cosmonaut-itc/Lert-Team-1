@@ -1,120 +1,175 @@
-from flask import Flask, request, jsonify, session
-from flask_bcrypt import Bcrypt
+import logging
+from flask import Flask, jsonify, request
+from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from flask_cors import CORS, cross_origin
-from flask_session import Session
-from config import AppConfig
-from models import db, User
+from config import Config
+import json
+import secrets
+from argon2 import PasswordHasher
+from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
+from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config.from_object(AppConfig)
-db.init_app(app)
-bcrypt = Bcrypt(app)
-cors = CORS(app, supports_credentials=True)
-server_session = Session(app)
+app.config.from_object(Config)
+CORS(app, support_credentials=True)
+logging.getLogger('flask_cors').level = logging.DEBUG
 
-with app.app_context():
-    db.create_all()
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
+from models import User, Country, TypeOfEmployee, Employee
 
-# Fake DB test
+app.secret_key = secrets.token_urlsafe(16)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 TeamDD = [
-  {
-    'id': 1,
-    'name': 'Ken Bauer',
-    'email': 'kenbauer@tec.mx',
-    'status': 'Temp Down',
-  },
-  {
-    'id': 2,
-    'name': 'Ken LOL',
-    'email': 'kenbauer@tec.mx',
-    'status': 'Temp Down',
-  },
-  {
-    'id': 3,
-    'name': 'Ken Bauer',
-    'email': 'kenbauer@tec.mx',
-    'status': 'Temp Down',
-  },
-]
+    {
+        'id': 1,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 2,
+        'name': 'Ken LOL',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 3,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 4,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 5,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 6,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 7,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 8,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
+    {
+        'id': 9,
+        'name': 'Ken Bauer',
+        'email': 'kenbauer@tec.mx',
+        'status': 'Temp Down',
+    },
 
+]
 TeamDDRes = json.dumps(TeamDD)
 
-## This route is used to authenticate the user once is inside the app.
-@app.route("/@me", methods=["GET"])
-def get_current_user():
-    user_id = session.get("user_id")
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        print(current_user.role)
+        if current_user.role != 2:
+            return "Permission denied"
+        return func(*args, **kwargs)
 
-    if not user_id:
-        return jsonify({"error": "Unauthorized"}), 401
+    return decorated_view
 
-    user = User.query.filter_by(id=user_id).first()
-    return jsonify({
-        "id": user.id,
-        "email": user.email,
-    })
 
-# Register route
-@app.route("/register", methods=["POST"])
-def register_user():
-    email = request.json["email"]
-    password = request.json["password"]
+def ops_manager_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if current_user.role != 1:
+            return "Permission denied"
+        return func(*args, **kwargs)
 
-    user_exists = User.query.filter_by(email=email).first() is not None
+    return decorated_view
 
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+@app.route('/')
+def hello_world():  # put application's code here
+    return 'Hello World!'
+
+
+@app.route('/signup', methods=['POST'])
+@login_required
+@admin_required
+def signup():
+    ph = PasswordHasher()
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+    role = request.form.get('role')
+    country = request.form.get('country')
+
+    user_exists = User.query.filter_by(email=email).first()
     if user_exists:
-        return jsonify({"error": "User already exists"}), 409
-
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(id="5", email=email, password=hashed_password, rol="admin")
+        return "User already exist", 409
+    new_user = User(email=email, password=ph.hash(password), role=role, country=country)
     db.session.add(new_user)
     db.session.commit()
+    return "Added user", 201
 
-    return jsonify({
-        "id": new_user.id,
-        "email": new_user.email,
-    })
 
-# Login route
-@app.route("/login", methods=["POST"])
-def login_user():
-    email = request.json["email"]
-    password = request.json["password"]
+@app.route('/login', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def login():
+    ph = PasswordHasher()
+
+    email = request.form['email']
+    password = request.form['password']
 
     user = User.query.filter_by(email=email).first()
+    if not user or not ph.verify(user.password, password):
+        return "Invalid password ", 401
 
-    if user is None:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    if not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Unauthorized",
-                        "user": user.id})
-
-    session["user_id"] = user.id
-
-    return jsonify({
-        "id": user.id,
-        "email": user.email,
-    })
-
-#Delete route
-@app.route('/delete/<int:id>', methods=["DELETE"])
-def delete_user(id):
-    user_to_delete = User.query.get_or_404(id)
-
-    try:
-        db.session.delete(user_to_delete)
-        db.session.commit()
-    #   after this we could redirect to the frontpage with return redirect('/')
-    except:
-        return "There was a problem deleting that user..."
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    login_user(user)
+    print(user.role)
+    return json.dumps({'role': user.role})
 
 
 @app.route('/manager/team')
-@cross_origin()
 def manager_team():  # put application's code here
     return TeamDDRes
 
+
+@app.route('/protected')
+@login_required
+@admin_required
+def protected():  # put application's code here
+    return "Hello world" + " " + current_user.email
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return "Logged out"
+
+
+if __name__ == '__main__':
+    app.run()
