@@ -95,7 +95,7 @@ export default function Home() {
 
   return (
     <div className='pt-4 pl-10 w-full'>
-      <div className='flex items-center justify-end mb-10 md:p-4 mr-6'>
+      <div className='flex items-center justify-end mb-10 md:m-4 mr-6'>
         <div className='text-xl font-semibold text-gray-600 invisible md:visible'>
           Status:{' '}
         </div>
@@ -112,7 +112,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='flex pt-3'>
+      <div className='flex'>
         <div className='items-center flex'>
           <ModalTeamAdd
             open={openTeamAdd}
@@ -146,7 +146,7 @@ export default function Home() {
           <SearchBar />
         </div>
       </div>
-      <div className='flex pt-3'>
+      <div className='flex'>
         <div className='items-center flex'>
           <ModalExpensesAdd
             open={openExpensesAdd}
