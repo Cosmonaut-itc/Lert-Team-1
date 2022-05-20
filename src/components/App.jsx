@@ -7,6 +7,7 @@ import Reports from './Manager/reports'
 import Home from './Manager/Home'
 import Team from './Manager/team'
 import Login from './Shared/Login'
+import OpsHome from './OPSManager/Home'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/manager/home' element={<Home />} />
             <Route path='/manager/reports' element={<Reports />} />
             <Route path='manager/team' element={<Team />} />
+            <Route path='/opsmanager/home' element={<OpsHome />} />
           </Route>
           <Route path='/login' element={<Login />} />
         </Routes>
