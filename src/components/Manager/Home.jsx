@@ -77,7 +77,7 @@ export default function Home() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const response = await api.get('/manager/team')
+        const response = await api.get('/manager/employees/1')
         setTeam(response.data)
       } catch (err) {
         if (err.response) {
@@ -129,12 +129,12 @@ export default function Home() {
 
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-            {TeamDD.map((data) => (
+            {team.map((data) => (
               <TeamCard
                 key={data.id}
-                name={data.name}
+                name={data.first_name + " " + data.last_name}
                 email={data.email}
-                status={data.status}
+                status={ "Band " + data.band_id}
               />
             ))}
           </ScrollMenu>

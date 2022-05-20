@@ -4,7 +4,7 @@ import secrets
 from functools import wraps
 
 from argon2 import PasswordHasher
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_migrate import Migrate
@@ -96,15 +96,23 @@ def login():
     return json.dumps({'role': user.role})
 
 
-@app.route('/manager/team')
-def manager_team():  # put application's code here
-    return "ROUTES"
+@app.route('/manager/employees/<int:manager_id>')
+def manager_employees(manager_id):
+    manager_team = Employee.query.filter_by(user_id=manager_id)
+    if not manager_team:
+        return 204
+
+    response = []
+    for member in manager_team:
+        response.append(member.as_dict())
+
+    return jsonify(response)
 
 
 @app.route('/protected')
 @login_required
 @admin_required
-def protected():  # put application's code here
+def protected():
     return "Hello world" + " " + current_user.email
 
 
