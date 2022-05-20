@@ -1,7 +1,31 @@
 import graphicsIcon from '../../assets/icons/graphicsIcon.png'
 import LiveDemo from './Components/LiveDemo'
+import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 function LandingPage() {
+    const { auth } = useAuth()
+    const navigate = useNavigate()
+
+    let route = ''
+    switch (auth.role) {
+        case 0:
+            route = '/manager/home'
+            break
+        case 1:
+            route = '/OPSManager/home'
+            break
+        case 2:
+            route = '/admin/home'
+            break
+    }
+
+    console.log(route)
+
+    const navigateToPage = () => {
+        navigate(route, { replace: true })
+    }
+
   return (
     <div className='flex flex-col h-screen md:h-full mt-10 mx-4 sm:m-10 sm:mt-28 sm:text-left text-center'>
       <div className='sm:text-5xl text-4xl font-bold whitespace-nowrap'>
@@ -14,12 +38,12 @@ function LandingPage() {
         expenses and financial recoveries.
       </p>
       <div className='sm:flex space-x-4 mt-6 sm:text-lg whitespace-nowrap text-center'>
-        <a
+        <button
           className='bg-blue-600 rounded p-2 sm:px-8 px-4 text-white'
-          href='/home'
+          onClick={navigateToPage}
         >
           Get started
-        </a>
+        </button>
         <LiveDemo />
       </div>
       <div className='flex sm:justify-end justify-center mt-8'>
