@@ -81,14 +81,14 @@ export default function SideMenu() {
 
   return (
     <div className={isSideMenuClose ? 'md:ml-28' : 'md:ml-60'}>
-      <div className='md:hidden'>
+      <div className='md:hidden fixed'>
         <button
           type='button'
-          className=' h-16 w-16 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
+          className='m-4 h-10 w-10 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
           onClick={() => setSidebarOpen(true)}
         >
           <span className='sr-only'>Open sidebar</span>
-          <MenuIcon className='h-6 w-6' aria-hidden='true' />
+          <MenuIcon className='h-8 w-8' aria-hidden='true' />
         </button>
       </div>
       <Transition.Root show={sidebarOpen} as={Fragment}>

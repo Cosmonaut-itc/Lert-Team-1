@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, ScrollView } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
@@ -8,7 +8,7 @@ import ModalTeamAdd from './Components/ModalTeamAdd'
 import ModalExpensesAdd from './Components/ModalExpensesAdd'
 import api from '../api/api'
 import '../../styles/Home.css'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 
 const TeamDD = [
   {
@@ -93,26 +93,22 @@ export default function Home() {
     fetchTeam()
   }, [])
 
-  const Arrow = ({ text, className }) => {
-    return <div className={className}>{text}</div>
-  }
-  const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' })
-  const ArrowRight = Arrow({ text: '>', className: 'arrow-next' })
-
   return (
-    <div className='pt-16 pl-10 h-screen app'>
+    <div className='pt-4 pl-10 w-full'>
+      <div className='flex items-center justify-end mb-10 md:p-4 mr-6'>
+        <div className='text-xl font-semibold text-gray-600 invisible md:visible'>
+          Status:{' '}
+        </div>
+        <div className='flex items-center pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'>
+          <p>In progress</p>
+          <ArrowDownIcon className='w-4 h-5 m-2' />
+        </div>
+      </div>
       <div className='flex justify-around'>
         <div className='flex items-center gap-7 w-full'>
           <div className='text-2xl font-semibold text-gray-600'>Team</div>
-          <div className='w-2/12'>
+          <div className='w-2/4 sm:w-3/12'>
             <SearchBar />
-          </div>
-        </div>
-        <div className='flex items-center'>
-          <div className='text-xl font-semibold text-gray-600'>Status: </div>
-          <div className='flex items-center pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'>
-            <p>In progress</p>
-            <ArrowDownIcon className='w-4 h-5 m-2' />
           </div>
         </div>
       </div>
@@ -132,12 +128,7 @@ export default function Home() {
         </div>
 
         <div className='flex app'>
-          <ScrollMenu
-            style='width: 80vw;'
-            className='react-horizontal-scrolling-menu--scroll-container'
-            arrowLeft={ArrowLeft}
-            arrowRight={ArrowRight}
-          >
+          <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {TeamDD.map((data) => (
               <TeamCard
                 key={data.id}
@@ -151,7 +142,7 @@ export default function Home() {
       </div>
       <div className='flex items-center gap-7 pt-16'>
         <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
-        <div className='w-2/12'>
+        <div className='w-2/4 sm:w-3/12'>
           <SearchBar />
         </div>
       </div>
@@ -171,12 +162,7 @@ export default function Home() {
         </div>
 
         <div className='flex app'>
-          <ScrollMenu
-            style='width: 80vw;'
-            className='react-horizontal-scrolling-menu--scroll-container'
-            arrowLeft={ArrowLeft}
-            arrowRight={ArrowRight}
-          >
+          <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {ExpensesDD.map((data) => (
               <ExpensesCard
                 key={data.id}
