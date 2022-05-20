@@ -1,14 +1,16 @@
-import logging
-from flask import Flask, jsonify, request
-from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
-from flask_cors import CORS, cross_origin
-from config import Config
 import json
+import logging
 import secrets
-from argon2 import PasswordHasher
-from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
+
+from argon2 import PasswordHasher
+from flask import Flask, request
+from flask_cors import CORS, cross_origin
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+
+from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,71 +20,13 @@ logging.getLogger('flask_cors').level = logging.DEBUG
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from models import User, Country, TypeOfEmployee, Employee
+from models import *
 
 app.secret_key = secrets.token_urlsafe(16)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-TeamDD = [
-    {
-        'id': 1,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 2,
-        'name': 'Ken LOL',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 3,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 4,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 5,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 6,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 7,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 8,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-    {
-        'id': 9,
-        'name': 'Ken Bauer',
-        'email': 'kenbauer@tec.mx',
-        'status': 'Temp Down',
-    },
-
-]
-TeamDDRes = json.dumps(TeamDD)
 
 def admin_required(func):
     @wraps(func)
@@ -154,7 +98,7 @@ def login():
 
 @app.route('/manager/team')
 def manager_team():  # put application's code here
-    return TeamDDRes
+    return "ROUTES"
 
 
 @app.route('/protected')

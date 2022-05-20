@@ -1,7 +1,10 @@
-flask 
+flask
 flask-sqlalchemy
 flask-bcrypt
 python-dotenv
 flask-session
 flask-cors
 flask-psycopg2
+argon2-cffi
+Flask-Migrate
+

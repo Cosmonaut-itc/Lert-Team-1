@@ -21,6 +21,7 @@ class Country(db.Model):
     name = db.Column(db.Text, index=True, unique=True)
     users = db.relationship('User', backref='country')
     employees = db.relationship('Employee', backref='country')
+    bands = db.relationship('Band', backref='country')
 
 
 class TypeOfEmployee(db.Model):
@@ -37,6 +38,11 @@ class Employee(db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     typeOfEmployee_id = db.Column(db.Integer, db.ForeignKey('type_of_employee.id'))
 
+
+class Band(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
+    salary = db.Column(db.Integer)
 
 db.create_all()
 db.session.commit()
