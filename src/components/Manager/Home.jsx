@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, ScrollView } from 'react'
 
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
@@ -7,6 +7,8 @@ import ExpensesCard from './Components/ExpensesCard'
 import TeamAdd from './Components/TeamAdd'
 import ExpensesAdd from './Components/ExpensesAdd'
 import api from '../api/api'
+import '../../styles/Home.css'
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 
 const TeamDD = [
   {
@@ -54,6 +56,14 @@ const ExpensesDD = [
     price: '200',
     section: 'Office Supplies',
   },
+  {
+    id: 4,
+    item: 'Monitor',
+    email: 'kenbauer@tec.mx',
+    date: '14/03/2022',
+    price: '200',
+    section: 'Office Supplies',
+  },
 ]
 
 export default function Home() {
@@ -83,8 +93,14 @@ export default function Home() {
     fetchTeam()
   }, [])
 
+  const Arrow = ({ text, className }) => {
+    return <div className={className}>{text}</div>
+  }
+  const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' })
+  const ArrowRight = Arrow({ text: '>', className: 'arrow-next' })
+
   return (
-    <div className='pt-16 pl-10 h-screen'>
+    <div className='pt-16 pl-10 h-screen app'>
       <div className='flex justify-around'>
         <div className='flex items-center gap-7 w-full'>
           <div className='text-2xl font-semibold text-gray-600'>Team</div>
@@ -114,15 +130,23 @@ export default function Home() {
             />
           </button>
         </div>
-        <div className='flex'>
-          {TeamDD.map((data) => (
-            <TeamCard
-              key={data.id}
-              name={data.name}
-              email={data.email}
-              status={data.status}
-            />
-          ))}
+
+        <div className='flex app'>
+          <ScrollMenu
+            style='width: 80vw;'
+            className='react-horizontal-scrolling-menu--scroll-container'
+            arrowLeft={ArrowLeft}
+            arrowRight={ArrowRight}
+          >
+            {TeamDD.map((data) => (
+              <TeamCard
+                key={data.id}
+                name={data.name}
+                email={data.email}
+                status={data.status}
+              />
+            ))}
+          </ScrollMenu>
         </div>
       </div>
       <div className='flex items-center gap-7 pt-16'>
@@ -145,19 +169,47 @@ export default function Home() {
             />
           </button>
         </div>
-        <div className='flex'>
-          {ExpensesDD.map((data) => (
-            <ExpensesCard
-              key={data.id}
-              item={data.item}
-              email={data.email}
-              date={data.date}
-              price={data.price}
-              section={data.section}
-            />
-          ))}
+
+        <div className='flex app'>
+          <ScrollMenu
+            style='width: 80vw;'
+            className='react-horizontal-scrolling-menu--scroll-container'
+            arrowLeft={ArrowLeft}
+            arrowRight={ArrowRight}
+          >
+            {ExpensesDD.map((data) => (
+              <ExpensesCard
+                key={data.id}
+                item={data.item}
+                email={data.email}
+                date={data.date}
+                price={data.price}
+                section={data.section}
+              />
+            ))}
+          </ScrollMenu>
         </div>
       </div>
     </div>
+  )
+}
+
+function LeftArrow() {
+  const { isFirstItemVisible, scrollPrev } = React.useContext(VisibilityContext)
+
+  return (
+    <Arrow disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
+      Left
+    </Arrow>
+  )
+}
+
+function RightArrow() {
+  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext)
+
+  return (
+    <Arrow disabled={isLastItemVisible} onClick={() => scrollNext()}>
+      Right
+    </Arrow>
   )
 }
