@@ -48,7 +48,7 @@ export default function Login() {
       setAuth({ email, password, role })
       setEmail('')
       setPassword('')
-      navigate("/landingpage", { replace: true })
+      navigate('/landingpage', { replace: true })
       /*navigate(from, { replace: true })*/
     } catch (err) {
       if (!err?.response) {

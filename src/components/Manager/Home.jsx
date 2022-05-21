@@ -132,9 +132,9 @@ export default function Home() {
             {team.map((data) => (
               <TeamCard
                 key={data.id}
-                name={data.first_name + " " + data.last_name}
+                name={data.first_name + ' ' + data.last_name}
                 email={data.email}
-                status={ "Band " + data.band_id}
+                status={'Band ' + data.band_id}
               />
             ))}
           </ScrollMenu>

@@ -16,7 +16,7 @@ export default function LiveDemo() {
   return (
     <>
       <button
-        className='bg-blue-200 rounded p-2 sm:px-8 px-4 text-blue-600'
+        className=' p-2 sm:px-8 text-blue-600 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md  bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
         type='button'
         onClick={openModal}
       >
