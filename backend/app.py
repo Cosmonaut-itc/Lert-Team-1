@@ -97,6 +97,14 @@ def login():
     return json.dumps({'role': user.role})
 
 
+@app.route('/isAuth', methods=['GET'])
+@login_required
+def isAuth():
+    res = {'role': current_user.role}
+    db.session.commit()
+    return json.dumps(res)
+
+
 @app.route('/manager/employees', methods=['GET'])
 @login_required
 def manager_employees():

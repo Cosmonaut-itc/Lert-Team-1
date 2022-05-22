@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import httpClients from '../api/api'
 import useAuth from '../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
@@ -44,7 +43,8 @@ export default function Login() {
       })
       const role = response?.data?.role
       console.log(role)
-      setAuth({ email, password, role })
+      /*setAuth({ email, password, role })*/
+      setAuth({ role })
       setEmail('')
       setPassword('')
       navigate('/landingpage', { replace: true })
