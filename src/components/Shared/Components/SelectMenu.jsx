@@ -1,26 +1,21 @@
-import { Fragment, useState } from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-const people = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
-]
-
+const defOption = {id: 1, name: 'Select' }
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMenu({ label }) {
-  const [selected, setSelected] = useState(people[3])
+export default function SelectMenu({ label, options, alreadySelected }) {
+  const [selected, setSelected] = useState(defOption)
+
+  useEffect(() => {
+    const savedSelected = () => {
+      if (alreadySelected) setSelected(alreadySelected)
+    }
+    savedSelected()
+  })
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -48,7 +43,7 @@ export default function SelectMenu({ label }) {
               leaveTo='opacity-0'
             >
               <Listbox.Options className='absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
-                {people.map((person) => (
+                {options.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>

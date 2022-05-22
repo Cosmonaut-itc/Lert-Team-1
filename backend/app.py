@@ -2,6 +2,7 @@ import json
 import logging
 import secrets
 from functools import wraps
+from time import sleep
 
 from argon2 import PasswordHasher
 from flask import Flask, request, jsonify
@@ -9,13 +10,14 @@ from flask_cors import CORS, cross_origin
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 
 from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app, support_credentials=True)
-logging.getLogger('flask_cors').level = logging.DEBUG
+
+CORS(app, supports_credentials=True, )
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -80,7 +82,6 @@ def signup():
 
 
 @app.route('/login', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def login():
     ph = PasswordHasher()
 
@@ -88,23 +89,110 @@ def login():
     password = request.form['password']
 
     user = User.query.filter_by(email=email).first()
+    db.session.commit()
     if not user or not ph.verify(user.password, password):
         return "Invalid password ", 401
 
-    login_user(user)
-    print(user.role)
+    login_user(user, remember=True, duration=timedelta(days=5))
     return json.dumps({'role': user.role})
 
 
-@app.route('/manager/employees/<int:manager_id>')
-def manager_employees(manager_id):
-    manager_team = Employee.query.filter_by(user_id=manager_id)
+@app.route('/manager/employees', methods=['GET'])
+@login_required
+def manager_employees():
+    # manager_team = Employee.query.filter_by(user_id=current_user.id)
+
+    manager_team = Employee.query.filter_by(user_id=current_user.id)
+    db.session.commit()
+
     if not manager_team:
         return 204
 
     response = []
-    for member in manager_team:
-        response.append(member.as_dict())
+    for employee in manager_team:
+        foreign_keys_names_dictionary = {
+            'country_name': employee.country.name,
+            'type_of_employee_name': employee.typeOfEmployee.name,
+            'band_name': employee.Band.name,
+            'ICA_name': employee.ICA.name,
+            'squad_name': employee.squad.name
+        }
+        response.append(employee.as_dict() | foreign_keys_names_dictionary)
+
+    return jsonify(response)
+
+
+@app.route('/countries')
+@login_required
+def countries():
+    countries = Country.query.all()
+    db.session.commit()
+    if not countries:
+        return 204
+
+    response = []
+    for country in countries:
+        response.append(country.as_dict())
+
+    return jsonify(response)
+
+
+@app.route('/ICAS')
+@login_required
+def ICAS():
+    ICAS = ICA.query.all()
+    db.session.commit()
+    if not ICAS:
+        return 204
+
+    response = []
+    for ica in ICAS:
+        response.append(ica.as_dict())
+
+    return jsonify(response)
+
+
+@app.route('/bands')
+@login_required
+def bands():
+    bands = Band.query.all()
+    db.session.commit()
+    if not bands:
+        return 204
+
+    response = []
+    for band in bands:
+        response.append(band.as_dict())
+
+    return jsonify(response)
+
+
+@app.route('/squads')
+@login_required
+def squads():
+    squads = Squad.query.all()
+    db.session.commit()
+    if not squads:
+        return 204
+
+    response = []
+    for squad in squads:
+        response.append(squad.as_dict())
+
+    return jsonify(response)
+
+
+@app.route('/typesOfEmployee')
+@login_required
+def typesOfEmployee():
+    typesOfEmployee = TypeOfEmployee.query.all()
+    db.session.commit()
+    if not typesOfEmployee:
+        return 204
+
+    response = []
+    for typeOfEmployee in typesOfEmployee:
+        response.append(typeOfEmployee.as_dict())
 
     return jsonify(response)
 

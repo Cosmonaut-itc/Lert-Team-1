@@ -1,9 +1,34 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
-export default function ModalTeamAdd({ open, cancelButtonRef, setOpen }) {
+export default function ModalTeamAdd({
+  open,
+  cancelButtonRef,
+  setOpen,
+  countries,
+  bands,
+  ICAS,
+  squads,
+  typesOfEmployee,
+  isModify,
+  employee,
+}) {
+  const submitButtonLabel = isModify ? 'Modify' : 'Save'
+
+  useEffect(() => {
+    const modifyDefaultValues = () => {
+      if (isModify && employee) {
+        document.getElementById('First Name').value = employee.first_name
+        document.getElementById('Last Name').value = employee.last_name
+        document.getElementById('Email').value = employee.email
+      }
+    }
+    console.log(employee)
+    modifyDefaultValues()
+  })
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -62,14 +87,25 @@ export default function ModalTeamAdd({ open, cancelButtonRef, setOpen }) {
                         <input
                           type='text'
                           name='text'
-                          id='text'
+                          id='First name'
                           className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                           placeholder='First name'
                         />
                       </div>
                     </div>
                     <div>
-                      <SelectMenu label='Type of employee' />
+                      <SelectMenu
+                        label='Type of employee'
+                        options={typesOfEmployee}
+                        alreadySelected={
+                          isModify
+                            ? {
+                                id: 0,
+                                name: 'aaa',
+                              }
+                            : null
+                        }
+                      />
                     </div>
                     <div>
                       <label
@@ -82,14 +118,25 @@ export default function ModalTeamAdd({ open, cancelButtonRef, setOpen }) {
                         <input
                           type='text'
                           name='text'
-                          id='text'
+                          id='Last name'
                           className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                           placeholder='Last name'
                         />
                       </div>
                     </div>
                     <div>
-                      <SelectMenu label='Band' />
+                      <SelectMenu
+                        label='Band'
+                        options={bands}
+                        alreadySelected={
+                          isModify && employee
+                            ? {
+                                id: employee.band_id,
+                                name: employee.band_name,
+                              }
+                            : null
+                        }
+                      />
                     </div>
                     <div>
                       <label
@@ -108,20 +155,53 @@ export default function ModalTeamAdd({ open, cancelButtonRef, setOpen }) {
                         <input
                           type='text'
                           name='email'
-                          id='email'
+                          id='Email'
                           className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                           placeholder='examplemail@ibm.com'
                         />
                       </div>
                     </div>
                     <div>
-                      <SelectMenu label='ICA' />
+                      <SelectMenu
+                        label='ICA'
+                        options={ICAS}
+                        alreadySelected={
+                          isModify && employee
+                            ? {
+                                id: employee.ICA_id,
+                                name: employee.ICA_name,
+                              }
+                            : null
+                        }
+                      />
                     </div>
                     <div>
-                      <SelectMenu label='Country' />
+                      <SelectMenu
+                        label='Country'
+                        options={countries}
+                        alreadySelected={
+                          isModify && employee
+                            ? {
+                                id: employee.country_id,
+                                name: employee.country_name,
+                              }
+                            : null
+                        }
+                      />
                     </div>
                     <div>
-                      <SelectMenu label='Squad' />
+                      <SelectMenu
+                        label='Squad'
+                        options={squads}
+                        alreadySelected={
+                          isModify && employee
+                            ? {
+                                id: employee.squad_id,
+                                name: employee.squad_name,
+                              }
+                            : null
+                        }
+                      />
                     </div>
                   </div>
                 </div>
@@ -132,7 +212,7 @@ export default function ModalTeamAdd({ open, cancelButtonRef, setOpen }) {
                   className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm'
                   onClick={() => setOpen(false)}
                 >
-                  Save
+                  {submitButtonLabel}
                 </button>
                 <button
                   type='button'

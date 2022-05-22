@@ -40,8 +40,7 @@ export default function Login() {
 
     try {
       const response = await api.post(LOGIN_URL, bodyFormData, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data'}
       })
       const role = response?.data?.role
       console.log(role)
@@ -52,7 +51,7 @@ export default function Login() {
       /*navigate(from, { replace: true })*/
     } catch (err) {
       if (!err?.response) {
-        setErrMsg('No server repsonse')
+        setErrMsg('No server response')
       } else if (err.response?.status === 400) {
         setErrMsg('Missing user name or password')
       } else if (err.response?.status === 401) {

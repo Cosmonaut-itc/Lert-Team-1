@@ -58,6 +58,7 @@ class Employee(db.Model):
 
 class Band(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     salary = db.Column(db.Integer)
     employees = db.relationship('Employee', backref='Band')
@@ -82,7 +83,3 @@ class Squad(db.Model):
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
-
-
-db.create_all()
-db.session.commit()
