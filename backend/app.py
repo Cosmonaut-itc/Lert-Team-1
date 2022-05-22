@@ -112,7 +112,7 @@ def manager_employees():
     for employee in manager_team:
         foreign_keys_names_dictionary = {
             'country_name': employee.country.name,
-            'type_of_employee_name': employee.typeOfEmployee.name,
+            'typeOfEmployee_name': employee.typeOfEmployee.name,
             'band_name': employee.Band.name,
             'ICA_name': employee.ICA.name,
             'squad_name': employee.squad.name

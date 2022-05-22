@@ -1,9 +1,9 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
-export default function ModalTeamAdd({
+export default function AddModifyEmployeeForm({
   open,
   cancelButtonRef,
   setOpen,
@@ -16,18 +16,6 @@ export default function ModalTeamAdd({
   employee,
 }) {
   const submitButtonLabel = isModify ? 'Modify' : 'Save'
-
-  useEffect(() => {
-    const modifyDefaultValues = () => {
-      if (isModify && employee) {
-        document.getElementById('First Name').value = employee.first_name
-        document.getElementById('Last Name').value = employee.last_name
-        document.getElementById('Email').value = employee.email
-      }
-    }
-    console.log(employee)
-    modifyDefaultValues()
-  })
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -87,7 +75,8 @@ export default function ModalTeamAdd({
                         <input
                           type='text'
                           name='text'
-                          id='First name'
+                          id='First_name'
+                          defaultValue={isModify ? employee.first_name : ''}
                           className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                           placeholder='First name'
                         />
@@ -100,8 +89,8 @@ export default function ModalTeamAdd({
                         alreadySelected={
                           isModify
                             ? {
-                                id: 0,
-                                name: 'aaa',
+                                id: employee.typeOfEmployee_id,
+                                name: employee.typeOfEmployee_name,
                               }
                             : null
                         }
@@ -118,7 +107,8 @@ export default function ModalTeamAdd({
                         <input
                           type='text'
                           name='text'
-                          id='Last name'
+                          id='Last_name'
+                          defaultValue={isModify ? employee.last_name : ''}
                           className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                           placeholder='Last name'
                         />
@@ -129,7 +119,7 @@ export default function ModalTeamAdd({
                         label='Band'
                         options={bands}
                         alreadySelected={
-                          isModify && employee
+                          isModify
                             ? {
                                 id: employee.band_id,
                                 name: employee.band_name,
@@ -156,6 +146,7 @@ export default function ModalTeamAdd({
                           type='text'
                           name='email'
                           id='Email'
+                          defaultValue={isModify ? employee.email : ''}
                           className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                           placeholder='examplemail@ibm.com'
                         />
@@ -166,7 +157,7 @@ export default function ModalTeamAdd({
                         label='ICA'
                         options={ICAS}
                         alreadySelected={
-                          isModify && employee
+                          isModify
                             ? {
                                 id: employee.ICA_id,
                                 name: employee.ICA_name,
@@ -180,7 +171,7 @@ export default function ModalTeamAdd({
                         label='Country'
                         options={countries}
                         alreadySelected={
-                          isModify && employee
+                          isModify
                             ? {
                                 id: employee.country_id,
                                 name: employee.country_name,
@@ -194,7 +185,7 @@ export default function ModalTeamAdd({
                         label='Squad'
                         options={squads}
                         alreadySelected={
-                          isModify && employee
+                          isModify
                             ? {
                                 id: employee.squad_id,
                                 name: employee.squad_name,
