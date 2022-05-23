@@ -19,7 +19,7 @@ export default function TeamCard({employee, countries, bands, ICAS, squads, type
       <div className='flex justify-between'>
         <div className='text-left pl-6 pt-2'>
           <h4 className='font-bold text-lg'>{employee.first_name + " " + employee.last_name}</h4>
-          <p className='text-gray-500 text-sm'>{employee.mail}</p>
+          <p className='text-gray-500 text-sm'>{employee.email}</p>
           <p className='text-gray-500 text-xs pt-5'>Modify band/status</p>
         </div>
         <div className='p-2'>

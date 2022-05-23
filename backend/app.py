@@ -1,12 +1,10 @@
 import json
-import logging
 import secrets
 from functools import wraps
-from time import sleep
 
 from argon2 import PasswordHasher
 from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -33,7 +31,6 @@ login_manager.init_app(app)
 def admin_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        print(current_user.role)
         if current_user.role != 2:
             return "Permission denied"
         return func(*args, **kwargs)
@@ -73,6 +70,7 @@ def signup():
     country = request.form.get('country')
 
     user_exists = User.query.filter_by(email=email).first()
+    db.session.commit()
     if user_exists:
         return "User already exist", 409
     new_user = User(email=email, password=ph.hash(password), role=role, country=country)
@@ -105,29 +103,74 @@ def isAuth():
     return json.dumps(res)
 
 
-@app.route('/manager/employees', methods=['GET'])
+@app.route('/manager/employees', methods=['GET', 'POST', 'PUT'])
+@app.route('/manager/employees/<modify_id>', methods=['GET', 'POST', 'PUT'])
 @login_required
-def manager_employees():
-    # manager_team = Employee.query.filter_by(user_id=current_user.id)
+def manager_employees(modify_id=None):
+    if request.method == 'GET':
+        manager_team = Employee.query.filter_by(user_id=current_user.id)
+        db.session.commit()
 
-    manager_team = Employee.query.filter_by(user_id=current_user.id)
-    db.session.commit()
+        if not manager_team:
+            return 204
 
-    if not manager_team:
-        return 204
+        response = []
+        for employee in manager_team:
+            foreign_keys_names_dictionary = {
+                'country_name': employee.country.name,
+                'typeOfEmployee_name': employee.typeOfEmployee.name,
+                'band_name': employee.Band.name,
+                'ICA_name': employee.ICA.name,
+                'squad_name': employee.squad.name
+            }
+            response.append(employee.as_dict() | foreign_keys_names_dictionary)
 
-    response = []
-    for employee in manager_team:
-        foreign_keys_names_dictionary = {
-            'country_name': employee.country.name,
-            'typeOfEmployee_name': employee.typeOfEmployee.name,
-            'band_name': employee.Band.name,
-            'ICA_name': employee.ICA.name,
-            'squad_name': employee.squad.name
-        }
-        response.append(employee.as_dict() | foreign_keys_names_dictionary)
+        return jsonify(response)
 
-    return jsonify(response)
+    if request.method == 'POST' or 'PUT':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        country_id = request.form.get('country_id')
+        typeOfEmployee_id = request.form.get('typeOfEmployee_id')
+        band_id = request.form.get('band_id')
+        ICA_id = request.form.get('ICA_id')
+        squad_id = request.form.get('squad_id')
+        user_id = current_user.id
+        modify_id = modify_id
+
+        if request.method == 'POST':
+            employee_exists = Employee.query.filter_by(email=email).first()
+            db.session.commit()
+
+            if employee_exists:
+                return "Employee already exist", 409
+
+            new_employee = Employee(first_name=first_name, last_name=last_name, email=email, country_id=int(country_id),
+                                    typeOfEmployee_id=int(typeOfEmployee_id), band_id=int(band_id), ICA_id=int(ICA_id),
+                                    squad_id=int(squad_id), user_id=int(user_id))
+            db.session.add(new_employee)
+            db.session.commit()
+            return "Added Employee", 201
+
+        if request.method == 'PUT':
+            employee_exists = Employee.query.filter_by(id=modify_id).first()
+            if not employee_exists:
+                return "Employee does not exist", 404
+            if employee_exists.user_id != current_user.id:
+                return "Not your employee", 401
+
+            employee_exists.first_name = first_name
+            employee_exists.last_name = last_name
+            employee_exists.email = email
+            employee_exists.country_id = country_id
+            employee_exists.typeOfEmployee_id = typeOfEmployee_id
+            employee_exists.band_id = band_id
+            employee_exists.ICA_id = ICA_id
+            employee_exists.squad_id = squad_id
+            db.session.commit()
+            return "User added"
+    return 400
 
 
 @app.route('/countries')
