@@ -53,11 +53,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
-
-
 @app.route('/signup', methods=['POST'])
 @login_required
 @admin_required
