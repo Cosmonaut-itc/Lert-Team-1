@@ -15,7 +15,7 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 
-CORS(app, supports_credentials=True, )
+CORS(app, supports_credentials=True)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -103,8 +103,8 @@ def isAuth():
     return json.dumps(res)
 
 
-@app.route('/manager/employees', methods=['GET', 'POST', 'PUT'])
-@app.route('/manager/employees/<modify_id>', methods=['GET', 'POST', 'PUT'])
+@app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/manager/employees/<modify_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def manager_employees(modify_id=None):
     if request.method == 'GET':
@@ -126,6 +126,18 @@ def manager_employees(modify_id=None):
             response.append(employee.as_dict() | foreign_keys_names_dictionary)
 
         return jsonify(response)
+
+    if request.method == 'DELETE':
+        employee_exists = Employee.query.filter_by(id=modify_id).first()
+        if not employee_exists:
+            return "Employee does not exist", 404
+        if employee_exists.user_id != current_user.id:
+            return "Not your employee", 401
+
+        db.session.delete(employee_exists)
+        db.session.commit()
+
+        return "User deleted"
 
     if request.method == 'POST' or 'PUT':
         first_name = request.form.get('first_name')
@@ -155,6 +167,7 @@ def manager_employees(modify_id=None):
 
         if request.method == 'PUT':
             employee_exists = Employee.query.filter_by(id=modify_id).first()
+
             if not employee_exists:
                 return "Employee does not exist", 404
             if employee_exists.user_id != current_user.id:
