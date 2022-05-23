@@ -270,5 +270,10 @@ def logout():
     return "Logged out"
 
 
+@app.route('/expenses')
+@login_required
+def expenses():
+    pass
+
 if __name__ == '__main__':
     app.run()
