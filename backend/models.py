@@ -84,12 +84,18 @@ class Squad(db.Model):
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
+class Type_of_Expense(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, index=True)
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mail_id = db.Column(db.Text, db.ForeignKey('employee.id'))
     cost = db.Column(db.Float, index=True)
-    type = db.Column(db.Text, index=True)
+    type_id = db.Column(db.Text, db.ForeignKey('type_of_expense.id'))
     ICA_id = db.Column(db.Integer, db.ForeignKey('ICA.id'))
     ICA_mail = db.Column(db.Text, index=True)
     admin_mail = db.Column(db.Text, index=True)
