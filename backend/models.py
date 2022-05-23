@@ -94,3 +94,6 @@ class Expense(db.Model):
     ICA_mail = db.Column(db.Text, index=True)
     admin_mail = db.Column(db.Text, index=True)
     comments = db.Column(db.Text, index=True)
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
