@@ -127,7 +127,7 @@ export default function AddModifyEmployeeForm({
     bodyFormData.append('squad_id', squad_id)
 
     try {
-      const response = await api.put(EMPLOYEES_URL + '/' +modify_id, bodyFormData, {
+      const response = await api.put(EMPLOYEES_URL + '/' + modify_id, bodyFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       setOperationMessage('Employee Modified')
