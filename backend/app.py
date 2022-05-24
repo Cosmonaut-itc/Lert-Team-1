@@ -9,6 +9,7 @@ from flask_login import LoginManager, login_user, login_required, current_user, 
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
+from random import randint
 
 from config import Config
 
@@ -270,9 +271,20 @@ def logout():
     return "Logged out"
 
 
-@app.route('/expenses')
+@app.route('/expenses', methods=['POST'])
 @login_required
 def expenses():
+    id = randint(0, 10000)
+    description = request.form.get('description')
+    employee_mail = request.form.get('employee_mail')
+    cost = request.form.get('cost')
+    #TODO: type of expense dropdown list
+    #TODO: ICA dropdown list
+    ica_mail = request.form.get('ica_manager_mail')
+    admin_mail = request.form.get('administrator_mail')
+    comments = request.form.get('comments')
+
+
     pass
 
 if __name__ == '__main__':
