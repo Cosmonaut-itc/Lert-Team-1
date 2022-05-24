@@ -93,7 +93,8 @@ class Type_of_Expense(db.Model):
 
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    mail_id = db.Column(db.Text, db.ForeignKey('employee.id'))
+    description = db.Column(db.Text, index=True)
+    employee_mail = db.Column(db.Text, index=True)
     cost = db.Column(db.Float, index=True)
     type_id = db.Column(db.Text, db.ForeignKey('type_of_expense.id'))
     ICA_id = db.Column(db.Integer, db.ForeignKey('ICA.id'))
