@@ -271,10 +271,13 @@ def logout():
     return "Logged out"
 
 
+#TODO: Testing is missing on this endpoint
 @app.route('/expenses', methods=['POST'])
 @login_required
 def expenses():
-    id = randint(0, 10000)
+    expense_id = randint(0, 10000)  #Random function to create a random ID for every expense
+
+    #Creates the rest of the row by requesting the form
     description = request.form.get('description')
     employee_mail = request.form.get('employee_mail')
     cost = request.form.get('cost')
@@ -284,8 +287,15 @@ def expenses():
     admin_mail = request.form.get('administrator_mail')
     comments = request.form.get('comments')
 
+    #Creates the new row by using the built-in model Expense
+    new_expense = Expense(expense_id, description, employee_mail, cost, 'dummy expense', 'ica dummy', ica_mail, admin_mail,
+                          comments)
 
-    pass
+    #Adds and commits the expense to the db
+    db.session.add(new_expense)
+    db.session.commit()
+
+    return "Added expense", 201
 
 if __name__ == '__main__':
     app.run()
