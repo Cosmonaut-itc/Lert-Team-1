@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
-export default function ExpensesAdd({ open, cancelButtonRef, setOpen }) {
+export default function ModalExpensesAdd({ open, cancelButtonRef, setOpen }) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
