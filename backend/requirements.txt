@@ -8,4 +8,5 @@ flask-psycopg2
 argon2-cffi
 Flask-Migrate
 datetime
-
+psycopg2-binary
+flask-login
