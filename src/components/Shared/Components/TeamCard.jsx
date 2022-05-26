@@ -2,8 +2,14 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
+import ModalTempDown from '../../Manager/Components/ModalTempDown'
+import { useEffect, useRef, useState } from 'react'
 
 export default function TeamCard({ id, name, email, status }) {
+
+
+  const [openTempDown, setTempDown] = useState(false);
+  const cancelButtonRefTeam = useRef(null)
   return (
     <Card
       sx={{ borderRadius: 3 }}
@@ -28,6 +34,11 @@ export default function TeamCard({ id, name, email, status }) {
       </div>
 
       <CardActions>
+      <ModalTempDown
+            open={openTempDown}
+            setOpen={setTempDown}
+            cancelButtonRef={cancelButtonRefTeam}
+          />
         <Button
           variant='contained'
           sx={{
@@ -42,6 +53,7 @@ export default function TeamCard({ id, name, email, status }) {
             boxShadow: 3,
             whiteSpace: 'nowrap',
           }}
+          onClick={() => setTempDown(true)}
         >
           {status}
         </Button>

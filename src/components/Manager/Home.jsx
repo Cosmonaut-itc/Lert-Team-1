@@ -6,11 +6,12 @@ import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
 import ModalTeamAdd from './Components/ModalTeamAdd'
 import ModalExpensesAdd from './Components/ModalExpensesAdd'
+import ModalTempDown from './Components/ModalTempDown'
 import api from '../api/api'
 import '../../styles/Home.css'
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 
-const TeamDD = [
+export const TeamDD = [
   {
     id: 1,
     name: 'Ken Bauer',
@@ -70,6 +71,7 @@ export default function Home() {
   const [openTeamAdd, setOpenTeamAdd] = useState(false)
   const cancelButtonRefTeam = useRef(null)
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
+  // const [openTempDown, setTempDown] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
   const [team, setTeam] = useState([])
 
@@ -129,6 +131,11 @@ export default function Home() {
 
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
+          {/* <ModalTempDown
+            open={openTempDown}
+            setOpen={setTempDown}
+            cancelButtonRef={cancelButtonRefTeam}
+          /> */}
             {TeamDD.map((data) => (
               <TeamCard
                 key={data.id}
