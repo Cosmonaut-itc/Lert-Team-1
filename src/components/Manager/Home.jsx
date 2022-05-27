@@ -45,11 +45,9 @@ const ExpensesDD = [
   },
 ]
 
+const EMPLOYEES_URL = '/manager/employees'
+
 export default function Home() {
-  const [openTeamAdd, setOpenTeamAdd] = useState(false)
-  const cancelButtonRefTeam = useRef(null)
-  const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
-  const cancelButtonRefExpenses = useRef(null)
   const [team, setTeam] = useState([])
   const [countries, setCountries] = useState([])
   const [bands, setBands] = useState([])
@@ -58,110 +56,287 @@ export default function Home() {
   const [typesOfEmployee, setTypesOfEmployee] = useState([])
   const [dataReady, setDataReady] = useState(false)
 
-  // Fetch example with axios
+  // Add-modify employee states
+  const [openTeamAdd, setOpenTeamAdd] = useState(false)
+  const cancelButtonRefTeam = useRef(null)
+
+  const defaultSelection = { id: 0, name: 'Select' }
+  const [operationMessage, setOperationMessage] = useState('')
+  const [first_name, setFirst_name] = useState('')
+  const [last_name, setLast_name] = useState('')
+  const [email, setEmail] = useState('')
+  const [country_id, setCountry_id] = useState('')
+  const [country_selection, setCountry_selection] = useState(defaultSelection)
+  const [typeOfEmployee_id, setTypeOfEmployee_id] = useState('')
+  const [typeOfEmployee_selection, setTypeOfEmployee_selection] =
+    useState(defaultSelection)
+  const [band_id, setBand_id] = useState('')
+  const [band_selection, setBand_selection] = useState(defaultSelection)
+  const [ICA_id, setICA_id] = useState('')
+  const [ICA_selection, setICA_selection] = useState({ id: 0, name: 'Select' })
+  const [squad_id, setSquad_id] = useState('')
+  const [squad_selection, setSquad_selection] = useState(defaultSelection)
+  const [modify_id, setModify_id] = useState('')
+  const [modify_employee, setModify_employee] = useState('')
+
+  // Add-Modify expenses states
+  const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
+  const cancelButtonRefExpenses = useRef(null)
+
+  /* Add-Modify employee functions */
+
+  const populateFormForModify = (employee) => {
+    setFirst_name(employee.first_name)
+    setLast_name(employee.last_name)
+    setEmail(employee.email)
+    setCountry_id(employee.country_id)
+    setCountry_selection({
+      id: employee.country_id,
+      name: employee.country_name,
+    })
+    setTypeOfEmployee_id(employee.typeOfEmployee_id)
+    setTypeOfEmployee_selection({
+      id: employee.typeOfEmployee_id,
+      name: employee.typeOfEmployee_name,
+    })
+    setBand_id(employee.band_id)
+    setBand_selection({
+      id: employee.band_id,
+      name: employee.band_name,
+    })
+    setICA_id(employee.ICA_id)
+    setICA_selection({
+      id: employee.ICA_id,
+      name: employee.ICA_name,
+    })
+    setSquad_id(employee.squad_id)
+    setSquad_selection({
+      id: employee.squad_id,
+      name: employee.squad_name,
+    })
+  }
+
+  const unpopulateForm= () => {
+    setFirst_name('')
+    setLast_name('')
+    setEmail('')
+    setCountry_id('')
+    setCountry_selection(defaultSelection)
+    setTypeOfEmployee_id('')
+    setTypeOfEmployee_selection(defaultSelection)
+    setBand_id('')
+    setBand_selection(defaultSelection)
+    setICA_id('')
+    setICA_selection(defaultSelection)
+    setSquad_id('')
+    setSquad_selection(defaultSelection)
+    setModify_id('')
+  }
+
+  const createEmployeeForm = () => {
+    const bodyFormData = new FormData()
+    bodyFormData.append('first_name', first_name)
+    bodyFormData.append('last_name', last_name)
+    bodyFormData.append('email', email)
+    bodyFormData.append('country_id', country_id)
+    bodyFormData.append('typeOfEmployee_id', typeOfEmployee_id)
+    bodyFormData.append('band_id', band_id)
+    bodyFormData.append('ICA_id', ICA_id)
+    bodyFormData.append('squad_id', squad_id)
+
+    return bodyFormData
+  }
+
+  const handleSubmitAddEmployee = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createEmployeeForm()
+
+    try {
+      const response = await api.post(EMPLOYEES_URL, bodyFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      setOperationMessage('Employee added')
+      unpopulateForm()
+      fetchTeam()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        setOperationMessage('Employee already exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+    setModify_id('')
+  }
+
+  const handleSubmitModifyEmployee = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createEmployeeForm()
+
+    try {
+      const response = await api.put(
+        EMPLOYEES_URL + '/' + modify_id,
+        bodyFormData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      )
+      setOperationMessage('Employee Modified')
+      fetchTeam()
+      unpopulateForm()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('Employee does not exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
+  const handleDeleteEmployee = async (id) => {
+    try {
+      console.log(modify_id)
+      const response = await api.delete(EMPLOYEES_URL + '/' + id)
+      fetchTeam()
+    } catch (err) {
+      if (!err?.response) {
+        console.log('Server error')
+      } else if (err.response?.status === 400) {
+        console.log('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        console.log('Employee already exists')
+      } else {
+        console.log('Operation failed')
+      }
+    }
+    setModify_id('')
+  }
+
+  /* Fetching functions */
+
+  const fetchTeam = async () => {
+    try {
+      const response = await api.get('/manager/employees')
+      setTeam(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchCountries = async () => {
+    try {
+      const response = await api.get('/countries')
+      setCountries(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchBands = async () => {
+    try {
+      const response = await api.get('/bands')
+      setBands(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchICAS = async () => {
+    try {
+      const response = await api.get('/ICAS')
+      setICAS(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchSquads = async () => {
+    try {
+      const response = await api.get('/squads')
+      setSquads(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchTypesOfEmployee = async () => {
+    try {
+      const response = await api.get('/typesOfEmployee')
+      setTypesOfEmployee(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchData = async () => {
+    await fetchTeam()
+    await fetchCountries()
+    await fetchBands()
+    await fetchICAS()
+    await fetchTypesOfEmployee()
+    await fetchSquads()
+    setDataReady(true)
+  }
+
+  /* Effects */
   useEffect(() => {
-    const fetchTeam = async () => {
-      try {
-        const response = await api.get('/manager/employees')
-        setTeam(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchCountries = async () => {
-      try {
-        const response = await api.get('/countries')
-        setCountries(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchBands = async () => {
-      try {
-        const response = await api.get('/bands')
-        setBands(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchICAS = async () => {
-      try {
-        const response = await api.get('/ICAS')
-        setICAS(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchSquads = async () => {
-      try {
-        const response = await api.get('/squads')
-        setSquads(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchTypesOfEmployee = async () => {
-      try {
-        const response = await api.get('/typesOfEmployee')
-        setTypesOfEmployee(response.data)
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data)
-          console.log(err.response.status)
-          console.log(err.response.headers)
-        } else {
-          console.log(err.message)
-        }
-      }
-    }
-
-    const fetchData = async () => {
-      await fetchTeam()
-      await fetchCountries()
-      await fetchBands()
-      await fetchICAS()
-      await fetchTypesOfEmployee()
-      await fetchSquads()
-        setDataReady(true)
-    }
-
     fetchData()
   }, [])
+
+  useEffect(() => {}, [team])
+
+  useEffect(() => {
+    if (modify_id === '') {
+      unpopulateForm()
+    } else {
+      populateFormForModify(modify_employee)
+    }
+  }, [modify_id])
 
   return (
     <div className='pt-4 pl-10 w-full'>
@@ -184,20 +359,42 @@ export default function Home() {
       </div>
       <div className='flex'>
         <div className='items-center flex'>
-          { dataReady &&
+          {dataReady && (
             <AddModifyEmployeeForm
               open={openTeamAdd}
               setOpen={setOpenTeamAdd}
+              setModify_id={setModify_id}
               cancelButtonRef={cancelButtonRefTeam}
               countries={countries}
               bands={bands}
               ICAS={ICAS}
               squads={squads}
               typesOfEmployee={typesOfEmployee}
-/*              isModify={true}
-              employee={team[0]}*/
+              isModify={modify_id !== ''}
+              first_name={first_name}
+              setFirst_name={setFirst_name}
+              last_name={last_name}
+              setLast_name={setLast_name}
+              email={email}
+              setEmail={setEmail}
+              setCountry_id={setCountry_id}
+              country_selection={country_selection}
+              setCountry_selection={setCountry_selection}
+              setTypeOfEmployee_id={setTypeOfEmployee_id}
+              typeOfEmployee_selection={typeOfEmployee_selection}
+              setTypeOfEmployee_selection={setTypeOfEmployee_selection}
+              setBand_id={setBand_id}
+              band_selection={band_selection}
+              setBand_selection={setBand_selection}
+              setICA_id={setICA_id}
+              ICA_selection={ICA_selection}
+              setICA_selection={setICA_selection}
+              setSquad_id={setSquad_id}
+              squad_selection={squad_selection}
+              setSquad_selection={setSquad_selection}
+              handleSubmit={modify_id === '' ? handleSubmitAddEmployee : handleSubmitModifyEmployee}
             />
-          }
+          )}
           <button>
             <PlusCircleIcon
               className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
@@ -212,11 +409,10 @@ export default function Home() {
               <TeamCard
                 key={data.id}
                 employee={data}
-                countries={countries}
-                bands={bands}
-                ICAS={ICAS}
-                squads={squads}
-                typesOfEmployee={typesOfEmployee}
+                setOpenTeamAdd={setOpenTeamAdd}
+                handleDeleteEmployee={handleDeleteEmployee}
+                setModify_id={setModify_id}
+                setModify_employee={setModify_employee}
               />
             ))}
           </ScrollMenu>
