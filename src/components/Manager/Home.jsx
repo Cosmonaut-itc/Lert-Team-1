@@ -5,6 +5,7 @@ import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
 import AddModifyEmployeeForm from './Components/AddModifyEmployeeForm'
+import ModalTempDown from './Components/ModalTempDown'
 import ModalExpensesAdd from './Components/ModalExpensesAdd'
 import api from '../api/api'
 import '../../styles/Home.css'
@@ -83,6 +84,10 @@ export default function Home() {
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
 
+  // Employee-recovery states
+  const [openEmployeeRecovery, setOpenEmployeeRecovery] = useState(false);
+  const cancelButtonRefEmployeeRecovery = useRef(null)
+
   /* Add-Modify employee functions */
 
   const populateFormForModify = (employee) => {
@@ -116,7 +121,7 @@ export default function Home() {
     })
   }
 
-  const unpopulateForm= () => {
+  const unpopulateForm = () => {
     setFirst_name('')
     setLast_name('')
     setEmail('')
@@ -340,7 +345,7 @@ export default function Home() {
 
   return (
     <div className='pt-4 pl-10 w-full'>
-      <div className='flex items-center justify-end mb-10 md:m-4 mr-6'>
+      <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
         <div className='text-xl font-semibold text-gray-600 invisible md:visible'>
           Status:{' '}
         </div>
@@ -392,7 +397,11 @@ export default function Home() {
               setSquad_id={setSquad_id}
               squad_selection={squad_selection}
               setSquad_selection={setSquad_selection}
-              handleSubmit={modify_id === '' ? handleSubmitAddEmployee : handleSubmitModifyEmployee}
+              handleSubmit={
+                modify_id === ''
+                  ? handleSubmitAddEmployee
+                  : handleSubmitModifyEmployee
+              }
             />
           )}
           <button>
@@ -402,7 +411,6 @@ export default function Home() {
             />
           </button>
         </div>
-
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {team.map((data) => (
@@ -413,6 +421,7 @@ export default function Home() {
                 handleDeleteEmployee={handleDeleteEmployee}
                 setModify_id={setModify_id}
                 setModify_employee={setModify_employee}
+                setOpenEmployeeRecovery={setOpenEmployeeRecovery}
               />
             ))}
           </ScrollMenu>
@@ -438,6 +447,14 @@ export default function Home() {
             />
           </button>
         </div>
+
+        {dataReady && (
+            <ModalTempDown
+                open={openEmployeeRecovery}
+                setOpen={setOpenEmployeeRecovery}
+                cancelButtonRef={cancelButtonRefEmployeeRecovery}
+            />
+        )}
 
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>

@@ -1,11 +1,7 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import SelectMenu from '../../Shared/Components/SelectMenu'
-import { MailIcon, ArrowDownIcon } from '@heroicons/react/solid'
-import TeamDD from '../Home.jsx'
-import TeamCard from '../../Shared/Components/TeamCard'
+import {  ArrowDownIcon } from '@heroicons/react/solid'
 import Button from '@mui/material/Button'
-import InputUnstyled from '@mui/base/InputUnstyled';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 

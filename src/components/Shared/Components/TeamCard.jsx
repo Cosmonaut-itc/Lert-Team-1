@@ -9,6 +9,7 @@ export default function TeamCard({
   handleDeleteEmployee,
   setModify_id,
   setModify_employee,
+  setOpenEmployeeRecovery,
 }) {
   return (
     <Card
@@ -61,6 +62,9 @@ export default function TeamCard({
             mb: 2,
             boxShadow: 3,
             whiteSpace: 'nowrap',
+          }}
+          onClick={() => {
+            setOpenEmployeeRecovery(true)
           }}
         >
           {employee.band_name}
