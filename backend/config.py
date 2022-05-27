@@ -1,16 +1,9 @@
-from dotenv import load_dotenv
-from sqlalchemy import create_engine
 import os
 
-load_dotenv()
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-class AppConfig:
-    SESSION_TYPE = "filesystem"
-    SECRET_KEY = os.environ["SECRET_KEY"]
-    DB_HOST = os.environ["HOSTNAME"]
-    DB_PORT = os.environ["PORT"]
-    DB_USER = os.environ["USERNAME_DB"]
-    DB_PASSWORD = os.environ["PASSWORD_DB"]
-    DB_NAME = os.environ["DB_NAME"]
+
+class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URI = 'postgresql://dmt:WE4ko0phX8lj8RvQZZfd@dmt-lert.cyxducjppxib.us-west-1.rds.amazonaws.com:5432/lert'
+

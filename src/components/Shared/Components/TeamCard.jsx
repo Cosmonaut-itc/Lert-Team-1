@@ -2,43 +2,52 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
-import ModalTempDown from '../../Manager/Components/ModalTempDown'
-import { useEffect, useRef, useState } from 'react'
 
-export default function TeamCard({ id, name, email, status }) {
-
-
-  const [openTempDown, setTempDown] = useState(false);
-  const cancelButtonRefTeam = useRef(null)
+export default function TeamCard({
+  employee,
+  setOpenTeamAdd,
+  handleDeleteEmployee,
+  setModify_id,
+  setModify_employee,
+}) {
   return (
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
       className='m-4 pt-1 relative shadow-lg overflow-visible'
-      key={id}
+      key={employee.id}
     >
       <div className='flex justify-between'>
         <div className='text-left pl-6 pt-2'>
-          <h4 className='font-bold text-lg'>{name}</h4>
-          <p className='text-gray-500 text-sm'>{email}</p>
+          <h4 className='font-bold text-lg'>
+            {employee.first_name + ' ' + employee.last_name}
+          </h4>
+          <p className='text-gray-500 text-sm'>{employee.email}</p>
           <p className='text-gray-500 text-xs pt-5'>Modify band/status</p>
         </div>
         <div className='p-2'>
           <button>
-            <PencilAltIcon className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1' />
+            <PencilAltIcon
+              className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
+              onClick={() => {
+                setOpenTeamAdd(true)
+                setModify_employee(employee)
+                setModify_id(employee.id)
+              }}
+            />
           </button>
           <button>
-            <TrashIcon className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1' />
+            <TrashIcon
+              className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1'
+              onClick={() => {
+                handleDeleteEmployee(employee.id)
+              }}
+            />
           </button>
         </div>
       </div>
 
       <CardActions>
-      <ModalTempDown
-            open={openTempDown}
-            setOpen={setTempDown}
-            cancelButtonRef={cancelButtonRefTeam}
-          />
         <Button
           variant='contained'
           sx={{
@@ -53,9 +62,8 @@ export default function TeamCard({ id, name, email, status }) {
             boxShadow: 3,
             whiteSpace: 'nowrap',
           }}
-          onClick={() => setTempDown(true)}
         >
-          {status}
+          {employee.band_name}
         </Button>
       </CardActions>
     </Card>

@@ -12,12 +12,6 @@ import { NavLink } from 'react-router-dom'
 import Logo from './Logo'
 import { Fragment, useState } from 'react'
 
-const navigation = [
-  { name: 'Dashboard', icon: HomeIcon, href: '/manager/home' },
-  { name: 'Team', icon: UsersIcon, href: '/manager/team', count: 3 },
-  { name: 'Reports', icon: ChartBarIcon, href: '/manager/reports' },
-]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -62,7 +56,7 @@ function NavLinksMobile({ item }) {
   )
 }
 
-export default function SideMenu() {
+export default function SideMenu({ role }) {
   const isSideMenuCloseLS = localStorage.getItem('isSideMenuClose')
   const [isSideMenuClose, SetSideMenuSize] = useState(
     isSideMenuCloseLS ? false : true
@@ -76,6 +70,12 @@ export default function SideMenu() {
     SetSideMenuSize(true)
     localStorage.removeItem('isSideMenuClose')
   }
+
+  const navigation = [
+    { name: 'Dashboard', icon: HomeIcon, href: `${role}/home` },
+    { name: 'Team', icon: UsersIcon, href: `${role}/team`, count: 3 },
+    { name: 'Reports', icon: ChartBarIcon, href: `${role}/reports` },
+  ]
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
