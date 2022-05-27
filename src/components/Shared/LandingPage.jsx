@@ -7,22 +7,10 @@ function LandingPage() {
   const { auth } = useAuth()
   const navigate = useNavigate()
 
-  let route = ''
-  switch (auth.role) {
-    case 0:
-      route = '/manager/home'
-      break
-    case 1:
-      route = '/OPSManager/home'
-      break
-    case 2:
-      route = '/admin/home'
-      break
+  const navigateToPage = () => {
+    navigate('/Login', { replace: true })
   }
 
-  const navigateToPage = () => {
-    navigate(route, { replace: true })
-  }
   return (
     <div className='relative w-full'>
       <main className='lg:relative'>
