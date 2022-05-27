@@ -5,7 +5,7 @@ import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
 import AddModifyEmployeeForm from './Components/AddModifyEmployeeForm'
-import ModalTempDown from './Components/ModalTempDown'
+import EmployeeRecoveryForm from './Components/EmployeeRecoveryForm'
 import ModalExpensesAdd from './Components/ModalExpensesAdd'
 import api from '../api/api'
 import '../../styles/Home.css'
@@ -365,6 +365,13 @@ export default function Home() {
       <div className='flex'>
         <div className='items-center flex'>
           {dataReady && (
+              <EmployeeRecoveryForm
+                  open={openEmployeeRecovery}
+                  setOpen={setOpenEmployeeRecovery}
+                  cancelButtonRef={cancelButtonRefEmployeeRecovery}
+              />
+          )}
+          {dataReady && (
             <AddModifyEmployeeForm
               open={openTeamAdd}
               setOpen={setOpenTeamAdd}
@@ -447,15 +454,6 @@ export default function Home() {
             />
           </button>
         </div>
-
-        {dataReady && (
-            <ModalTempDown
-                open={openEmployeeRecovery}
-                setOpen={setOpenEmployeeRecovery}
-                cancelButtonRef={cancelButtonRefEmployeeRecovery}
-            />
-        )}
-
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {ExpensesDD.map((data) => (

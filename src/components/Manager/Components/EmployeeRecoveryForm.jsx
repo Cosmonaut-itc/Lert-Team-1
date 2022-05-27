@@ -6,7 +6,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 
 
-export default function ModalTempDown({ open, cancelButtonRef, setOpen }) {
+export default function EmployeeRecoveryForm({ open, cancelButtonRef, setOpen }) {
 
 return (
 <Transition.Root show={open} as={Fragment}>
