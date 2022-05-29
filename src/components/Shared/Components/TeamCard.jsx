@@ -31,9 +31,9 @@ export default function TeamCard({
             <PencilAltIcon
               className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
               onClick={() => {
-                setOpenTeamAdd(true)
-                setModify_employee(employee)
-                setModify_id(employee.id)
+                  setModify_id(employee.id)
+                  setModify_employee(employee)
+                  setOpenTeamAdd(true)
               }}
             />
           </button>

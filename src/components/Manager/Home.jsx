@@ -49,6 +49,7 @@ const ExpensesDD = [
 const EMPLOYEES_URL = '/manager/employees'
 
 export default function Home() {
+  // Data fetched from DB states
   const [team, setTeam] = useState([])
   const [countries, setCountries] = useState([])
   const [bands, setBands] = useState([])
@@ -85,7 +86,7 @@ export default function Home() {
   const cancelButtonRefExpenses = useRef(null)
 
   // Employee-recovery states
-  const [openEmployeeRecovery, setOpenEmployeeRecovery] = useState(false);
+  const [openEmployeeRecovery, setOpenEmployeeRecovery] = useState(false)
   const cancelButtonRefEmployeeRecovery = useRef(null)
 
   /* Add-Modify employee functions */
@@ -175,7 +176,6 @@ export default function Home() {
         setOperationMessage('Operation failed')
       }
     }
-    setModify_id('')
   }
 
   const handleSubmitModifyEmployee = async (e) => {
@@ -223,7 +223,6 @@ export default function Home() {
         console.log('Operation failed')
       }
     }
-    setModify_id('')
   }
 
   /* Fetching functions */
@@ -365,17 +364,16 @@ export default function Home() {
       <div className='flex'>
         <div className='items-center flex'>
           {dataReady && (
-              <EmployeeRecoveryForm
-                  open={openEmployeeRecovery}
-                  setOpen={setOpenEmployeeRecovery}
-                  cancelButtonRef={cancelButtonRefEmployeeRecovery}
-              />
+            <EmployeeRecoveryForm
+              open={openEmployeeRecovery}
+              setOpen={setOpenEmployeeRecovery}
+              cancelButtonRef={cancelButtonRefEmployeeRecovery}
+            />
           )}
           {dataReady && (
             <AddModifyEmployeeForm
               open={openTeamAdd}
               setOpen={setOpenTeamAdd}
-              setModify_id={setModify_id}
               cancelButtonRef={cancelButtonRefTeam}
               countries={countries}
               bands={bands}
@@ -414,7 +412,11 @@ export default function Home() {
           <button>
             <PlusCircleIcon
               className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
-              onClick={() => setOpenTeamAdd(true)}
+              onClick={() => {
+                setModify_id('')
+                setModify_employee('')
+                setOpenTeamAdd(true)
+              }}
             />
           </button>
         </div>
@@ -450,7 +452,9 @@ export default function Home() {
           <button>
             <PlusCircleIcon
               className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
-              onClick={() => setOpenExpensesAdd(true)}
+              onClick={() => {
+                setOpenExpensesAdd(true)
+              }}
             />
           </button>
         </div>
