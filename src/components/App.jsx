@@ -7,7 +7,7 @@ import LandingPage from './Shared/LandingPage'
 import SidebarLayout from './Shared/Components/SidebarLayout'
 import Reports from './Manager/reports'
 import Home from './Manager/Home'
-import Team from './Manager/team'
+import Squads from './Manager/squads'
 import Login from './Shared/Login'
 import OPSManager from './OPSManager/Home'
 
@@ -22,16 +22,16 @@ function App() {
             <Route path='/landingpage' element={<LandingPage />} />
 
             {/* Manager routes */}
-            <Route /*element={<RequireAuth allowedRole={0} />} */>
+            <Route element={<RequireAuth allowedRole={0} />}>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<Home />} />
                 <Route path='/manager/reports' element={<Reports />} />
-                <Route path='manager/team' element={<Team />} />
+                <Route path='manager/squads' element={<Squads />} />
               </Route>
             </Route>
 
             {/* OPSManager routes */}
-            <Route /*</Routes>element={<RequireAuth allowedRole={1} />}*/>
+            <Route element={<RequireAuth allowedRole={1} />}>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/OPSManager/home' element={<OPSManager />} />
               </Route>

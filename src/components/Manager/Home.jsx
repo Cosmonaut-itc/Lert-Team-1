@@ -395,7 +395,7 @@ export default function Home() {
       <div className='flex justify-around'>
         <div className='flex items-center gap-7 w-full'>
           <div className='text-2xl font-semibold text-gray-600'>Team</div>
-          <div className='w-2/4 sm:w-3/12'>
+          <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
             <SearchBar />
           </div>
         </div>
@@ -477,7 +477,7 @@ export default function Home() {
       </div>
       <div className='flex items-center gap-7 pt-16'>
         <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
-        <div className='w-2/4 sm:w-3/12'>
+        <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
           <SearchBar />
         </div>
       </div>

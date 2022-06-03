@@ -73,7 +73,7 @@ export default function SideMenu({ role }) {
 
   const navigation = [
     { name: 'Dashboard', icon: HomeIcon, href: `${role}/home` },
-    { name: 'Team', icon: UsersIcon, href: `${role}/team`, count: 3 },
+    { name: 'Squad', icon: UsersIcon, href: `${role}/squads`, count: 3 },
     { name: 'Reports', icon: ChartBarIcon, href: `${role}/reports` },
   ]
 
