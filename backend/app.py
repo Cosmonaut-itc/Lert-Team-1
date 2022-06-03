@@ -55,21 +55,21 @@ def load_user(id):
 
 
 @app.route('/signup', methods=['POST'])
-@login_required
-@admin_required
+#@login_required
+#@admin_required
 def signup():
     ph = PasswordHasher()
 
     email = request.form.get('email')
     password = request.form.get('password')
     role = request.form.get('role')
-    country = request.form.get('country')
+    country_id = request.form.get('country')
 
     user_exists = User.query.filter_by(email=email).first()
     db.session.commit()
     if user_exists:
         return "User already exist", 409
-    new_user = User(email=email, password=ph.hash(password), role=role, country=country)
+    new_user = User(email=email, password=ph.hash(password), role=role, country_id=country_id)
     db.session.add(new_user)
     db.session.commit()
     return "Added user", 201

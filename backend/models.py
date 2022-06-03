@@ -92,7 +92,7 @@ class TypeOfExpense(db.Model):
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
-
+"""
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text, index=True)
@@ -106,7 +106,7 @@ class Expense(db.Model):
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
-
+"""
 
 # class EmployeeRecovery(db.Model):
 #     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
