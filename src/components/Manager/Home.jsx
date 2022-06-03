@@ -46,6 +46,44 @@ const ExpensesDD = [
   },
 ]
 
+const TeamDD = [
+  {
+    id: 1,
+    first_name: 'Ken',
+    last_name: 'Bauer',
+    email: 'kenbauer@ibm.com',
+    band_name: 'Band 1',
+  },
+  {
+    id: 2,
+    first_name: 'Ken',
+    last_name: 'Bauer',
+    email: 'kenbauer@ibm.com',
+    band_name: 'Band 1',
+  },
+  {
+    id: 3,
+    first_name: 'Ken',
+    last_name: 'Bauer',
+    email: 'kenbauer@ibm.com',
+    band_name: 'Band 1',
+  },
+  {
+    id: 4,
+    first_name: 'Ken',
+    last_name: 'Bauer',
+    email: 'kenbauer@ibm.com',
+    band_name: 'Band 1',
+  },
+  {
+    id: 5,
+    first_name: 'Ken',
+    last_name: 'Bauer',
+    email: 'kenbauer@ibm.com',
+    band_name: 'Band 1',
+  },
+]
+
 const EMPLOYEES_URL = '/manager/employees'
 
 export default function Home() {
@@ -330,6 +368,7 @@ export default function Home() {
   /* Effects */
   useEffect(() => {
     fetchData()
+    console.log(dataReady)
   }, [])
 
   useEffect(() => {}, [team])
@@ -422,7 +461,7 @@ export default function Home() {
         </div>
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-            {team.map((data) => (
+            {TeamDD.map((data) => (
               <TeamCard
                 key={data.id}
                 employee={data}

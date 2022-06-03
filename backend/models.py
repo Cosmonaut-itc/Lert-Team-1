@@ -108,8 +108,8 @@ class Expense(db.Model):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 
-class EmployeeRecovery(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+# class EmployeeRecovery(db.Model):
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
-    def as_dict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+#     def as_dict(self):
+#         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}

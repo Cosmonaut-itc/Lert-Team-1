@@ -200,10 +200,24 @@ export default function ModalExpensesAdd({ open, cancelButtonRef, setOpen }) {
                       </div>
                     </div>
                     <div>
-                      <SelectMenu label='Type of expenses' />
+                      <SelectMenu
+                        label='Type of expenses'
+                        options={[
+                          { name: 'Wade Cooper' },
+                          { name: 'Arlene Mccoy' },
+                        ]}
+                        alreadySelected={0}
+                      />
                     </div>
                     <div>
-                      <SelectMenu label='ICA' />
+                      <SelectMenu
+                        label='ICA'
+                        options={[
+                          { name: 'Wade Cooper' },
+                          { name: 'Arlene Mccoy' },
+                        ]}
+                        alreadySelected={1}
+                      />
                     </div>
                   </div>
                 </div>

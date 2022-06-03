@@ -1,5 +1,4 @@
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import ManagerCard from './Components/ManagerCard'
 

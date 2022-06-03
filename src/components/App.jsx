@@ -15,14 +15,14 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className='flex bg-slate-100 h-screen'>
+        <div className='md:flex bg-slate-100 h-screen'>
           <Routes>
             {/* Public routes */}
             <Route path='/login' element={<Login />} />
             <Route path='/landingpage' element={<LandingPage />} />
 
             {/* Manager routes */}
-            <Route element={<RequireAuth allowedRole={0} />}>
+            <Route /*element={<RequireAuth allowedRole={0} />} */>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<Home />} />
                 <Route path='/manager/reports' element={<Reports />} />
@@ -31,7 +31,7 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route element={<RequireAuth allowedRole={1} />}>
+            <Route /*</Routes>element={<RequireAuth allowedRole={1} />}*/>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/OPSManager/home' element={<OPSManager />} />
               </Route>

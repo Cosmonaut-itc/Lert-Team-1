@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -6,10 +6,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMenu({ label, options, alreadySelected, onChange }) {
+export default function SelectMenu({ label, options, alreadySelected }) {
+  const [selected, setSelected] = useState(options[alreadySelected])
 
   return (
-    <Listbox value={alreadySelected} onChange={onChange}>
+    <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
           <Listbox.Label className='block text-sm font-medium text-gray-700'>
@@ -17,7 +18,7 @@ export default function SelectMenu({ label, options, alreadySelected, onChange }
           </Listbox.Label>
           <div className='mt-1 relative'>
             <Listbox.Button className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
-              <span className='block truncate'>{alreadySelected.name}</span>
+              <span className='block truncate'>{selected.name}</span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                 <SelectorIcon
                   className='h-5 w-5 text-gray-400'
@@ -49,7 +50,7 @@ export default function SelectMenu({ label, options, alreadySelected, onChange }
                       <>
                         <span
                           className={classNames(
-                              alreadySelected ? 'font-semibold' : 'font-normal',
+                            alreadySelected ? 'font-semibold' : 'font-normal',
                             'block truncate'
                           )}
                         >
