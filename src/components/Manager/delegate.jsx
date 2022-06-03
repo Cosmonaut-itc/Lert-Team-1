@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import { useState } from 'react'
 import SearchBar from '../Shared/Components/SearchBar'
-import ModalAddModifySquad from './Components/ModalAddModifySquad'
+import ModalAddModifyDelegate from './Components/ModalAddModifyDelegate'
 import DelegateCard from './Components/DelegateCard'
 
 const delegateDD = [
@@ -48,7 +48,7 @@ const delegateDD = [
 ]
 
 export default function Delegate() {
-  const [openSquadAddModify, setOpenSquadAddModify] = useState(false)
+  const [openDelegateAddModify, setOpenDelegateAddModify] = useState(false)
 
   return (
     <div className='pl-10 h-screen '>
@@ -59,15 +59,15 @@ export default function Delegate() {
         </div>
       </div>
       <div className='flex justify-center md:justify-start pt-3'>
-        <ModalAddModifySquad
-          open={openSquadAddModify}
-          setOpen={setOpenSquadAddModify}
+        <ModalAddModifyDelegate
+          open={openDelegateAddModify}
+          setOpen={setOpenDelegateAddModify}
         />
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
           <button
             className='flex justify-center items-center'
             onClick={() => {
-              setOpenSquadAddModify(true)
+              setOpenDelegateAddModify(true)
             }}
           >
             <PlusCircleIcon className='flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />

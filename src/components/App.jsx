@@ -22,7 +22,7 @@ function App() {
             <Route path='/landingpage' element={<LandingPage />} />
 
             {/* Manager routes */}
-            <Route element={<RequireAuth allowedRole={0} />}>
+            <Route /* element={<RequireAuth allowedRole={0} />} */>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<Home />} />
                 <Route path='/manager/delegate' element={<Delegate />} />
@@ -31,7 +31,7 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route element={<RequireAuth allowedRole={1} />}>
+            <Route /* element={<RequireAuth allowedRole={1} />} */>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/OPSManager/home' element={<OPSManager />} />
               </Route>

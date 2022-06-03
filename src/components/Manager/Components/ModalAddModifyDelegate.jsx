@@ -1,7 +1,9 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export default function ModalAddModifySquad({
+import MailIcon from '@heroicons/react/solid/MailIcon'
+
+export default function ModalAddModifyDelegate({
   open,
   cancelButtonRef,
   setOpen,
@@ -52,24 +54,63 @@ export default function ModalAddModifySquad({
                   >
                     Delegate
                   </Dialog.Title>
-                  <div className='my-16 center w-full md:w-6/12 mx-auto'>
-                    <div className='flex justify-center w-full'>
-                      <div className='w-full'>
-                        <label
-                          htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
-                        >
-                          Squad
-                        </label>
-                        <div className='mt-1'>
-                          <input
-                            type='text'
-                            name='text'
-                            id='text'
-                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                            placeholder='Squad name'
+                  <div className='mt-10 grid grid-cols-2 gap-10'>
+                    <div>
+                      <label
+                        htmlFor='text'
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        First name
+                      </label>
+                      <div className='mt-1'>
+                        <input
+                          type='text'
+                          name='text'
+                          id='text'
+                          className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                          placeholder='First name(s)'
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor='text'
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        Last name
+                      </label>
+                      <div className='mt-1'>
+                        <input
+                          type='text'
+                          name='text'
+                          id='text'
+                          className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                          placeholder='Last name(s)'
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor='email'
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        Mail
+                      </label>
+                      <div className='mt-1 relative rounded-md shadow-sm'>
+                        <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                          <MailIcon
+                            className='h-5 w-5 text-gray-400'
+                            aria-hidden='true'
                           />
                         </div>
+                        <input
+                          type='text'
+                          name='email'
+                          id='email'
+                          className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                          placeholder='examplemail@ibm.com'
+                        />
                       </div>
                     </div>
                   </div>
