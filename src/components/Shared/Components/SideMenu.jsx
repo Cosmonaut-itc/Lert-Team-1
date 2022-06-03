@@ -73,8 +73,8 @@ export default function SideMenu({ role }) {
 
   const navigation = [
     { name: 'Dashboard', icon: HomeIcon, href: `${role}/home` },
-    { name: 'Squad', icon: UsersIcon, href: `${role}/squads`, count: 3 },
-    { name: 'Reports', icon: ChartBarIcon, href: `${role}/reports` },
+    { name: 'Squad', icon: UsersIcon, href: `${role}/squad`, count: 3 },
+    { name: 'Delegate', icon: ChartBarIcon, href: `${role}/delegate` },
   ]
 
   const [sidebarOpen, setSidebarOpen] = useState(false)

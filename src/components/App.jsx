@@ -5,9 +5,9 @@ import RequireAuth from './Shared/RequireAuth'
 
 import LandingPage from './Shared/LandingPage'
 import SidebarLayout from './Shared/Components/SidebarLayout'
-import Reports from './Manager/reports'
+import Delegate from './Manager/delegate'
 import Home from './Manager/Home'
-import Squads from './Manager/squads'
+import Squad from './Manager/squad'
 import Login from './Shared/Login'
 import OPSManager from './OPSManager/Home'
 
@@ -15,7 +15,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className='md:flex bg-slate-100 h-screen'>
+        <div className='md:flex bg-slate-100'>
           <Routes>
             {/* Public routes */}
             <Route path='/login' element={<Login />} />
@@ -25,8 +25,8 @@ function App() {
             <Route element={<RequireAuth allowedRole={0} />}>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<Home />} />
-                <Route path='/manager/reports' element={<Reports />} />
-                <Route path='manager/squads' element={<Squads />} />
+                <Route path='/manager/delegate' element={<Delegate />} />
+                <Route path='manager/squad' element={<Squad />} />
               </Route>
             </Route>
 
