@@ -47,10 +47,22 @@ class Employee(db.Model):
     email = db.Column(db.Text, index=True, unique=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     typeOfEmployee_id = db.Column(db.Integer, db.ForeignKey('type_of_employee.id'))
-    band_id = db.Column(db.Integer, db.ForeignKey('band.id'))
     ICA_id = db.Column(db.Integer, db.ForeignKey('ICA.id'))
     squad_id = db.Column(db.Integer, db.ForeignKey('squad.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    band_id = db.Column(db.Integer, db.ForeignKey('band.id'))
+    month1Band_id = db.Column(db.Integer, db.ForeignKey('band.id'))
+    month2Band_id = db.Column(db.Integer, db.ForeignKey('band.id'))
+
+    comment = db.Column(db.Text)
+    hour1 = db.Column(db.Integer)
+    hour2 = db.Column(db.Integer)
+    hour3 = db.Column(db.Integer)
+
+    band = db.relationship("Band", foreign_keys=[band_id])
+    month1Band = db.relationship("Band", foreign_keys=[month1Band_id])
+    month2Band = db.relationship("Band", foreign_keys=[month2Band_id])
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -61,7 +73,6 @@ class Band(db.Model):
     name = db.Column(db.Text, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     salary = db.Column(db.Integer)
-    employees = db.relationship('Employee', backref='Band')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -103,7 +114,8 @@ class Delegate(db.Model):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 
-"""
+
+'''
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text, index=True)
@@ -117,10 +129,4 @@ class Expense(db.Model):
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
-"""
-
-# class EmployeeRecovery(db.Model):
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
-#     def as_dict(self):
-#         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+'''

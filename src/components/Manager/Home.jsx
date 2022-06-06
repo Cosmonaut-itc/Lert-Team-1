@@ -90,6 +90,7 @@ export default function Home() {
   // Data fetched from DB states
   const [team, setTeam] = useState([])
   const [countries, setCountries] = useState([])
+  const [quarter, setQuarter] = useState([])
   const [bands, setBands] = useState([])
   const [ICAS, setICAS] = useState([])
   const [squads, setSquads] = useState([])
@@ -110,14 +111,26 @@ export default function Home() {
   const [typeOfEmployee_id, setTypeOfEmployee_id] = useState('')
   const [typeOfEmployee_selection, setTypeOfEmployee_selection] =
     useState(defaultSelection)
-  const [band_id, setBand_id] = useState('')
-  const [band_selection, setBand_selection] = useState(defaultSelection)
   const [ICA_id, setICA_id] = useState('')
   const [ICA_selection, setICA_selection] = useState({ id: 0, name: 'Select' })
   const [squad_id, setSquad_id] = useState('')
   const [squad_selection, setSquad_selection] = useState(defaultSelection)
   const [modify_id, setModify_id] = useState('')
   const [modify_employee, setModify_employee] = useState('')
+
+  // Employees and recovery
+  const [band_id, setBand_id] = useState('')
+  const [band_selection, setBand_selection] = useState(defaultSelection)
+
+  // Recovery
+  const [month1Band_id, setMonth1Band_id] = useState('')
+  const [month1Band_selection, setMonth1Band_selection] = useState(defaultSelection)
+  const [month2Band_id, setMonth2Band_id] = useState('')
+  const [month2Band_selection, setMonth2Band_selection] = useState(defaultSelection)
+  const [hour1, setHour1] = useState(0)
+  const [hour2, setHour2] = useState(0)
+  const [hour3, setHour3] = useState(0)
+  const [comment, setComment] = useState('')
 
   // Add-Modify expenses states
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
@@ -143,11 +156,6 @@ export default function Home() {
       id: employee.typeOfEmployee_id,
       name: employee.typeOfEmployee_name,
     })
-    setBand_id(employee.band_id)
-    setBand_selection({
-      id: employee.band_id,
-      name: employee.band_name,
-    })
     setICA_id(employee.ICA_id)
     setICA_selection({
       id: employee.ICA_id,
@@ -158,6 +166,29 @@ export default function Home() {
       id: employee.squad_id,
       name: employee.squad_name,
     })
+
+    // Employee and recovery
+    setBand_id(employee.band_id)
+    setBand_selection({
+      id: employee.band_id,
+      name: employee.band_name,
+    })
+
+    // Recovery
+    setMonth1Band_id(employee.month1_band_id)
+    setMonth1Band_selection({
+      id: employee.month1Band_id,
+      name: employee.month1Band_name,
+    })
+    setMonth2Band_id(employee.month2_band_id)
+    setMonth2Band_selection({
+      id: employee.month2Band_id,
+      name: employee.month2Band_name,
+    })
+    setComment(employee.comment)
+    setHour1(employee.hour1)
+    setHour2(employee.hour2)
+    setHour3(employee.hour3)
   }
 
   const unpopulateForm = () => {
@@ -187,6 +218,19 @@ export default function Home() {
     bodyFormData.append('band_id', band_id)
     bodyFormData.append('ICA_id', ICA_id)
     bodyFormData.append('squad_id', squad_id)
+
+    return bodyFormData
+  }
+
+  const createRecoveryForm = () => {
+    const bodyFormData = new FormData()
+    bodyFormData.append('band_id', band_id)
+    bodyFormData.append('month1Band_id', month1Band_id)
+    bodyFormData.append('month2Band_id', month2Band_id)
+    bodyFormData.append('hour1', hour1)
+    bodyFormData.append('hour2', hour2)
+    bodyFormData.append('hour3', hour3)
+    bodyFormData.append('comment', comment)
 
     return bodyFormData
   }
@@ -259,6 +303,35 @@ export default function Home() {
         console.log('Employee already exists')
       } else {
         console.log('Operation failed')
+      }
+    }
+  }
+
+  const handleSubmitModifyRecovery = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createRecoveryForm()
+
+    try {
+      const response = await api.put(
+          EMPLOYEES_URL + '/' + modify_id + '/recovery',
+          bodyFormData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+      )
+      setOperationMessage('Recovery Modified')
+      fetchTeam()
+      unpopulateForm()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('Employee does not exists')
+      } else {
+        setOperationMessage('Operation failed')
       }
     }
   }
@@ -355,6 +428,21 @@ export default function Home() {
     }
   }
 
+  const fetchQuarter = async () => {
+    try {
+      const response = await api.get('/quarter')
+      setQuarter(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
   const fetchData = async () => {
     await fetchTeam()
     await fetchCountries()
@@ -362,6 +450,7 @@ export default function Home() {
     await fetchICAS()
     await fetchTypesOfEmployee()
     await fetchSquads()
+    await fetchQuarter()
     setDataReady(true)
   }
 
@@ -408,6 +497,8 @@ export default function Home() {
               open={openEmployeeRecovery}
               setOpen={setOpenEmployeeRecovery}
               cancelButtonRef={cancelButtonRefEmployeeRecovery}
+              quarter={quarter}
+
             />
           )}
           {dataReady && (

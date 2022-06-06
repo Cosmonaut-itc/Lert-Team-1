@@ -64,6 +64,8 @@ export default function TeamCard({
             whiteSpace: 'nowrap',
           }}
           onClick={() => {
+            setModify_id(employee.id)
+            setModify_employee(employee)
             setOpenEmployeeRecovery(true)
           }}
         >

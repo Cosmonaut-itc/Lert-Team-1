@@ -1,5 +1,6 @@
 import json
 import secrets
+import datetime
 from functools import wraps
 
 from argon2 import PasswordHasher
@@ -55,15 +56,15 @@ def load_user(id):
 
 
 @app.route('/signup', methods=['POST'])
-#@login_required
-#@admin_required
+# @login_required
+# @admin_required
 def signup():
     ph = PasswordHasher()
 
     email = request.form.get('email')
     password = request.form.get('password')
     role = request.form.get('role')
-    country_id = request.form.get('country')
+    country_id = request.form.get('country_id')
 
     user_exists = User.query.filter_by(email=email).first()
     db.session.commit()
@@ -100,9 +101,9 @@ def isAuth():
 
 
 @app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
-@app.route('/manager/employees/<modify_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/manager/employees/<employee_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
-def manager_employees(modify_id=None):
+def manager_employees(employee_id=None):
     if request.method == 'GET':
         manager_team = Employee.query.filter_by(user_id=current_user.id)
         db.session.commit()
@@ -115,16 +116,21 @@ def manager_employees(modify_id=None):
             foreign_keys_names_dictionary = {
                 'country_name': employee.country.name,
                 'typeOfEmployee_name': employee.typeOfEmployee.name,
-                'band_name': employee.Band.name,
+                'band_name': employee.band.name,
+                'month1Band_name': employee.month1Band.name,
+                'month2Band_name': employee.month2Band.name,
                 'ICA_name': employee.ICA.name,
-                'squad_name': employee.squad.name
+                'squad_name': employee.squad.name,
+                'month1_cost': (employee.band.salary / 12),
+                'month2_cost': (employee.month1Band.salary / 12),
+                'month3_cost': (employee.month2Band.salary / 12),
             }
             response.append(employee.as_dict() | foreign_keys_names_dictionary)
 
         return jsonify(response)
 
     if request.method == 'DELETE':
-        employee_exists = Employee.query.filter_by(id=modify_id).first()
+        employee_exists = Employee.query.filter_by(id=employee_id).first()
         if not employee_exists:
             return "Employee does not exist", 404
         if employee_exists.user_id != current_user.id:
@@ -136,6 +142,7 @@ def manager_employees(modify_id=None):
         return "User deleted"
 
     if request.method == 'POST' or 'PUT':
+        # Form
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         email = request.form.get('email')
@@ -144,8 +151,10 @@ def manager_employees(modify_id=None):
         band_id = request.form.get('band_id')
         ICA_id = request.form.get('ICA_id')
         squad_id = request.form.get('squad_id')
+
+        # Internal
         user_id = current_user.id
-        modify_id = modify_id
+        employee_id = employee_id
 
         if request.method == 'POST':
             employee_exists = Employee.query.filter_by(email=email).first()
@@ -156,13 +165,14 @@ def manager_employees(modify_id=None):
 
             new_employee = Employee(first_name=first_name, last_name=last_name, email=email, country_id=int(country_id),
                                     typeOfEmployee_id=int(typeOfEmployee_id), band_id=int(band_id), ICA_id=int(ICA_id),
-                                    squad_id=int(squad_id), user_id=int(user_id))
+                                    squad_id=int(squad_id), user_id=int(user_id), month1_band_id=int(band_id),
+                                    month2_band_id=int(band_id), comment="", hour1=0, hour2=0, hour3=0)
             db.session.add(new_employee)
             db.session.commit()
             return "Added Employee", 201
 
         if request.method == 'PUT':
-            employee_exists = Employee.query.filter_by(id=modify_id).first()
+            employee_exists = Employee.query.filter_by(id=employee_id).first()
 
             if not employee_exists:
                 return "Employee does not exist", 404
@@ -177,9 +187,70 @@ def manager_employees(modify_id=None):
             employee_exists.band_id = band_id
             employee_exists.ICA_id = ICA_id
             employee_exists.squad_id = squad_id
+
             db.session.commit()
             return "User added"
     return 400
+
+
+@app.route('/manager/employees/<employee_id>/recovery', methods=['PUT'])
+@login_required
+def manager_employees_recovery(employee_id):
+    band_id = request.form.get('band_id')
+    month1_band_id = request.form.get('month1_band_id')
+    month2_band_id = request.form.get('month2_band_id')
+    hour1 = request.form.get('hour1')
+    hour2 = request.form.get('hour2')
+    hour3 = request.form.get('hour3')
+    comment = request.form.get('comment')
+
+    employee_exists = Employee.query.filter_by(id=employee_id).first()
+
+    if not employee_exists:
+        return "Employee does not exist", 404
+    if employee_exists.user_id != current_user.id:
+        return "Not your employee", 401
+
+    employee_exists.band_id = band_id
+    employee_exists.month1_band_id = month1_band_id
+    employee_exists.month2_band_id = month2_band_id
+
+    employee_exists.hour1 = hour1
+    employee_exists.hour2 = hour2
+    employee_exists.hour3 = hour3
+
+    employee_exists.comment = comment
+
+    db.session.commit()
+    return "Recovery added"
+
+
+@app.route('/quarter')
+def quarter():
+    months = {
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April',
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'August',
+        9: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December'
+    }
+    result = {}
+    current_time = datetime.datetime.now()
+    current_q = (current_time.month // 3)
+    j = 0
+
+    for i in range(current_q * 3 - 2, current_q * 3 + 1):
+        result[j] = months[i]
+        j = j + 1
+
+    return result
 
 
 @app.route('/countries')
@@ -271,27 +342,28 @@ def logout():
     return "Logged out"
 
 
-#TODO: Testing is missing on this endpoint
+# TODO: Testing is missing on this endpoint
 @app.route('/expenses', methods=['POST'])
 @login_required
 def expenses():
-    expense_id = randint(0, 10000)  #Random function to create a random ID for every expense
+    expense_id = randint(0, 10000)  # Random function to create a random ID for every expense
 
-    #Creates the rest of the row by requesting the form
+    # Creates the rest of the row by requesting the form
     description = request.form.get('description')
     employee_mail = request.form.get('employee_mail')
     cost = request.form.get('cost')
-    #TODO: type of expense dropdown list
-    #TODO: ICA dropdown list
+    # TODO: type of expense dropdown list
+    # TODO: ICA dropdown list
     ica_mail = request.form.get('ica_manager_mail')
     admin_mail = request.form.get('administrator_mail')
     comments = request.form.get('comments')
 
-    #Creates the new row by using the built-in model Expense
-    new_expense = Expense(expense_id, description, employee_mail, cost, 'dummy expense', 'ica dummy', ica_mail, admin_mail,
+    # Creates the new row by using the built-in model Expense
+    new_expense = Expense(expense_id, description, employee_mail, cost, 'dummy expense', 'ica dummy', ica_mail,
+                          admin_mail,
                           comments)
 
-    #Adds and commits the expense to the db
+    # Adds and commits the expense to the db
     db.session.add(new_expense)
     db.session.commit()
 
@@ -326,6 +398,7 @@ def add_squad():
     db.session.commit()
 
     return "Added squad", 201
+
 
 
 if __name__ == '__main__':
