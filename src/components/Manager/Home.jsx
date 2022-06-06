@@ -4,8 +4,8 @@ import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
-import AddModifyEmployeeForm from './Components/AddModifyEmployeeForm'
-import EmployeeRecoveryForm from './Components/EmployeeRecoveryForm'
+import ModalAddModifyEmployeeForm from './Components/ModalAddModifyEmployeeForm'
+import ModalEmployeeRecoveryForm from './Components/ModalEmployeeRecoveryForm'
 import ModalExpensesAdd from './Components/ModalExpensesAdd'
 import api from '../api/api'
 import '../../styles/Home.css'
@@ -403,14 +403,14 @@ export default function Home() {
       <div className='flex'>
         <div className='items-center flex'>
           {dataReady && (
-            <EmployeeRecoveryForm
+            <ModalEmployeeRecoveryForm
               open={openEmployeeRecovery}
               setOpen={setOpenEmployeeRecovery}
               cancelButtonRef={cancelButtonRefEmployeeRecovery}
             />
           )}
           {dataReady && (
-            <AddModifyEmployeeForm
+            <ModalAddModifyEmployeeForm
               open={openTeamAdd}
               setOpen={setOpenTeamAdd}
               cancelButtonRef={cancelButtonRefTeam}

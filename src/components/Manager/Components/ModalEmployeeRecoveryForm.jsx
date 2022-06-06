@@ -4,7 +4,7 @@ import { ArrowDownIcon } from '@heroicons/react/solid'
 import Button from '@mui/material/Button'
 import TextareaAutosize from '@mui/base/TextareaAutosize'
 
-export default function EmployeeRecoveryForm({
+export default function ModalEmployeeRecoveryForm({
   open,
   cancelButtonRef,
   setOpen,

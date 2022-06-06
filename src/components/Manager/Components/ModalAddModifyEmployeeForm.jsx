@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
-export default function AddModifyEmployeeForm({
+export default function ModalAddModifyEmployeeForm({
   open,
   cancelButtonRef,
   setOpen,

@@ -5,6 +5,7 @@ import {
   LogoutIcon,
   MenuIcon,
   XIcon,
+  UserGroupIcon,
 } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
 import { NavLink } from 'react-router-dom'
@@ -74,7 +75,7 @@ export default function SideMenu({ role }) {
   const navigation = [
     { name: 'Dashboard', icon: HomeIcon, href: `${role}/home` },
     { name: 'Squad', icon: UsersIcon, href: `${role}/squad`, count: 3 },
-    { name: 'Delegate', icon: ChartBarIcon, href: `${role}/delegate` },
+    { name: 'Delegate', icon: UserGroupIcon, href: `${role}/delegate` },
   ]
 
   const [sidebarOpen, setSidebarOpen] = useState(false)

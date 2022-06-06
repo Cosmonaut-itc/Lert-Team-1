@@ -2,7 +2,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
 
-export default function DelegateCard({ id, name, email }) {
+export default function OpsManagerCard({ id, name, email, country }) {
   return (
     <Card
       sx={{ borderRadius: 3 }}
@@ -13,6 +13,11 @@ export default function DelegateCard({ id, name, email }) {
       <div className='text-left pb-10 pl-4  '>
         <h4 className='font-bold text-lg pt-2'>{name}</h4>
         <p className='underline text-gray-500 text-sm'>{email}</p>
+        <div className='flex items-center mt-1'>
+          <p className='text-gray-500 text-sm'>Country: &nbsp; </p>
+
+          <p className='text-sm'> {country}</p>
+        </div>
       </div>
 
       <CardActions className='flex justify-center'>

@@ -5,11 +5,13 @@ import RequireAuth from './Shared/RequireAuth'
 
 import LandingPage from './Shared/LandingPage'
 import SidebarLayout from './Shared/Components/SidebarLayout'
-import Delegate from './Manager/delegate'
-import Home from './Manager/Home'
-import Squad from './Manager/squad'
+import ManagerDelegate from './Manager/delegate'
+import ManagerHome from './Manager/Home'
+import ManagerSquad from './Manager/squad'
 import Login from './Shared/Login'
-import OPSManager from './OPSManager/Home'
+import OPSManagerHome from './OPSManager/Home'
+import AdminHome from './Admin/Home'
+import AdminCountries from './Admin/countries'
 
 function App() {
   return (
@@ -24,19 +26,25 @@ function App() {
             {/* Manager routes */}
             <Route /* element={<RequireAuth allowedRole={0} />} */>
               <Route element={<SidebarLayout role='manager' />}>
-                <Route path='/manager/home' element={<Home />} />
-                <Route path='/manager/delegate' element={<Delegate />} />
-                <Route path='manager/squad' element={<Squad />} />
+                <Route path='/manager/home' element={<ManagerHome />} />
+                <Route path='/manager/delegate' element={<ManagerDelegate />} />
+                <Route path='manager/squad' element={<ManagerSquad />} />
               </Route>
             </Route>
 
             {/* OPSManager routes */}
             <Route /* element={<RequireAuth allowedRole={1} />} */>
               <Route element={<SidebarLayout role='opsmanager' />}>
-                <Route path='/OPSManager/home' element={<OPSManager />} />
+                <Route path='/OPSManager/home' element={<OPSManagerHome />} />
               </Route>
             </Route>
             {/* Admin routes */}
+            <Route /* element={<RequireAuth allowedRole={2} />} */>
+              <Route element={<SidebarLayout role='admin' />}>
+                <Route path='/admin/home' element={<AdminHome />} />
+                <Route path='/admin/countries' element={<AdminCountries />} />
+              </Route>
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>
