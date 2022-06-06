@@ -13,6 +13,8 @@
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^13.5.0",
         "axios": "^0.26.1",
+        "flowbite": "^1.4.7",
+        "flowbite-react": "^0.0.25",
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
         "react-horizontal-scrolling-menu": "^2.8.2",

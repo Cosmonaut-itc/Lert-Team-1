@@ -392,6 +392,7 @@ export default function Home() {
           <ArrowDownIcon className='w-4 h-5 m-2' />
         </div>
       </div>
+
       <div className='flex justify-around'>
         <div className='flex items-center gap-7 w-full'>
           <div className='text-2xl font-semibold text-gray-600'>Team</div>
@@ -497,6 +498,7 @@ export default function Home() {
             />
           </button>
         </div>
+
         <div className='flex'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {ExpensesDD.map((data) => (

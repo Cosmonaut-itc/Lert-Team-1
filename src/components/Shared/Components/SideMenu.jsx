@@ -11,6 +11,9 @@ import {
   IoBagAdd,
   IoReceipt,
 } from 'react-icons/io5'
+
+import { Tooltip } from 'flowbite-react'
+
 import { Dialog, Transition } from '@headlessui/react'
 import { NavLink } from 'react-router-dom'
 
@@ -194,7 +197,7 @@ export default function SideMenu({ role }) {
           </div>
         </Dialog>
       </Transition.Root>
-      <div className='fixed top-0 left-0 overflow-hidden z-50'>
+      <div className='fixed top-0 left-0 z-50'>
         <div
           className={`hidden md:flex h-screen flex-1 flex-col border-r border-gray-200 bg-white ${
             isSideMenuClose ? 'w-26' : 'w-56'
@@ -223,15 +226,29 @@ export default function SideMenu({ role }) {
                     )
                   }
                 >
-                  <item.icon
-                    className={classNames(
-                      item.current
-                        ? 'text-blue-500'
-                        : 'text-blue-400 group-hover:text-blue-500',
-                      'flex-shrink-0 h-6 w-6'
-                    )}
-                    aria-hidden='true'
-                  />
+                  {isSideMenuClose ? (
+                    <Tooltip content={item.name} placement='right'>
+                      <item.icon
+                        className={classNames(
+                          item.current
+                            ? 'text-blue-500'
+                            : 'text-blue-400 group-hover:text-blue-500',
+                          'flex-shrink-0 h-6 w-6'
+                        )}
+                        aria-hidden='true'
+                      />
+                    </Tooltip>
+                  ) : (
+                    <item.icon
+                      className={classNames(
+                        item.current
+                          ? 'text-blue-500'
+                          : 'text-blue-400 group-hover:text-blue-500',
+                        'flex-shrink-0 h-6 w-6'
+                      )}
+                      aria-hidden='true'
+                    />
+                  )}
 
                   {!isSideMenuClose ? (
                     <span className='flex-1 ml-2'>{item.name}</span>
