@@ -314,5 +314,11 @@ def add_delegate():
     return "Added delegate", 201
 
 
+@app.route('/add_squad', methods=['POST'])
+@login_required
+def add_squad():
+    pass
+
+
 if __name__ == '__main__':
     app.run()
