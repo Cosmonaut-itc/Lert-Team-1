@@ -317,7 +317,15 @@ def add_delegate():
 @app.route('/add_squad', methods=['POST'])
 @login_required
 def add_squad():
-    pass
+    squad_id = randint(0, 10000)
+    squad_name = request.form.get('squad_name')
+
+    new_squad = Squad(squad_id, squad_name)
+
+    db.session.add(new_squad)
+    db.session.commit()
+
+    return "Added squad", 201
 
 
 if __name__ == '__main__':
