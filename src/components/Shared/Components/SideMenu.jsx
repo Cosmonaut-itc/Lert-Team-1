@@ -1,12 +1,16 @@
+import { LogoutIcon } from '@heroicons/react/outline'
+
 import {
-  ChartBarIcon,
-  HomeIcon,
-  UsersIcon,
-  LogoutIcon,
-  MenuIcon,
-  XIcon,
-  UserGroupIcon,
-} from '@heroicons/react/outline'
+  IoBody,
+  IoHome,
+  IoPeople,
+  IoDuplicate,
+  IoMenu,
+  IoCloseSharp,
+  IoGlobeOutline,
+  IoBagAdd,
+  IoReceipt,
+} from 'react-icons/io5'
 import { Dialog, Transition } from '@headlessui/react'
 import { NavLink } from 'react-router-dom'
 
@@ -42,17 +46,6 @@ function NavLinksMobile({ item }) {
       />
 
       <span className='flex-1 ml-2'>{item.name}</span>
-
-      {item.count ? (
-        <span
-          className={classNames(
-            item.current ? 'bg-white' : 'bg-gray-100 group-hover:bg-gray-200',
-            'inline-block py-0.5 ml-2 px-3 text-xs font-medium rounded-full'
-          )}
-        >
-          {item.count}
-        </span>
-      ) : null}
     </NavLink>
   )
 }
@@ -72,13 +65,29 @@ export default function SideMenu({ role }) {
     localStorage.removeItem('isSideMenuClose')
   }
 
-  const navigation = [
-    { name: 'Dashboard', icon: HomeIcon, href: `${role}/home` },
-    { name: 'Squad', icon: UsersIcon, href: `${role}/squad`, count: 3 },
-    { name: 'Delegate', icon: UserGroupIcon, href: `${role}/delegate` },
-  ]
-
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const navigation = {
+    delegate: [
+      { name: 'Home', icon: IoHome, href: `${role}/home` },
+      { name: 'Squads', icon: IoPeople, href: `${role}/squads` },
+    ],
+    opsmanager: [
+      { name: 'Home', icon: IoHome, href: `${role}/home` },
+      { name: 'Types', icon: IoDuplicate, href: `${role}/types` },
+      { name: 'Bands', icon: IoReceipt, href: `${role}/bands` },
+      { name: 'Icas', icon: IoBagAdd, href: `${role}/icas` },
+    ],
+    manager: [
+      { name: 'Home', icon: IoHome, href: `${role}/home` },
+      { name: 'Squads', icon: IoPeople, href: `${role}/squads` },
+      { name: 'Delegate', icon: IoBody, href: `${role}/delegate` },
+    ],
+    admin: [
+      { name: 'Home', icon: IoHome, href: `${role}/home` },
+      { name: 'countries', icon: IoGlobeOutline, href: `${role}/countries` },
+    ],
+  }
 
   return (
     <div className={isSideMenuClose ? 'md:ml-28' : 'md:ml-60'}>
@@ -89,7 +98,7 @@ export default function SideMenu({ role }) {
           onClick={() => setSidebarOpen(true)}
         >
           <span className='sr-only'>Open sidebar</span>
-          <MenuIcon className='h-8 w-8' aria-hidden='true' />
+          <IoMenu className='h-8 w-8' aria-hidden='true' />
         </button>
       </div>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -131,10 +140,10 @@ export default function SideMenu({ role }) {
                 <div className='absolute top-0 right-0 -mr-12 pt-2'>
                   <button
                     type='button'
-                    className='ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset text-white focus:ring-white'
+                    className='flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset text-white focus:ring-white'
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <XIcon />
+                    <IoCloseSharp />
                   </button>
                 </div>
               </Transition.Child>
@@ -146,7 +155,7 @@ export default function SideMenu({ role }) {
                   className='mt-5 flex-1 px-2 bg-white space-y-10'
                   aria-label='Sidebar'
                 >
-                  {navigation.map((item) => (
+                  {navigation[role].map((item) => (
                     <NavLinksMobile item={item} key={item.name} />
                   ))}
                 </nav>
@@ -201,7 +210,7 @@ export default function SideMenu({ role }) {
               className='mt-5 flex-1 px-2 bg-white space-y-10'
               aria-label='Sidebar'
             >
-              {navigation.map((item) => (
+              {navigation[role].map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.href}
@@ -229,38 +238,32 @@ export default function SideMenu({ role }) {
                   ) : (
                     ''
                   )}
-
-                  {item.count ? (
-                    <span
-                      className={classNames(
-                        item.current
-                          ? 'bg-white'
-                          : 'bg-gray-100 group-hover:bg-gray-200',
-                        'inline-block py-0.5 ml-2 px-3 text-xs font-medium rounded-full'
-                      )}
-                    >
-                      {item.count}
-                    </span>
-                  ) : null}
                 </NavLink>
               ))}
             </nav>
           </div>
-          <div className='flex-shrink-0 flex border-t border-gray-200 p-4 w-full'>
-            <div className='flex items-center w-full'>
+          <div
+            className={`border-t border-gray-200 p-4 w-full ${
+              isSideMenuClose
+                ? 'flex-col text-center gap-y-5'
+                : 'flex flex-shrink-0'
+            }`}
+          >
+            <div
+              className={`flex ${
+                isSideMenuClose ? 'justify-center' : 'w-full'
+              }`}
+            >
               <div>
-                <a href='src/components/Shared/Components/SideMenu#'>
+                <a href='#'>
                   <img
                     className='inline-block h-8 w-8 rounded-full'
-                    src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                    src='https://dreamvilla.life/wp-content/uploads/2017/07/dummy-profile-pic.png '
                     alt=''
                   />
                 </a>
               </div>
-              <a
-                href='src/components/Shared/Components/SideMenu#'
-                className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}
-              >
+              <a href='#' className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}>
                 <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>
                   Diego Mojarro
                 </p>
@@ -270,7 +273,11 @@ export default function SideMenu({ role }) {
               </a>
             </div>
             <button>
-              <LogoutIcon className='text-gray-500 hover:text-black w-6 ml-3' />
+              <LogoutIcon
+                className={`text-gray-500 hover:text-black w-6 ${
+                  isSideMenuClose ? 'mt-5' : ''
+                }`}
+              />
             </button>
           </div>
         </div>

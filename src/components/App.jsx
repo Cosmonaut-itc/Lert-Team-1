@@ -7,7 +7,7 @@ import LandingPage from './Shared/LandingPage'
 import SidebarLayout from './Shared/Components/SidebarLayout'
 import ManagerDelegate from './Manager/delegate'
 import ManagerHome from './Manager/Home'
-import ManagerSquad from './Manager/squad'
+import ManagerSquads from './Manager/squads'
 import Login from './Shared/Login'
 import OPSManagerHome from './OPSManager/Home'
 import AdminHome from './Admin/Home'
@@ -28,7 +28,7 @@ function App() {
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<ManagerHome />} />
                 <Route path='/manager/delegate' element={<ManagerDelegate />} />
-                <Route path='manager/squad' element={<ManagerSquad />} />
+                <Route path='manager/squads' element={<ManagerSquads />} />
               </Route>
             </Route>
 

@@ -497,7 +497,7 @@ export default function Home() {
             />
           </button>
         </div>
-        <div className='flex app'>
+        <div className='flex'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
             {ExpensesDD.map((data) => (
               <ExpensesCard
