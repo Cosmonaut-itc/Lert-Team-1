@@ -297,5 +297,22 @@ def expenses():
 
     return "Added expense", 201
 
+
+@app.route('/add_delegate', methods=['POST'])
+@login_required
+def add_delegate():
+    delegate_id = randint(0, 10000)
+    name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    mail = request.form.get('mail')
+
+    new_delegate = Delegate(delegate_id, name, last_name, mail)
+
+    db.session.add(new_delegate)
+    db.session.commit()
+
+    return "Added delegate", 201
+
+
 if __name__ == '__main__':
     app.run()

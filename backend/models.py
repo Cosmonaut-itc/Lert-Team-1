@@ -92,6 +92,17 @@ class TypeOfExpense(db.Model):
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
+
+class Delegate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, index=True)
+    last_name = db.Column(db.Text, index=True)
+    email = db.Column(db.Text, index=True)
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+
+
 """
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
