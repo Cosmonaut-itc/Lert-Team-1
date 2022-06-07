@@ -8,7 +8,7 @@ export default function ManagerCard({ id, name, email, team, statusColor }) {
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 pl-6 relative shadow-lg overflow-visible w-full'
+      className='m-4 pt-1 pl-6 relative shadow-lg overflow-visible'
       key={id}
     >
       <div

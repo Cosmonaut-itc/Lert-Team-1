@@ -59,8 +59,8 @@ export default function Home() {
   const [openAddModifyOpsManager, setOpenAddModifyOpsManager] = useState(false)
 
   return (
-    <div className='pl-10 h-screen '>
-      <div className='flex items-center gap-7 pt-16'>
+    <div className='mt-16 ml-10 h-screen '>
+      <div className='flex items-center gap-7'>
         <div className='text-2xl font-semibold text-gray-600'>Ops Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
           <SearchBar />
@@ -72,14 +72,15 @@ export default function Home() {
           setOpen={setOpenAddModifyOpsManager}
         />
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
-          <button
-            className='flex justify-center items-center'
-            onClick={() => {
-              setOpenAddModifyOpsManager(true)
-            }}
-          >
-            <PlusCircleIcon className='flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
-          </button>
+          <div className='flex justify-center items-center'>
+            <button
+              onClick={() => {
+                setOpenAddModifyOpsManager(true)
+              }}
+            >
+              <PlusCircleIcon className='flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
+            </button>
+          </div>
           {OpsManagersDD.map((data) => (
             <OpsManagerCard
               key={data.id}
