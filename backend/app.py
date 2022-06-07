@@ -417,7 +417,15 @@ def type_of_expenses():
         return jsonify(response), 201
 
     if request.method == 'POST':
-        pass
+        type_id = randint(0, 10000)
+        name_expense = request.form.get('type_of_expense')
+
+        new_type_of_expense = TypeOfExpense(type_id, name_expense, current_user.country_id)
+
+        db.session.add(new_type_of_expense)
+        db.session.commit()
+
+        return "Type of expense added", 201
 
 
 if __name__ == '__main__':
