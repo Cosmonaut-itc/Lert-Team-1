@@ -370,7 +370,7 @@ def expenses():
     return "Added expense", 201
 
 
-@app.route('/add_delegate', methods=['POST'])
+@app.route('/addDelegate', methods=['POST'])
 @login_required
 def add_delegate():
     delegate_id = randint(0, 10000)
@@ -386,7 +386,7 @@ def add_delegate():
     return "Added delegate", 201
 
 
-@app.route('/add_squad', methods=['POST'])
+@app.route('/addSquad', methods=['POST'])
 @login_required
 def add_squad():
     squad_id = randint(0, 10000)
@@ -399,6 +399,25 @@ def add_squad():
 
     return "Added squad", 201
 
+
+@app.route('/typeOfExpense', methods=['GET', 'POST'])
+@login_required
+def type_of_expenses():
+    if request.method == 'GET':
+        type_expense = TypeOfExpense.query.all()
+        db.session.commit()
+
+        if not type_expense:
+            return "No type of expense for your user", 404
+
+        response = []
+        for expense in type_expense:
+            response.append(expense.as_dict())
+
+        return jsonify(response), 201
+
+    if request.method == 'POST':
+        pass
 
 
 if __name__ == '__main__':
