@@ -55,7 +55,7 @@ export default function Countries() {
           open={openAddModifyCountry}
           setOpen={setOpenAddModifyCountry}
         />
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3'>
           <div className='flex justify-center items-center'>
             <button
               onClick={() => {

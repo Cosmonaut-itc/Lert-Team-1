@@ -89,7 +89,7 @@ export default function Home() {
         </Button>
       </div>
       <div className='flex justify-center md:justify-start pt-3'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3'>
           <div className='flex justify-center items-center'>
             <button>
               <PlusCircleIcon className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />

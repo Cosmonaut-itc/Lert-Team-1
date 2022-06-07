@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import NotFound from './Shared/NotFound'
+
 import { AuthProvider } from './context/authProvider'
 
 import Login from './Shared/Login'
@@ -26,14 +28,15 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className='md:flex bg-slate-100'>
+        <div className='md:flex bg-slate-100 h-screen'>
           <Routes>
             {/* Public routes */}
+            <Route path='*' element={<NotFound />} />
             <Route path='/login' element={<Login />} />
             <Route path='/landingpage' element={<LandingPage />} />
 
             {/* Manager routes */}
-            <Route element={<RequireAuth allowedRole={0} />}>
+            <Route /* element={<RequireAuth allowedRole={0} />} */>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<ManagerHome />} />
                 <Route path='/manager/delegate' element={<ManagerDelegate />} />
@@ -42,7 +45,7 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route element={<RequireAuth allowedRole={1} />}>
+            <Route /* element={<RequireAuth allowedRole={1} />} */>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/opsmanager/home' element={<OPSManagerHome />} />
                 <Route path='/opsmanager/types' element={<OPSManagerTypes />} />
@@ -52,7 +55,7 @@ function App() {
             </Route>
 
             {/* Admin routes */}
-            <Route element={<RequireAuth allowedRole={2} />}>
+            <Route /* element={<RequireAuth allowedRole={2} />} */>
               <Route element={<SidebarLayout role='admin' />}>
                 <Route path='/admin/home' element={<AdminHome />} />
                 <Route path='/admin/countries' element={<AdminCountries />} />
