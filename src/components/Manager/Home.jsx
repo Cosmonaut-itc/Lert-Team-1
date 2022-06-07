@@ -118,15 +118,20 @@ export default function Home() {
   const [modify_id, setModify_id] = useState('')
   const [modify_employee, setModify_employee] = useState('')
 
-  // Employees and recovery
+  // Employees and recovery states
   const [band_id, setBand_id] = useState('')
   const [band_selection, setBand_selection] = useState(defaultSelection)
 
-  // Recovery
+  // Recovery States
+  const [openEmployeeRecovery, setOpenEmployeeRecovery] = useState(false)
+  const cancelButtonRefEmployeeRecovery = useRef(null)
+
   const [month1Band_id, setMonth1Band_id] = useState('')
-  const [month1Band_selection, setMonth1Band_selection] = useState(defaultSelection)
+  const [month1Band_selection, setMonth1Band_selection] =
+    useState(defaultSelection)
   const [month2Band_id, setMonth2Band_id] = useState('')
-  const [month2Band_selection, setMonth2Band_selection] = useState(defaultSelection)
+  const [month2Band_selection, setMonth2Band_selection] =
+    useState(defaultSelection)
   const [hour1, setHour1] = useState(0)
   const [hour2, setHour2] = useState(0)
   const [hour3, setHour3] = useState(0)
@@ -135,10 +140,6 @@ export default function Home() {
   // Add-Modify expenses states
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
-
-  // Employee-recovery states
-  const [openEmployeeRecovery, setOpenEmployeeRecovery] = useState(false)
-  const cancelButtonRefEmployeeRecovery = useRef(null)
 
   /* Add-Modify employee functions */
 
@@ -206,6 +207,7 @@ export default function Home() {
     setSquad_id('')
     setSquad_selection(defaultSelection)
     setModify_id('')
+    setModify_employee('')
   }
 
   const createEmployeeForm = () => {
@@ -314,11 +316,11 @@ export default function Home() {
 
     try {
       const response = await api.put(
-          EMPLOYEES_URL + '/' + modify_id + '/recovery',
-          bodyFormData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          }
+        EMPLOYEES_URL + '/' + modify_id + '/recovery',
+        bodyFormData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
       )
       setOperationMessage('Recovery Modified')
       fetchTeam()
@@ -493,57 +495,77 @@ export default function Home() {
       <div className='flex'>
         <div className='items-center flex'>
           {dataReady && (
-            <ModalEmployeeRecoveryForm
-              open={openEmployeeRecovery}
-              setOpen={setOpenEmployeeRecovery}
-              cancelButtonRef={cancelButtonRefEmployeeRecovery}
-              quarter={quarter}
-
-            />
-          )}
-          {dataReady && (
-            <ModalAddModifyEmployeeForm
-              open={openTeamAdd}
-              setOpen={setOpenTeamAdd}
-              cancelButtonRef={cancelButtonRefTeam}
-              countries={countries}
-              bands={bands}
-              ICAS={ICAS}
-              squads={squads}
-              typesOfEmployee={typesOfEmployee}
-              isModify={modify_id !== ''}
-              first_name={first_name}
-              setFirst_name={setFirst_name}
-              last_name={last_name}
-              setLast_name={setLast_name}
-              email={email}
-              setEmail={setEmail}
-              setCountry_id={setCountry_id}
-              country_selection={country_selection}
-              setCountry_selection={setCountry_selection}
-              setTypeOfEmployee_id={setTypeOfEmployee_id}
-              typeOfEmployee_selection={typeOfEmployee_selection}
-              setTypeOfEmployee_selection={setTypeOfEmployee_selection}
-              setBand_id={setBand_id}
-              band_selection={band_selection}
-              setBand_selection={setBand_selection}
-              setICA_id={setICA_id}
-              ICA_selection={ICA_selection}
-              setICA_selection={setICA_selection}
-              setSquad_id={setSquad_id}
-              squad_selection={squad_selection}
-              setSquad_selection={setSquad_selection}
-              handleSubmit={
-                modify_id === ''
-                  ? handleSubmitAddEmployee
-                  : handleSubmitModifyEmployee
-              }
-            />
+            <>
+              <ModalAddModifyEmployeeForm
+                open={openTeamAdd}
+                setOpen={setOpenTeamAdd}
+                cancelButtonRef={cancelButtonRefTeam}
+                countries={countries}
+                bands={bands}
+                ICAS={ICAS}
+                squads={squads}
+                typesOfEmployee={typesOfEmployee}
+                isModify={modify_id !== ''}
+                first_name={first_name}
+                setFirst_name={setFirst_name}
+                last_name={last_name}
+                setLast_name={setLast_name}
+                email={email}
+                setEmail={setEmail}
+                setCountry_id={setCountry_id}
+                country_selection={country_selection}
+                setCountry_selection={setCountry_selection}
+                setTypeOfEmployee_id={setTypeOfEmployee_id}
+                typeOfEmployee_selection={typeOfEmployee_selection}
+                setTypeOfEmployee_selection={setTypeOfEmployee_selection}
+                setBand_id={setBand_id}
+                band_selection={band_selection}
+                setBand_selection={setBand_selection}
+                setICA_id={setICA_id}
+                ICA_selection={ICA_selection}
+                setICA_selection={setICA_selection}
+                setSquad_id={setSquad_id}
+                squad_selection={squad_selection}
+                setSquad_selection={setSquad_selection}
+                handleSubmit={
+                  modify_id === ''
+                    ? handleSubmitAddEmployee
+                    : handleSubmitModifyEmployee
+                }
+              />
+              <ModalEmployeeRecoveryForm
+                open={openEmployeeRecovery}
+                setOpen={setOpenEmployeeRecovery}
+                cancelButtonRef={cancelButtonRefEmployeeRecovery}
+                quarter={quarter}
+                first_name={first_name}
+                last_name={last_name}
+                email={email}
+                handleSubmit={handleSubmitModifyRecovery}
+                month1Band_id={month1Band_id}
+                setMonth1Band_id={setMonth1Band_id}
+                month1Band_selection={month1Band_selection}
+                setMonth1Band_selection={setMonth1Band_selection}
+                month2Band_id={month2Band_id}
+                setMonth2Band_id={setMonth2Band_id}
+                month2Band_selection={month2Band_selection}
+                setMonth2Band_selection={setMonth2Band_selection}
+                hour1={hour1}
+                setHour1={setHour1}
+                hour2={hour2}
+                setHour2={setHour2}
+                hour3={hour3}
+                setHour3={setHour3}
+                comment={comment}
+                setComment={setComment}
+              />
+            </>
           )}
           <button>
             <PlusCircleIcon
               className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
               onClick={() => {
+                console.log('a')
                 setModify_id('')
                 setModify_employee('')
                 setOpenTeamAdd(true)
@@ -553,7 +575,7 @@ export default function Home() {
         </div>
         <div className='flex app'>
           <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-            {TeamDD.map((data) => (
+            {team.map((data) => (
               <TeamCard
                 key={data.id}
                 employee={data}

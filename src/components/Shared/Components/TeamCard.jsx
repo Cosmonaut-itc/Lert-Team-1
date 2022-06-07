@@ -31,9 +31,9 @@ export default function TeamCard({
             <PencilAltIcon
               className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
               onClick={() => {
-                  setModify_id(employee.id)
-                  setModify_employee(employee)
-                  setOpenTeamAdd(true)
+                setModify_id(employee.id)
+                setModify_employee(employee)
+                setOpenTeamAdd(true)
               }}
             />
           </button>
@@ -64,6 +64,8 @@ export default function TeamCard({
             whiteSpace: 'nowrap',
           }}
           onClick={() => {
+            setModify_id(employee.id)
+            setModify_employee(employee)
             setOpenEmployeeRecovery(true)
           }}
         >

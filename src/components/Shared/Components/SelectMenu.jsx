@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -6,11 +6,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMenu({ label, options, alreadySelected }) {
-  const [selected, setSelected] = useState(options[alreadySelected])
-
+export default function SelectMenu({ label, options, selected, onChange }) {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={onChange}>
       {({ open }) => (
         <>
           <Listbox.Label className='block text-sm font-medium text-gray-700'>

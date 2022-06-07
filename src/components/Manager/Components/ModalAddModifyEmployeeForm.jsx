@@ -4,9 +4,13 @@ import SelectMenu from '../../Shared/Components/SelectMenu'
 import { MailIcon } from '@heroicons/react/solid'
 
 export default function ModalAddModifyEmployeeForm({
+  // Modal Logic
   open,
   cancelButtonRef,
   setOpen,
+  // Submit
+  handleSubmit,
+  // Fields
   countries,
   bands,
   ICAS,
@@ -34,7 +38,6 @@ export default function ModalAddModifyEmployeeForm({
   setSquad_id,
   squad_selection,
   setSquad_selection,
-  handleSubmit,
 }) {
   const submitButtonLabel = isModify ? 'Modify' : 'Save'
 
@@ -96,7 +99,7 @@ export default function ModalAddModifyEmployeeForm({
                         <div className='mt-1'>
                           <input
                             type='text'
-                            name='text'
+                            name='first_name'
                             id='first_name'
                             defaultValue={first_name}
                             className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
@@ -109,7 +112,7 @@ export default function ModalAddModifyEmployeeForm({
                         <SelectMenu
                           label='Type of employee'
                           options={typesOfEmployee}
-                          alreadySelected={typeOfEmployee_selection}
+                          selected={typeOfEmployee_selection}
                           onChange={(e) => {
                             setTypeOfEmployee_selection(e)
                             setTypeOfEmployee_id(e.id)
@@ -139,7 +142,7 @@ export default function ModalAddModifyEmployeeForm({
                         <SelectMenu
                           label='Band'
                           options={bands}
-                          alreadySelected={band_selection}
+                          selected={band_selection}
                           onChange={(e) => {
                             setBand_selection(e)
                             setBand_id(e.id)
@@ -175,7 +178,7 @@ export default function ModalAddModifyEmployeeForm({
                         <SelectMenu
                           label='ICA'
                           options={ICAS}
-                          alreadySelected={ICA_selection}
+                          selected={ICA_selection}
                           onChange={(e) => {
                             setICA_selection(e)
                             setICA_id(e.id)
@@ -186,7 +189,7 @@ export default function ModalAddModifyEmployeeForm({
                         <SelectMenu
                           label='Country'
                           options={countries}
-                          alreadySelected={country_selection}
+                          selected={country_selection}
                           onChange={(e) => {
                             setCountry_selection(e)
                             setCountry_id(e.id)
@@ -197,7 +200,7 @@ export default function ModalAddModifyEmployeeForm({
                         <SelectMenu
                           label='Squad'
                           options={squads}
-                          alreadySelected={squad_selection}
+                          selected={squad_selection}
                           onChange={(e) => {
                             setSquad_selection(e)
                             setSquad_id(e.id)
