@@ -45,7 +45,8 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route element={<RequireAuth allowedRole={1} />}>
+            {/* <Route element={<RequireAuth allowedRole={1} />}> */}
+            <Route>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/opsmanager/home' element={<OPSManagerHome />} />
                 <Route path='/opsmanager/types' element={<OPSManagerTypes />} />
