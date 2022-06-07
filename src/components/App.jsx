@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import NotFound from './Shared/NotFound'
+
 import { AuthProvider } from './context/authProvider'
 
 import Login from './Shared/Login'
@@ -26,9 +28,10 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className='md:flex bg-slate-100'>
+        <div className='md:flex bg-slate-100 h-screen'>
           <Routes>
             {/* Public routes */}
+            <Route path='*' element={<NotFound />} />
             <Route path='/login' element={<Login />} />
             <Route path='/landingpage' element={<LandingPage />} />
 
@@ -60,7 +63,7 @@ function App() {
             </Route>
 
             {/* Delegate routes */}
-            <Route element={<RequireAuth allowedRole={3} />} >
+            <Route element={<RequireAuth allowedRole={3} />}>
               <Route element={<SidebarLayout role='delegate' />}>
                 <Route path='/delegate/home' element={<DelegateHome />} />
                 <Route path='/delegate/squads' element={<DelegateSquads />} />

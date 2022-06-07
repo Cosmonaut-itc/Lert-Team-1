@@ -486,6 +486,7 @@ export default function Home() {
 
   return (
     <div className='pt-4 pl-10 w-full'>
+      <div></div>
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
         <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
           Status:{' '}
@@ -527,148 +528,149 @@ export default function Home() {
             />
         {/* </div> */}
       </div>
-
-      <div className='flex justify-around'>
-        <div className='flex items-center gap-7 w-full'>
-          <div className='text-2xl font-semibold text-gray-600'>Team</div>
+      <div className='flex flex-col justify-center h-3/4'>
+        <div className='flex justify-around'>
+          <div className='flex items-center gap-7 w-full'>
+            <div className='text-2xl font-semibold text-gray-600'>Team</div>
+            <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
+              <SearchBar />
+            </div>
+          </div>
+        </div>
+        <div className='flex'>
+          <div className='items-center flex'>
+            {dataReady && (
+              <>
+                <ModalAddModifyEmployeeForm
+                  open={openTeamAdd}
+                  setOpen={setOpenTeamAdd}
+                  cancelButtonRef={cancelButtonRefTeam}
+                  countries={countries}
+                  bands={bands}
+                  ICAS={ICAS}
+                  squads={squads}
+                  typesOfEmployee={typesOfEmployee}
+                  isModify={modify_id !== ''}
+                  first_name={first_name}
+                  setFirst_name={setFirst_name}
+                  last_name={last_name}
+                  setLast_name={setLast_name}
+                  email={email}
+                  setEmail={setEmail}
+                  setCountry_id={setCountry_id}
+                  country_selection={country_selection}
+                  setCountry_selection={setCountry_selection}
+                  setTypeOfEmployee_id={setTypeOfEmployee_id}
+                  typeOfEmployee_selection={typeOfEmployee_selection}
+                  setTypeOfEmployee_selection={setTypeOfEmployee_selection}
+                  setBand_id={setBand_id}
+                  band_selection={band_selection}
+                  setBand_selection={setBand_selection}
+                  setICA_id={setICA_id}
+                  ICA_selection={ICA_selection}
+                  setICA_selection={setICA_selection}
+                  setSquad_id={setSquad_id}
+                  squad_selection={squad_selection}
+                  setSquad_selection={setSquad_selection}
+                  handleSubmit={
+                    modify_id === ''
+                      ? handleSubmitAddEmployee
+                      : handleSubmitModifyEmployee
+                  }
+                />
+                <ModalEmployeeRecoveryForm
+                  open={openEmployeeRecovery}
+                  setOpen={setOpenEmployeeRecovery}
+                  cancelButtonRef={cancelButtonRefEmployeeRecovery}
+                  quarter={quarter}
+                  first_name={first_name}
+                  last_name={last_name}
+                  email={email}
+                  handleSubmit={handleSubmitModifyRecovery}
+                  month1Band_id={month1Band_id}
+                  setMonth1Band_id={setMonth1Band_id}
+                  month1Band_selection={month1Band_selection}
+                  setMonth1Band_selection={setMonth1Band_selection}
+                  month2Band_id={month2Band_id}
+                  setMonth2Band_id={setMonth2Band_id}
+                  month2Band_selection={month2Band_selection}
+                  setMonth2Band_selection={setMonth2Band_selection}
+                  hour1={hour1}
+                  setHour1={setHour1}
+                  hour2={hour2}
+                  setHour2={setHour2}
+                  hour3={hour3}
+                  setHour3={setHour3}
+                  comment={comment}
+                  setComment={setComment}
+                />
+              </>
+            )}
+            <button>
+              <PlusCircleIcon
+                className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
+                onClick={() => {
+                  console.log('a')
+                  setModify_id('')
+                  setModify_employee('')
+                  setOpenTeamAdd(true)
+                }}
+              />
+            </button>
+          </div>
+          <div className='flex app'>
+            <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
+              {TeamDD.map((data) => (
+                <TeamCard
+                  key={data.id}
+                  employee={data}
+                  setOpenTeamAdd={setOpenTeamAdd}
+                  handleDeleteEmployee={handleDeleteEmployee}
+                  setModify_id={setModify_id}
+                  setModify_employee={setModify_employee}
+                  setOpenEmployeeRecovery={setOpenEmployeeRecovery}
+                />
+              ))}
+            </ScrollMenu>
+          </div>
+        </div>
+        <div className='flex items-center gap-7 pt-16'>
+          <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
           <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
             <SearchBar />
           </div>
         </div>
-      </div>
-      <div className='flex'>
-        <div className='items-center flex'>
-          {dataReady && (
-            <>
-              <ModalAddModifyEmployeeForm
-                open={openTeamAdd}
-                setOpen={setOpenTeamAdd}
-                cancelButtonRef={cancelButtonRefTeam}
-                countries={countries}
-                bands={bands}
-                ICAS={ICAS}
-                squads={squads}
-                typesOfEmployee={typesOfEmployee}
-                isModify={modify_id !== ''}
-                first_name={first_name}
-                setFirst_name={setFirst_name}
-                last_name={last_name}
-                setLast_name={setLast_name}
-                email={email}
-                setEmail={setEmail}
-                setCountry_id={setCountry_id}
-                country_selection={country_selection}
-                setCountry_selection={setCountry_selection}
-                setTypeOfEmployee_id={setTypeOfEmployee_id}
-                typeOfEmployee_selection={typeOfEmployee_selection}
-                setTypeOfEmployee_selection={setTypeOfEmployee_selection}
-                setBand_id={setBand_id}
-                band_selection={band_selection}
-                setBand_selection={setBand_selection}
-                setICA_id={setICA_id}
-                ICA_selection={ICA_selection}
-                setICA_selection={setICA_selection}
-                setSquad_id={setSquad_id}
-                squad_selection={squad_selection}
-                setSquad_selection={setSquad_selection}
-                handleSubmit={
-                  modify_id === ''
-                    ? handleSubmitAddEmployee
-                    : handleSubmitModifyEmployee
-                }
-              />
-              <ModalEmployeeRecoveryForm
-                open={openEmployeeRecovery}
-                setOpen={setOpenEmployeeRecovery}
-                cancelButtonRef={cancelButtonRefEmployeeRecovery}
-                quarter={quarter}
-                first_name={first_name}
-                last_name={last_name}
-                email={email}
-                handleSubmit={handleSubmitModifyRecovery}
-                month1Band_id={month1Band_id}
-                setMonth1Band_id={setMonth1Band_id}
-                month1Band_selection={month1Band_selection}
-                setMonth1Band_selection={setMonth1Band_selection}
-                month2Band_id={month2Band_id}
-                setMonth2Band_id={setMonth2Band_id}
-                month2Band_selection={month2Band_selection}
-                setMonth2Band_selection={setMonth2Band_selection}
-                hour1={hour1}
-                setHour1={setHour1}
-                hour2={hour2}
-                setHour2={setHour2}
-                hour3={hour3}
-                setHour3={setHour3}
-                comment={comment}
-                setComment={setComment}
-              />
-            </>
-          )}
-          <button>
-            <PlusCircleIcon
-              className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
-              onClick={() => {
-                console.log('a')
-                setModify_id('')
-                setModify_employee('')
-                setOpenTeamAdd(true)
-              }}
-            />
-          </button>
-        </div>
-        <div className='flex app'>
-          <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-            {team.map((data) => (
-              <TeamCard
-                key={data.id}
-                employee={data}
-                setOpenTeamAdd={setOpenTeamAdd}
-                handleDeleteEmployee={handleDeleteEmployee}
-                setModify_id={setModify_id}
-                setModify_employee={setModify_employee}
-                setOpenEmployeeRecovery={setOpenEmployeeRecovery}
-              />
-            ))}
-          </ScrollMenu>
-        </div>
-      </div>
-      <div className='flex items-center gap-7 pt-16'>
-        <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
-        <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
-          <SearchBar />
-        </div>
-      </div>
-      <div className='flex'>
-        <div className='items-center flex'>
-          <ModalExpensesAdd
-            open={openExpensesAdd}
-            setOpen={setOpenExpensesAdd}
-            cancelButtonRef={cancelButtonRefExpenses}
-          />
-          <button>
-            <PlusCircleIcon
-              className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
-              onClick={() => {
-                setOpenExpensesAdd(true)
-              }}
-            />
-          </button>
-        </div>
-
         <div className='flex'>
-          <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-            {ExpensesDD.map((data) => (
-              <ExpensesCard
-                key={data.id}
-                item={data.item}
-                email={data.email}
-                date={data.date}
-                price={data.price}
-                section={data.section}
+          <div className='items-center flex'>
+            <ModalExpensesAdd
+              open={openExpensesAdd}
+              setOpen={setOpenExpensesAdd}
+              cancelButtonRef={cancelButtonRefExpenses}
+            />
+            <button>
+              <PlusCircleIcon
+                className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
+                onClick={() => {
+                  setOpenExpensesAdd(true)
+                }}
               />
-            ))}
-          </ScrollMenu>
+            </button>
+          </div>
+
+          <div className='flex'>
+            <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
+              {ExpensesDD.map((data) => (
+                <ExpensesCard
+                  key={data.id}
+                  item={data.item}
+                  email={data.email}
+                  date={data.date}
+                  price={data.price}
+                  section={data.section}
+                />
+              ))}
+            </ScrollMenu>
+          </div>
         </div>
       </div>
     </div>
