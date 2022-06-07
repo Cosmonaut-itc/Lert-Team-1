@@ -56,14 +56,15 @@ export default function Countries() {
           setOpen={setOpenAddModifyCountry}
         />
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
-          <button
-            className='flex justify-center items-center'
-            onClick={() => {
-              setOpenAddModifyCountry(true)
-            }}
-          >
-            <PlusCircleIcon className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
-          </button>
+          <div className='flex justify-center items-center'>
+            <button
+              onClick={() => {
+                setOpenAddModifyCountry(true)
+              }}
+            >
+              <PlusCircleIcon className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
+            </button>
+          </div>
           {CountriesDD.map((data) => (
             <CountryCard key={data.id} country={data.country} />
           ))}

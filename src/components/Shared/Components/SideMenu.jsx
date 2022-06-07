@@ -88,7 +88,7 @@ export default function SideMenu({ role }) {
     ],
     admin: [
       { name: 'Home', icon: IoHome, href: `${role}/home` },
-      { name: 'countries', icon: IoGlobeOutline, href: `${role}/countries` },
+      { name: 'Countries', icon: IoGlobeOutline, href: `${role}/countries` },
     ],
   }
 
