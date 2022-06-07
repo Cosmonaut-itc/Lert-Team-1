@@ -36,7 +36,7 @@ function App() {
             <Route path='/landingpage' element={<LandingPage />} />
 
             {/* Manager routes */}
-            <Route /* element={<RequireAuth allowedRole={0} />} */>
+            <Route element={<RequireAuth allowedRole={0} />}>
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<ManagerHome />} />
                 <Route path='/manager/delegate' element={<ManagerDelegate />} />
@@ -45,7 +45,7 @@ function App() {
             </Route>
 
             {/* OPSManager routes */}
-            <Route /* element={<RequireAuth allowedRole={1} />} */>
+            <Route element={<RequireAuth allowedRole={1} />}>
               <Route element={<SidebarLayout role='opsmanager' />}>
                 <Route path='/opsmanager/home' element={<OPSManagerHome />} />
                 <Route path='/opsmanager/types' element={<OPSManagerTypes />} />
@@ -55,7 +55,7 @@ function App() {
             </Route>
 
             {/* Admin routes */}
-            <Route /* element={<RequireAuth allowedRole={2} />} */>
+            <Route element={<RequireAuth allowedRole={2} />}>
               <Route element={<SidebarLayout role='admin' />}>
                 <Route path='/admin/home' element={<AdminHome />} />
                 <Route path='/admin/countries' element={<AdminCountries />} />
@@ -63,7 +63,7 @@ function App() {
             </Route>
 
             {/* Delegate routes */}
-            <Route /* element={<RequireAuth allowedRole={3} />} */>
+            <Route element={<RequireAuth allowedRole={3} />}>
               <Route element={<SidebarLayout role='delegate' />}>
                 <Route path='/delegate/home' element={<DelegateHome />} />
                 <Route path='/delegate/squads' element={<DelegateSquads />} />
