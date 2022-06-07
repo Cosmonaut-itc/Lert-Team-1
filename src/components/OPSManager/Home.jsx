@@ -65,7 +65,7 @@ const TeamDD = [
 
 export default function Home() {
   return (
-    <div className='pt-16 pl-10 h-screen'>
+    <div className='mt-16 ml-10 h-max'>
       <div className='flex items-center gap-7 justify-between'>
         <div className='text-2xl font-semibold text-gray-600'>Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>

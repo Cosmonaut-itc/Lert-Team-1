@@ -59,8 +59,8 @@ export default function Home() {
   const [openAddModifyOpsManager, setOpenAddModifyOpsManager] = useState(false)
 
   return (
-    <div className='pl-10 h-screen '>
-      <div className='flex items-center gap-7 pt-16'>
+    <div className='mt-16 ml-10 h-screen '>
+      <div className='flex items-center gap-7'>
         <div className='text-2xl font-semibold text-gray-600'>Ops Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
           <SearchBar />
