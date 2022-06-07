@@ -6,20 +6,41 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMenu({ label, options, selected, onChange, border }) {
+
+
+
+export default function SelectMenu({ options, selected, onChange }) {
+
+  var color = ""
+
+  switch (selected.id) {
+    case 1:
+      color="bg-red-600 opacity-90"
+      break;
+    case 2:
+      color="bg-gradient-to-b from-orange-400 to-yellow-300"
+      break;
+    case 3:
+      color="bg-gradient-to-r from-emerald-500 to-lime-600"
+      break;
+  
+    default:
+      break;
+  }
+
   return (
     <Listbox value={selected} onChange={onChange}>
       {({ open }) => (
         <>
-          <Listbox.Label className='block text-sm font-medium text-gray-700'>
-            {label}
-          </Listbox.Label>
-          <div className='mt-1 relative'>
-            <Listbox.Button className={` relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${selected.color ?  `${selected.color}` : "bg-white"} ${border ? `${border}`: "border border-gray-300"}`} >
-              <span className='block truncate'>{selected.name}</span>
+          {/* <Listbox.Label className='block text-sm font-medium text-gray-700'>
+            {"hola"}
+          </Listbox.Label> */}
+          <div className='mt-1 relative mr-4'>
+            <Listbox.Button className={`relative w-full rounded-md shadow-sm px-7 font-bold  py-2 text-center cursor-default focus:outline-none  sm:text-sm ${color ?  `${color}` : "bg-black"}` }>
+              <span className='text-left mr-2 truncate text-white'>{selected.name}</span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                 <SelectorIcon
-                  className='h-5 w-5 text-gray-400'
+                  className='h-5 w-5 text-white'
                   aria-hidden='true'
                 />
               </span>
@@ -32,7 +53,7 @@ export default function SelectMenu({ label, options, selected, onChange, border 
               leaveFrom='opacity-100'
               leaveTo='opacity-0'
             >
-              <Listbox.Options className='absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
+              <Listbox.Options className='absolute whitespace-wrap z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
                 {options.map((person) => (
                   <Listbox.Option
                     key={person.id}

@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
+import SelectMenu from '../Shared/Components/SelectMenu'
+import ProgressBar from '../Shared/Components/ProgressBar'
 import ExpensesCard from './Components/ExpensesCard'
 import ModalAddModifyEmployeeForm from './Components/ModalAddModifyEmployeeForm'
 import ModalEmployeeRecoveryForm from './Components/ModalEmployeeRecoveryForm'
@@ -102,6 +104,8 @@ export default function Home() {
   const cancelButtonRefTeam = useRef(null)
 
   const defaultSelection = { id: 0, name: 'Select' }
+  const inProgressBar = { id: 0, name: "In Progress", color: "bg-orange-400" }
+
   const [operationMessage, setOperationMessage] = useState('')
   const [first_name, setFirst_name] = useState('')
   const [last_name, setLast_name] = useState('')
@@ -142,6 +146,11 @@ export default function Home() {
   const cancelButtonRefExpenses = useRef(null)
 
   /* Add-Modify employee functions */
+
+  // status states
+
+  const [status, setStatus] = useState(inProgressBar)
+  const [statusId, setStatusId] = useState(0) 
 
   const populateFormForModify = (employee) => {
     setFirst_name(employee.first_name)
@@ -370,6 +379,8 @@ export default function Home() {
     }
   }
 
+  
+
   const fetchBands = async () => {
     try {
       const response = await api.get('/bands')
@@ -472,16 +483,49 @@ export default function Home() {
     }
   }, [modify_id])
 
+
   return (
     <div className='pt-4 pl-10 w-full'>
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
-        <div className='text-xl font-semibold text-gray-600 invisible md:visible'>
+        <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
           Status:{' '}
         </div>
-        <div className='flex items-center pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'>
-          <p>In progress</p>
-          <ArrowDownIcon className='w-4 h-5 m-2' />
-        </div>
+        {/* <div className='flex items-center align-middle pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'> */}
+        {/* <SelectMenu
+          options={[
+            {name: "Alexis"},
+            {name: "Diego"}
+          ]}
+          selected={inProgressBar}
+          border="border-none"
+          onChange={(e) => {
+            setTypeOfEmployee_selection(e)
+            setTypeOfEmployee_id(e.id)
+          }}
+            /> */}
+
+            <ProgressBar
+              selected={status}
+              options = {[
+                {
+                  id: 1,
+                  name: "Red" 
+                },
+                {
+                  id: 2,
+                  name: "Yellow" 
+                },
+                {
+                  id: 3,
+                  name: "Green" 
+                },
+              ]}
+              onChange={(e) => {
+                setStatus(e)
+                setStatusId(e.id)
+              }}
+            />
+        {/* </div> */}
       </div>
 
       <div className='flex justify-around'>
