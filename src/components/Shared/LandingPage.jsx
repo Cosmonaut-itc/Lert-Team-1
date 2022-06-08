@@ -2,6 +2,7 @@ import graphicsIcon from '../../assets/icons/graphicsIcon.png'
 import LiveDemo from './Components/LiveDemo'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import Footer from './Components/Footer'
 
 function LandingPage() {
   const { auth } = useAuth()
@@ -60,6 +61,7 @@ function LandingPage() {
             alt=''
           />
         </div>
+        <Footer />
       </main>
     </div>
   )
