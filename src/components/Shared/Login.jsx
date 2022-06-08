@@ -39,7 +39,7 @@ export default function Login() {
 
     try {
       const response = await api.post(LOGIN_URL, bodyFormData, {
-        headers: { 'Content-Type': 'multipart/form-data'}
+        headers: { 'Content-Type': 'multipart/form-data' },
       })
       const role = response?.data?.role
       console.log(role)
@@ -64,7 +64,7 @@ export default function Login() {
   }
 
   return (
-    <section className='min-h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+    <section className='min-h-screen w-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       <p
         ref={errRef}
         className={errMsg ? 'errmsg' : 'offscreen'}
@@ -72,7 +72,7 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <div className='max-w-md w-full space-y-8'>
+      <div className='max-w-md w-full space-y-8 bg-white rounded-xl shadow-lg px-6 pb-6'>
         <div>
           <h2 className='mt-6 text-left text-3xl font-base text-gray-900'>
             Log in to IBM
