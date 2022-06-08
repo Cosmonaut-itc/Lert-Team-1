@@ -15,6 +15,7 @@ export default function ModalEmployeeRecoveryForm({
   first_name,
   last_name,
   email,
+  bands,
   month1Band_id,
   setMonth1Band_id,
   month1Band_selection,
@@ -106,19 +107,19 @@ export default function ModalEmployeeRecoveryForm({
                                     scope='col'
                                     className=' py-3 border-r text-xl text-center font-bold  capitalize leading-7'
                                   >
-                                    February
+                                    {quarter[0]}
                                   </th>
                                   <th
                                     scope='col'
                                     className=' py-3 border-r text-xl text-center font-bold  capitalize leading-7'
                                   >
-                                    January
+                                    {quarter[1]}
                                   </th>
                                   <th
                                     scope='col'
                                     className=' py-3  text-xl text-center font-bold  capitalize leading-7'
                                   >
-                                    March
+                                    {quarter[2]}
                                   </th>
 
                                   {/* <th scope="col" className="relative px-6 py-3">

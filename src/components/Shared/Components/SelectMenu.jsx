@@ -6,13 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMenu({
-  label,
-  options,
-  selected,
-  onChange,
-  border,
-}) {
+export default function SelectMenu({ label, options, selected, onChange }) {
   return (
     <Listbox value={selected} onChange={onChange}>
       {({ open }) => (
@@ -22,9 +16,8 @@ export default function SelectMenu({
           </Listbox.Label>
           <div className='mt-1 relative'>
             <Listbox.Button
-              className={` relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                selected.color ? `${selected.color}` : 'bg-white'
-              } ${border ? `${border}` : 'border border-gray-300'}`}
+              className={`relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white
+          border border-gray-300`}
             >
               <span className='block truncate'>{selected.name}</span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>

@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
-import SelectMenu from '../Shared/Components/SelectMenu'
-import ProgressBar from '../Shared/Components/ProgressBar'
+import StatusDropdown from '../Shared/Components/StatusDropdown'
 import ExpensesCard from './Components/ExpensesCard'
 import ModalAddModifyEmployeeForm from './Components/ModalAddModifyEmployeeForm'
 import ModalEmployeeRecoveryForm from './Components/ModalEmployeeRecoveryForm'
@@ -150,7 +149,7 @@ export default function Home() {
   // status states
 
   const [status, setStatus] = useState(inProgressBar)
-  const [statusId, setStatusId] = useState(0) 
+  const [statusId, setStatusId] = useState(0)
 
   const populateFormForModify = (employee) => {
     setFirst_name(employee.first_name)
@@ -379,7 +378,7 @@ export default function Home() {
     }
   }
 
-  
+
 
   const fetchBands = async () => {
     try {
@@ -505,20 +504,20 @@ export default function Home() {
           }}
             /> */}
 
-            <ProgressBar
+            <StatusDropdown
               selected={status}
               options = {[
                 {
                   id: 1,
-                  name: "Red" 
+                  name: "Red"
                 },
                 {
                   id: 2,
-                  name: "Yellow" 
+                  name: "Yellow"
                 },
                 {
                   id: 3,
-                  name: "Green" 
+                  name: "Green"
                 },
               ]}
               onChange={(e) => {

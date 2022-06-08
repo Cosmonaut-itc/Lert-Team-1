@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
-import SelectMenu from '../Shared/Components/SelectMenu'
-import ProgressBar from '../Shared/Components/StatusDropdown'
+import StatusDropdown from '../Shared/Components/StatusDropdown'
 import ExpensesCard from './Components/ExpensesCard'
 import ModalAddModifyEmployeeForm from './Components/ModalAddModifyEmployeeForm'
 import ModalEmployeeRecoveryForm from './Components/ModalEmployeeRecoveryForm'
@@ -151,8 +150,7 @@ export default function Home() {
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
 
-  /* Modify state functions */
-
+  /* Modify status functions */
   const handleSubmitModifyStatus = async () => {
 
     const bodyFormData = new FormData()
@@ -380,7 +378,6 @@ export default function Home() {
       const response = await api.get('/manager/status')
       setStatusId(response.data.status_id)
       setStatus(statusOptions[response.data.status_id])
-      console.log(response.data.status_id)
     } catch (err) {
       if (err.response) {
         console.log(err.response.data)
@@ -610,7 +607,7 @@ export default function Home() {
         <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
           Status:{' '}
         </div>
-        <ProgressBar
+        <StatusDropdown
           selected={status}
           options={statusOptions}
           onChange={(e) => {
