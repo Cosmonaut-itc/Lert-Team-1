@@ -24,7 +24,7 @@ export default function ExpensesCard({
           <p className='text-gray-500 text-sm'>{email}</p>
           <p className='text-gray-500 text-xs'>{date}</p>
           <div className='flex text-xl font-semibold pt-4'>
-            <p className='text-blue-500'>$</p>
+            <p className='text-blue-500'>$&nbsp;</p>
             <p>{price}</p>
           </div>
         </div>

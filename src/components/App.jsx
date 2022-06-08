@@ -56,7 +56,8 @@ function App() {
             </Route>
 
             {/* Admin routes */}
-            <Route element={<RequireAuth allowedRole={2} />}>
+            {/* <Route element={<RequireAuth allowedRole={2} />}> */}
+            <Route>
               <Route element={<SidebarLayout role='admin' />}>
                 <Route path='/admin/home' element={<AdminHome />} />
                 <Route path='/admin/countries' element={<AdminCountries />} />
@@ -64,7 +65,8 @@ function App() {
             </Route>
 
             {/* Delegate routes */}
-            <Route element={<RequireAuth allowedRole={3} />}>
+            {/* <Route element={<RequireAuth allowedRole={3} />}> */}
+            <Route>
               <Route element={<SidebarLayout role='delegate' />}>
                 <Route path='/delegate/home' element={<DelegateHome />} />
                 <Route path='/delegate/squads' element={<DelegateSquads />} />
