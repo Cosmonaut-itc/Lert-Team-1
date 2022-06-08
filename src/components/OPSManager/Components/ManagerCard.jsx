@@ -1,20 +1,17 @@
-import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 
 export default function ManagerCard({ id, name, email, team, statusColor }) {
   console.log(statusColor)
   return (
-    <Card
-      sx={{ borderRadius: 3 }}
-      variant='outlined'
-      className='m-4 pt-1 pl-6 relative shadow-lg overflow-visible'
+    <div
+      className='m-4 pt-1 pl-6 relative shadow-lg border overflow-visible bg-white rounded-xl'
       key={id}
     >
       <div
-        className='rounded-full absolute p-4 shadow-sm -top-2 -right-2'
+        className='rounded-full absolute p-4 -top-2 -right-2'
         style={{ backgroundColor: statusColor }}
-      ></div>
+      />
       <div className='text-left pb-10'>
         <h4 className='font-bold text-lg pt-2'>{name}</h4>
         <p className='underline text-gray-500 text-sm'>{email}</p>
@@ -41,6 +38,6 @@ export default function ManagerCard({ id, name, email, team, statusColor }) {
           Download
         </Button>
       </CardActions>
-    </Card>
+    </div>
   )
 }
