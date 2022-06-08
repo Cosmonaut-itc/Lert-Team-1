@@ -70,7 +70,7 @@ def signup():
     db.session.commit()
     if user_exists:
         return "User already exist", 409
-    new_user = User(email=email, password=ph.hash(password), role=role, country_id=country_id)
+    new_user = User(email=email, password=ph.hash(password), role=role, country_id=country_id, status=0)
     db.session.add(new_user)
     db.session.commit()
     return "Added user", 201
@@ -251,6 +251,22 @@ def quarter():
         j = j + 1
 
     return result
+
+
+@app.route('/manager/status', methods=['GET', 'PUT'])
+@login_required
+def manager_status():
+    if request.method == 'GET':
+        return {'status_id': current_user.status}
+
+    new_status = request.form.get('status_id')
+    print(new_status)
+    user_exists = User.query.filter_by(id=current_user.id).first()
+    if not user_exists:
+        return "Error finding your user", 404
+    user_exists.status = new_status
+    db.session.commit()
+    return "User added"
 
 
 @app.route('/countries')

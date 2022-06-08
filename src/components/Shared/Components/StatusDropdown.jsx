@@ -11,19 +11,19 @@ function classNames(...classes) {
 
 export default function SelectMenu({ options, selected, onChange }) {
 
-  var color = ""
+  let color = ""
 
   switch (selected.id) {
-    case 1:
+    case 0:
       color="bg-red-600 opacity-90"
       break;
-    case 2:
+    case 1:
       color="bg-gradient-to-b from-orange-400 to-yellow-300"
       break;
-    case 3:
+    case 2:
       color="bg-gradient-to-r from-emerald-500 to-lime-600"
       break;
-  
+
     default:
       break;
   }

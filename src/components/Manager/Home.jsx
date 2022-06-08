@@ -4,7 +4,7 @@ import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import SelectMenu from '../Shared/Components/SelectMenu'
-import ProgressBar from '../Shared/Components/ProgressBar'
+import ProgressBar from '../Shared/Components/StatusDropdown'
 import ExpensesCard from './Components/ExpensesCard'
 import ModalAddModifyEmployeeForm from './Components/ModalAddModifyEmployeeForm'
 import ModalEmployeeRecoveryForm from './Components/ModalEmployeeRecoveryForm'
@@ -99,13 +99,19 @@ export default function Home() {
   const [typesOfEmployee, setTypesOfEmployee] = useState([])
   const [dataReady, setDataReady] = useState(false)
 
+  // Status states
+  const statusOptions = [
+    { id: 0, name: 'Not started' },
+    { id: 1, name: 'In progress' },
+    { id: 2, name: 'Finished' },
+  ]
+  const [status, setStatus] = useState(statusOptions[0])
+  const [statusId, setStatusId] = useState(0)
+
   // Add-modify employee states
+  const defaultSelection = { id: 0, name: 'Select' }
   const [openTeamAdd, setOpenTeamAdd] = useState(false)
   const cancelButtonRefTeam = useRef(null)
-
-  const defaultSelection = { id: 0, name: 'Select' }
-  const inProgressBar = { id: 0, name: "In Progress", color: "bg-orange-400" }
-
   const [operationMessage, setOperationMessage] = useState('')
   const [first_name, setFirst_name] = useState('')
   const [last_name, setLast_name] = useState('')
@@ -145,13 +151,33 @@ export default function Home() {
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
 
+  /* Modify state functions */
+
+  const handleSubmitModifyStatus = async () => {
+
+    const bodyFormData = new FormData()
+    bodyFormData.append('status_id', statusId)
+
+    try {
+      const response = await api.put('/manager/status', bodyFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      setOperationMessage('Sattus Modified')
+      fetchStatusId()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('User does not exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
   /* Add-Modify employee functions */
-
-  // status states
-
-  const [status, setStatus] = useState(inProgressBar)
-  const [statusId, setStatusId] = useState(0) 
-
   const populateFormForModify = (employee) => {
     setFirst_name(employee.first_name)
     setLast_name(employee.last_name)
@@ -349,6 +375,23 @@ export default function Home() {
 
   /* Fetching functions */
 
+  const fetchStatusId = async () => {
+    try {
+      const response = await api.get('/manager/status')
+      setStatusId(response.data.status_id)
+      setStatus(statusOptions[response.data.status_id])
+      console.log(response.data.status_id)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
   const fetchTeam = async () => {
     try {
       const response = await api.get('/manager/employees')
@@ -378,8 +421,6 @@ export default function Home() {
       }
     }
   }
-
-  
 
   const fetchBands = async () => {
     try {
@@ -457,6 +498,7 @@ export default function Home() {
   }
 
   const fetchData = async () => {
+    await fetchStatusId()
     await fetchTeam()
     await fetchCountries()
     await fetchBands()
@@ -475,6 +517,8 @@ export default function Home() {
 
   useEffect(() => {}, [team])
 
+  useEffect(() => {handleSubmitModifyStatus()}, [statusId])
+
   useEffect(() => {
     if (modify_id === '') {
       unpopulateForm()
@@ -483,51 +527,100 @@ export default function Home() {
     }
   }, [modify_id])
 
-
   return (
     <div className='pt-4 pl-10 w-full'>
-      <div></div>
+      {/* Modals for Employee form, recovery form and expenses form  */}
+      <div>
+        {dataReady && (
+          <>
+            <ModalAddModifyEmployeeForm
+              open={openTeamAdd}
+              setOpen={setOpenTeamAdd}
+              cancelButtonRef={cancelButtonRefTeam}
+              countries={countries}
+              bands={bands}
+              ICAS={ICAS}
+              squads={squads}
+              typesOfEmployee={typesOfEmployee}
+              isModify={modify_id !== ''}
+              first_name={first_name}
+              setFirst_name={setFirst_name}
+              last_name={last_name}
+              setLast_name={setLast_name}
+              email={email}
+              setEmail={setEmail}
+              setCountry_id={setCountry_id}
+              country_selection={country_selection}
+              setCountry_selection={setCountry_selection}
+              setTypeOfEmployee_id={setTypeOfEmployee_id}
+              typeOfEmployee_selection={typeOfEmployee_selection}
+              setTypeOfEmployee_selection={setTypeOfEmployee_selection}
+              setBand_id={setBand_id}
+              band_selection={band_selection}
+              setBand_selection={setBand_selection}
+              setICA_id={setICA_id}
+              ICA_selection={ICA_selection}
+              setICA_selection={setICA_selection}
+              setSquad_id={setSquad_id}
+              squad_selection={squad_selection}
+              setSquad_selection={setSquad_selection}
+              handleSubmit={
+                modify_id === ''
+                  ? handleSubmitAddEmployee
+                  : handleSubmitModifyEmployee
+              }
+            />
+            <ModalEmployeeRecoveryForm
+              open={openEmployeeRecovery}
+              setOpen={setOpenEmployeeRecovery}
+              cancelButtonRef={cancelButtonRefEmployeeRecovery}
+              quarter={quarter}
+              first_name={first_name}
+              last_name={last_name}
+              email={email}
+              handleSubmit={handleSubmitModifyRecovery}
+              month1Band_id={month1Band_id}
+              setMonth1Band_id={setMonth1Band_id}
+              month1Band_selection={month1Band_selection}
+              setMonth1Band_selection={setMonth1Band_selection}
+              month2Band_id={month2Band_id}
+              setMonth2Band_id={setMonth2Band_id}
+              month2Band_selection={month2Band_selection}
+              setMonth2Band_selection={setMonth2Band_selection}
+              hour1={hour1}
+              setHour1={setHour1}
+              hour2={hour2}
+              setHour2={setHour2}
+              hour3={hour3}
+              setHour3={setHour3}
+              comment={comment}
+              setComment={setComment}
+            />
+            <ModalExpensesAdd
+              open={openExpensesAdd}
+              setOpen={setOpenExpensesAdd}
+              cancelButtonRef={cancelButtonRefExpenses}
+            />
+          </>
+        )}
+      </div>
+
+      {/* Status Bar  */}
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
         <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
           Status:{' '}
         </div>
-        {/* <div className='flex items-center align-middle pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'> */}
-        {/* <SelectMenu
-          options={[
-            {name: "Alexis"},
-            {name: "Diego"}
-          ]}
-          selected={inProgressBar}
-          border="border-none"
+        <ProgressBar
+          selected={status}
+          options={statusOptions}
           onChange={(e) => {
-            setTypeOfEmployee_selection(e)
-            setTypeOfEmployee_id(e.id)
+            setStatus(e)
+            setStatusId(e.id)
           }}
-            /> */}
-
-            <ProgressBar
-              selected={status}
-              options = {[
-                {
-                  id: 1,
-                  name: "Red" 
-                },
-                {
-                  id: 2,
-                  name: "Yellow" 
-                },
-                {
-                  id: 3,
-                  name: "Green" 
-                },
-              ]}
-              onChange={(e) => {
-                setStatus(e)
-                setStatusId(e.id)
-              }}
-            />
-        {/* </div> */}
+        />
       </div>
+
+      {/* Employees and expenses */}
       <div className='flex flex-col justify-center h-3/4'>
         <div className='flex justify-around'>
           <div className='flex items-center gap-7 w-full'>
@@ -539,73 +632,6 @@ export default function Home() {
         </div>
         <div className='flex'>
           <div className='items-center flex'>
-            {dataReady && (
-              <>
-                <ModalAddModifyEmployeeForm
-                  open={openTeamAdd}
-                  setOpen={setOpenTeamAdd}
-                  cancelButtonRef={cancelButtonRefTeam}
-                  countries={countries}
-                  bands={bands}
-                  ICAS={ICAS}
-                  squads={squads}
-                  typesOfEmployee={typesOfEmployee}
-                  isModify={modify_id !== ''}
-                  first_name={first_name}
-                  setFirst_name={setFirst_name}
-                  last_name={last_name}
-                  setLast_name={setLast_name}
-                  email={email}
-                  setEmail={setEmail}
-                  setCountry_id={setCountry_id}
-                  country_selection={country_selection}
-                  setCountry_selection={setCountry_selection}
-                  setTypeOfEmployee_id={setTypeOfEmployee_id}
-                  typeOfEmployee_selection={typeOfEmployee_selection}
-                  setTypeOfEmployee_selection={setTypeOfEmployee_selection}
-                  setBand_id={setBand_id}
-                  band_selection={band_selection}
-                  setBand_selection={setBand_selection}
-                  setICA_id={setICA_id}
-                  ICA_selection={ICA_selection}
-                  setICA_selection={setICA_selection}
-                  setSquad_id={setSquad_id}
-                  squad_selection={squad_selection}
-                  setSquad_selection={setSquad_selection}
-                  handleSubmit={
-                    modify_id === ''
-                      ? handleSubmitAddEmployee
-                      : handleSubmitModifyEmployee
-                  }
-                />
-                <ModalEmployeeRecoveryForm
-                  open={openEmployeeRecovery}
-                  setOpen={setOpenEmployeeRecovery}
-                  cancelButtonRef={cancelButtonRefEmployeeRecovery}
-                  quarter={quarter}
-                  first_name={first_name}
-                  last_name={last_name}
-                  email={email}
-                  handleSubmit={handleSubmitModifyRecovery}
-                  month1Band_id={month1Band_id}
-                  setMonth1Band_id={setMonth1Band_id}
-                  month1Band_selection={month1Band_selection}
-                  setMonth1Band_selection={setMonth1Band_selection}
-                  month2Band_id={month2Band_id}
-                  setMonth2Band_id={setMonth2Band_id}
-                  month2Band_selection={month2Band_selection}
-                  setMonth2Band_selection={setMonth2Band_selection}
-                  hour1={hour1}
-                  setHour1={setHour1}
-                  hour2={hour2}
-                  setHour2={setHour2}
-                  hour3={hour3}
-                  setHour3={setHour3}
-                  comment={comment}
-                  setComment={setComment}
-                />
-              </>
-            )}
             <button>
               <PlusCircleIcon
                 className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
@@ -620,7 +646,7 @@ export default function Home() {
           </div>
           <div className='flex app'>
             <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-              {TeamDD.map((data) => (
+              {team.map((data) => (
                 <TeamCard
                   key={data.id}
                   employee={data}
@@ -642,11 +668,6 @@ export default function Home() {
         </div>
         <div className='flex'>
           <div className='items-center flex'>
-            <ModalExpensesAdd
-              open={openExpensesAdd}
-              setOpen={setOpenExpensesAdd}
-              cancelButtonRef={cancelButtonRefExpenses}
-            />
             <button>
               <PlusCircleIcon
                 className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'

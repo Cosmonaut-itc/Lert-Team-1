@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.Text, index=True, unique=True)
     password = db.Column(db.Text)
     role = db.Column(db.Integer)
+    status = db.Column(db.Integer, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     employees = db.relationship('Employee', backref='user')
 
