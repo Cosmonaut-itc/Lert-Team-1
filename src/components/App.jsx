@@ -34,6 +34,7 @@ function App() {
             <Route path='*' element={<NotFound />} />
             <Route path='/login' element={<Login />} />
             <Route path='/landingpage' element={<LandingPage />} />
+            <Route path='/forgot' element={<Forgot />} />
 
             {/* Manager routes */}
             <Route element={<RequireAuth allowedRole={0} />}>
