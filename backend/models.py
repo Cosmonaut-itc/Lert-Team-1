@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     employees = db.relationship('Employee', backref='user')
     expenses = db.relationship('Expense', backref='user')
     delegates = db.relationship('Delegate', backref='user')
+    squads = db.relationship('Squad', backref='user')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -99,6 +100,7 @@ class ICA(db.Model):
 class Squad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     employees = db.relationship('Employee', backref='squad')
 
     def as_dict(self):

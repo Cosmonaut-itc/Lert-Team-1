@@ -392,6 +392,60 @@ def manager_delegates(delegate_id=None):
         return "User added"
 
 
+@app.route('/manager/squads', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@app.route('/manager/squads/<squad_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def manager_squads(squad_id=None):
+    if request.method == 'GET':
+        squads = Squad.query.filter_by(user_id=current_user.id)
+        db.session.commit()
+
+        if not squads:
+            return 204
+
+        response = []
+        for squad in squads:
+            response.append(squad.as_dict())
+
+        return jsonify(response[::-1])
+
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('name')
+
+        if request.method == 'POST':
+            new_squad = Squad(name=name, user_id=current_user.id)
+
+            # Adds and commits the expense to the db
+            db.session.add(new_squad)
+            db.session.commit()
+
+            return "Added delegate", 201
+
+        if request.method == 'PUT':
+            squad_exists = Squad.query.filter_by(id=squad_id).first()
+
+            if not squad_exists:
+                return "Squad does not exist", 404
+            if squad_exists.user_id != current_user.id:
+                return "Not your Squad", 401
+
+            squad_exists.name = name
+            db.session.commit()
+            return "Squad modified"
+
+    if request.method == 'DELETE':
+        squad_exists = Squad.query.filter_by(id=squad_id).first()
+        if not squad_exists:
+            return "Squad does not exist", 404
+        if squad_exists.user_id != current_user.id:
+            return "Not your Squad", 401
+
+        db.session.delete(squad_exists)
+        db.session.commit()
+
+        return "Squad deleted"
+
+
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():
@@ -469,21 +523,6 @@ def bands():
     response = []
     for band in bands:
         response.append(band.as_dict())
-
-    return jsonify(response)
-
-
-@app.route('/squads')
-@login_required
-def squads():
-    squads = Squad.query.all()
-    db.session.commit()
-    if not squads:
-        return 204
-
-    response = []
-    for squad in squads:
-        response.append(squad.as_dict())
 
     return jsonify(response)
 
