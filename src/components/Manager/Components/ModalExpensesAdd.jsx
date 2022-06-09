@@ -93,7 +93,7 @@ export default function ModalAddModifyExpenses({
                             name='description'
                             id='description'
                             defaultValue={description}
-                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                             placeholder='Expenses description'
                             onChange={(e) => setDescription(e.target.value)}
                           />
@@ -118,7 +118,7 @@ export default function ModalAddModifyExpenses({
                             name='email'
                             id='email'
                             defaultValue={ICA_email}
-                            className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                             onChange={(e) => setICA_email(e.target.value)}
                           />
@@ -143,7 +143,7 @@ export default function ModalAddModifyExpenses({
                             name='email'
                             id='email'
                             defaultValue={employee_email}
-                            className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                             onChange={(e) => setEmployee_email(e.target.value)}
                           />
@@ -168,7 +168,7 @@ export default function ModalAddModifyExpenses({
                             name='email'
                             id='email'
                             defaultValue={admin_email}
-                            className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                             onChange={(e) => setAdmin_email(e.target.value)}
                           />
@@ -189,7 +189,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='price'
                             id='price'
-                            className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md'
+                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md'
                             placeholder='0.00'
                             aria-describedby='price-currency'
                             defaultValue={cost}
@@ -268,14 +268,14 @@ export default function ModalAddModifyExpenses({
                 <div className='mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense'>
                   <button
                     type='submit'
-                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm'
+                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm'
                     onClick={() => setOpen(false)}
                   >
                     Save
                   </button>
                   <button
                     type='button'
-                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm'
+                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm'
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

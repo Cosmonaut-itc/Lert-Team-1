@@ -8,7 +8,7 @@ const LOGIN_URL = '/login'
 
 // import { LockClosedIcon } from '@heroicons/react/solid'
 
-export default function Login() {
+export default function Register() {
   const { setAuth } = useAuth()
 
   const navigate = useNavigate()
@@ -71,66 +71,93 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <div className='max-w-md w-full space-y-8 bg-white rounded-xl shadow-lg px-6 pb-6'>
+      <div className='max-w-md w-full space-y-2 bg-white rounded-xl shadow-lg px-6 pb-6'>
         <div>
           <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900'>
-            Log in to IBM
+            Register
           </h2>
         </div>
+
+        <p className='text-gray-500'></p>
         <form
-          className='mt-2 space-y-6'
+          className='mt-2 space-y-4'
           action='src/components/Shared/login#Login.jsx'
           method='POST'
           onSubmit={handleSubmit}
         >
           <input type='hidden' name='remember' defaultValue='true' />
-          <div className='rounded-md shadow-sm -space-y-px'>
-            <a
-              className='flex flex-row-reverse font-base text-sm text-blue-600 cursor-pointer'
-              href='/forgot'
-            >
-              Forgot IBMid?
-            </a>
-            <div>
-              <label htmlFor='email-address' className='text-sm text-gray-600'>
-                IBMid
-              </label>
-              <input
-                id='email-address'
-                ref={userRef}
-                name='email'
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete='email'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
-              />
-            </div>
-            <div className='pt-4'>
-              <label htmlFor='password' className='text-sm text-gray-600'>
-                Password
-              </label>
-              <input
-                id='password'
-                name='password'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete='current-password'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
-              />
+          <div className='rounded-md shadow-sm '>
+            <div className='grid grid-cols-2 gap-3'>
+              <div>
+                <label
+                  htmlFor='email-address'
+                  className='text-sm text-gray-600'
+                >
+                  Name
+                </label>
+                <input
+                  id='name'
+                  ref={userRef}
+                  name='text'
+                  type='text'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete='email'
+                  required
+                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor='email-address'
+                  className='text-sm text-gray-600'
+                >
+                  Last Name
+                </label>
+                <input
+                  id='email-address'
+                  ref={userRef}
+                  name='text'
+                  type='text'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete='email'
+                  required
+                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor='email-address'
+                  className='text-sm text-gray-600'
+                >
+                  IBMid
+                </label>
+                <input
+                  id='email-address'
+                  name='email'
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete='email'
+                  required
+                  className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
+                />
+              </div>
             </div>
           </div>
 
           <div className='flex items-center justify-between'>
             <div className='text-sm'>
               <a
-                href='/register'
+                href='src/components/Shared/login#'
+                className='font-base text-blue-600 cursor-pointer'
+              />
+              <a
+                href='/login'
                 className='font-base text-blue-600 cursor-pointer'
               >
-                Create new account
+                Go back
               </a>
             </div>
             <div>
@@ -142,7 +169,7 @@ export default function Login() {
                 <span className='absolute left-0 inset-y-0 flex items-center pl-3'>
                   {/* <LockClosedIcon className="h-5 w-5 text-blue-500 group-hover:text-blue-400" aria-hidden="true" /> */}
                 </span>
-                Login
+                Create account
               </button>
             </div>
           </div>
