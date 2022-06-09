@@ -71,23 +71,24 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <div className='max-w-md w-full space-y-8 bg-white rounded-xl shadow-lg px-6 pb-6'>
+      <div className='max-w-md w-full space-y-2 bg-white rounded-xl shadow-lg px-6 pb-6'>
         <div>
-          <h2 className='mt-6 text-left text-3xl font-base text-gray-900'>
-            Log in to IBM
+          <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900'>
+            Forgot your password?
           </h2>
         </div>
+
+        <p className='text-gray-500'>
+          Please enter your IBMid to reset your password.
+        </p>
         <form
-          className='mt-2 space-y-6'
+          className='mt-2 space-y-4'
           action='src/components/Shared/login#Login.jsx'
           method='POST'
           onSubmit={handleSubmit}
         >
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
-            <p className='flex flex-row-reverse font-base text-sm text-indigo-600 cursor-pointer'>
-              Forgot IBMid?
-            </p>
             <div>
               <label htmlFor='email-address' className='text-sm text-gray-600'>
                 IBMid
@@ -101,22 +102,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete='email'
                 required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-              />
-            </div>
-            <div className='pt-4'>
-              <label htmlFor='password' className='text-sm text-gray-600'>
-                Password
-              </label>
-              <input
-                id='password'
-                name='password'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete='current-password'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-gray-300 text-gray-900  focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm'
               />
             </div>
           </div>
@@ -124,26 +110,22 @@ export default function Login() {
           <div className='flex items-center justify-between'>
             <div className='text-sm'>
               <a
-                href='src/components/Shared/login#Login.jsx'
-                className='font-base text-indigo-600 cursor-pointer'
-              />
-              <a
-                href='/register'
-                className='font-base text-indigo-600 cursor-pointer'
+                href='/login'
+                className='font-base text-blue-600 cursor-pointer'
               >
-                Create new account
+                Go back
               </a>
             </div>
             <div>
               <button
                 type='submit'
-                className='group relative w-full flex justify-center py-2 px-10 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                className='group relative w-full flex justify-center py-2 px-10 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
                 /*onClick={logInUser}*/
               >
                 <span className='absolute left-0 inset-y-0 flex items-center pl-3'>
-                  {/* <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" /> */}
+                  {/* <LockClosedIcon className="h-5 w-5 text-blue-500 group-hover:text-blue-400" aria-hidden="true" /> */}
                 </span>
-                Login
+                Reset password
               </button>
             </div>
           </div>

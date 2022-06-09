@@ -6,26 +6,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
-
 export default function SelectMenu({ options, selected, onChange }) {
-
-  let color = ""
+  let color = ''
 
   switch (selected.id) {
     case 0:
-      color="bg-red-600 opacity-90"
-      break;
+      color = 'bg-red-600 opacity-90'
+      break
     case 1:
-      color="bg-gradient-to-b from-orange-400 to-yellow-300"
-      break;
+      color = 'bg-gradient-to-b from-orange-400 to-yellow-300'
+      break
     case 2:
-      color="bg-gradient-to-r from-emerald-500 to-lime-600"
-      break;
+      color = 'bg-gradient-to-r from-emerald-500 to-lime-600'
+      break
 
     default:
-      break;
+      break
   }
 
   return (
@@ -36,8 +32,14 @@ export default function SelectMenu({ options, selected, onChange }) {
             {"hola"}
           </Listbox.Label> */}
           <div className='mt-1 relative mr-4'>
-            <Listbox.Button className={`relative w-full rounded-md shadow-sm px-7 font-bold  py-2 text-center cursor-default focus:outline-none  sm:text-sm ${color ?  `${color}` : "bg-black"}` }>
-              <span className='text-left mr-2 truncate text-white'>{selected.name}</span>
+            <Listbox.Button
+              className={`relative w-full rounded-md shadow-sm px-7 font-bold  py-2 text-center cursor-default focus:outline-none  sm:text-sm ${
+                color ? `${color}` : 'bg-black'
+              }`}
+            >
+              <span className='text-left mr-2 truncate text-white'>
+                {selected.name}
+              </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                 <SelectorIcon
                   className='h-5 w-5 text-white'
@@ -59,7 +61,7 @@ export default function SelectMenu({ options, selected, onChange }) {
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                        active ? 'text-white bg-blue-600' : 'text-gray-900',
                         'cursor-default select-none relative py-2 pl-3 pr-9'
                       )
                     }
@@ -79,7 +81,7 @@ export default function SelectMenu({ options, selected, onChange }) {
                         {alreadySelected ? (
                           <span
                             className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
+                              active ? 'text-white' : 'text-blue-600',
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}
                           >

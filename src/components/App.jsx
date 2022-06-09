@@ -8,6 +8,8 @@ import Login from './Shared/Login'
 import RequireAuth from './Shared/RequireAuth'
 import LandingPage from './Shared/LandingPage'
 import SidebarLayout from './Shared/Components/SidebarLayout'
+import Forgot from './Shared/Forgot'
+import Register from './Shared/Register'
 
 import ManagerDelegate from './Manager/delegate'
 import ManagerHome from './Manager/Home'
@@ -35,9 +37,11 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/landingpage' element={<LandingPage />} />
             <Route path='/forgot' element={<Forgot />} />
+            <Route path='/register' element={<Register />} />
 
             {/* Manager routes */}
-            <Route element={<RequireAuth allowedRole={0} />}>
+            <Route>
+              {/* <Route element={<RequireAuth allowedRole={0} />}> */}
               <Route element={<SidebarLayout role='manager' />}>
                 <Route path='/manager/home' element={<ManagerHome />} />
                 <Route path='/manager/delegate' element={<ManagerDelegate />} />
