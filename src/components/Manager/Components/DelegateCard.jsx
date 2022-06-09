@@ -40,7 +40,7 @@ export default function DelegateCard({
           className='border border-blue-400 rounded-md mx-10 px-4 py-1 text-blue-600 hover:opacity-70 active:opacity-50 active:bg-blue-50 text-sm'
           onClick={() => {
             setModify_id(delegate.id)
-            setModify_delegate(delegate.id)
+            setModify_delegate(delegate)
             setOpenDelegateAdd(true)
           }}
         >
