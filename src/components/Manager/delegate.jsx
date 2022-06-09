@@ -190,16 +190,34 @@ export default function Delegate() {
               <PlusCircleIcon className='flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
             </button>
           </div>
-          {delegates.map((data) => (
-            <DelegateCard
+          {delegates
+            .filter((data) => {
+              if (searchDelegate == '') {
+                return data
+              } else if (
+                data.first_name
+                  .toLowerCase()
+                  .includes(searchDelegate.toLowerCase()) ||
+                data.last_name
+                  .toLowerCase()
+                  .includes(searchDelegate.toLowerCase()) ||
+                data.email
+                  .toLowerCase()
+                  .includes(searchDelegate.toLowerCase())
+              ) {
+                return data
+              }
+            })
+            .map((data) => (
+              <DelegateCard
                 key={data.id}
-              delegate={data}
-              setOpenDelegateAdd={setOpenDelegateAddModify}
-              setModify_delegate={setModify_delegate}
-              setModify_id={setModify_id}
-              handleDeleteDelegate={handleDeleteDelegate}
-            />
-          ))}
+                delegate={data}
+                setOpenDelegateAdd={setOpenDelegateAddModify}
+                setModify_delegate={setModify_delegate}
+                setModify_id={setModify_id}
+                handleDeleteDelegate={handleDeleteDelegate}
+              />
+            ))}
         </div>
       </div>
     </div>
