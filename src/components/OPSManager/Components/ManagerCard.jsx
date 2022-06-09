@@ -1,23 +1,69 @@
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
 
-export default function ManagerCard({ id, name, email, team, statusColor }) {
-  console.log(statusColor)
+export default function ManagerCard({
+  manager,
+  setOpenManagerAdd,
+  handleDeleteManager,
+  setModify_id,
+  setModify_manager,
+}) {
+  let color = ''
+
+  switch (manager.status) {
+    case 0:
+      color = 'bg-red-600 opacity-90'
+      break
+    case 1:
+      color = 'bg-gradient-to-b from-orange-400 to-yellow-300'
+      break
+    case 2:
+      color = 'bg-gradient-to-r from-emerald-500 to-lime-600'
+      break
+
+    default:
+      break
+  }
   return (
-    <div
-      className='m-4 pt-1 pl-6 relative shadow-lg border overflow-visible bg-white rounded-xl'
-      key={id}
+    <Card
+      sx={{ borderRadius: 3 }}
+      variant='outlined'
+      className='m-4 pt-1 relative shadow-lg overflow-visible'
+      key={manager.id}
     >
       <div
         className='rounded-full absolute p-4 -top-2 -right-2'
-        style={{ backgroundColor: statusColor }}
+        style={{ backgroundColor: color }}
       />
-      <div className='text-left pb-10'>
-        <h4 className='font-bold text-lg pt-2'>{name}</h4>
-        <p className='underline text-gray-500 text-sm'>{email}</p>
-        <p className='text-gray-500 text-sm font-medium'>
-          Team: <span className='uppercase text-sm text-black'>{team}</span>
-        </p>
+      <div className='flex justify-between'>
+        <div className='text-left pb-10'>
+          <h4 className='font-bold text-lg pt-2'>
+            {manager.first_name + ' ' + manager.last_name}
+          </h4>
+          <p className='underline text-gray-500 text-sm'>{manager.email}</p>
+        </div>
+        <div className='p-2'>
+          <button>
+            <PencilAltIcon
+              className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
+              onClick={() => {
+                setModify_id(manager.id)
+                setModify_manager(manager)
+                setOpenManagerAdd(true)
+              }}
+            />
+          </button>
+          <button>
+            <TrashIcon
+              className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1'
+              onClick={() => {
+                handleDeleteManager(manager.id)
+              }}
+            />
+          </button>
+        </div>
       </div>
 
       <CardActions className='flex justify-center'>
@@ -38,6 +84,6 @@ export default function ManagerCard({ id, name, email, team, statusColor }) {
           Download
         </Button>
       </CardActions>
-    </div>
+    </Card>
   )
 }

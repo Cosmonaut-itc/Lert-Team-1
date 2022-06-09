@@ -2,20 +2,28 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import MailIcon from '@heroicons/react/solid/MailIcon'
+import SelectMenu from './SelectMenu'
 
-export default function ModalAddModifyDelegate({
+export default function ModalAddModifyUserCountry({
+  // Modal Options
   open,
   cancelButtonRef,
   setOpen,
+  formTitle,
   // Submit
   handleSubmit,
-  // Fields
+  // Data,
+  countries,
+  //Fields
   first_name,
   last_name,
   email,
+  country_selection,
   setFirst_name,
   setLast_name,
   setEmail,
+  setCountry_selection,
+  setCountry_id,
 }) {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -62,7 +70,7 @@ export default function ModalAddModifyDelegate({
                       as='h3'
                       className='text-2xl leading-6 font-semibold text-gray-900'
                     >
-                      Delegate
+                      {formTitle}
                     </Dialog.Title>
                     <div className='mt-10 grid grid-cols-2 gap-10'>
                       <div>
@@ -129,20 +137,31 @@ export default function ModalAddModifyDelegate({
                           />
                         </div>
                       </div>
+                      <div>
+                        <SelectMenu
+                          label='Country'
+                          options={countries}
+                          selected={country_selection}
+                          onChange={(e) => {
+                            setCountry_selection(e)
+                            setCountry_id(e.id)
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className='mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense'>
                   <button
                     type='submit'
-                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm'
+                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm'
                     onClick={() => setOpen(false)}
                   >
                     Save
                   </button>
                   <button
                     type='button'
-                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm'
+                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm'
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

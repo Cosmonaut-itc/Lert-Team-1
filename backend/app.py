@@ -446,6 +446,74 @@ def manager_squads(squad_id=None):
         return "Squad deleted"
 
 
+@app.route('/OPSManager/managers', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@app.route('/OPSManager/managers/<manager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def OPSManager_managers(manager_id=None):
+    if request.method == 'GET':
+        managers = User.query.filter_by(country_id=current_user.country_id, role=0)
+        db.session.commit()
+
+        if not managers:
+            return 204
+
+        response = []
+        for manager in managers:
+            manager_no_pass = manager.as_dict()
+            manager_no_pass.pop('password')
+            response.append(manager_no_pass)
+
+        return jsonify(response[::-1])
+
+    if request.method == 'POST' or 'PUT':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+
+        if request.method == 'POST':
+            ph = PasswordHasher()
+            user_exists = User.query.filter_by(email=email).first()
+            db.session.commit()
+            if user_exists:
+                return "User already exist", 409
+            new_user = User(first_name=first_name, last_name=last_name, email=email, password=ph.hash('password'),
+                            role=0, country_id=current_user.country_id, status=0)
+            db.session.add(new_user)
+            db.session.commit()
+            return "Added user", 201
+
+        if request.method == 'PUT':
+            user_exists = User.query.filter_by(id=manager_id).first()
+
+            if not user_exists:
+                return "Delegate does not exist", 404
+            if user_exists.country_id != current_user.country_id:
+                return "Not your user", 401
+            if user_exists.role != 0:
+                return "Not your user", 401
+
+            user_exists.first_name = first_name
+            user_exists.last_name = last_name
+            user_exists.email = email
+
+            db.session.commit()
+            return "Delegate modified"
+
+    if request.method == 'DELETE':
+        user_exists = User.query.filter_by(id=manager_id).first()
+        if not user_exists:
+            return "User does not exist", 404
+        if user_exists.country_id != current_user.country_id:
+            return "Not your user", 401
+        if user_exists.role != 0:
+            return "Not your user", 401
+
+        db.session.delete(user_exists)
+        db.session.commit()
+
+        return "User deleted"
+
+
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():

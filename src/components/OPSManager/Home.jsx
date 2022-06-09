@@ -3,69 +3,181 @@ import SearchBar from '../Shared/Components/SearchBar'
 import ManagerCard from './Components/ManagerCard'
 
 import Button from '@mui/material/Button'
-
-const TeamDD = [
-  {
-    id: 1,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'red',
-  },
-  {
-    id: 2,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'green',
-  },
-  {
-    id: 3,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'green',
-  },
-  {
-    id: 4,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'orange',
-  },
-  {
-    id: 5,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'orange',
-  },
-  {
-    id: 6,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'green',
-  },
-  {
-    id: 7,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'orange',
-  },
-  {
-    id: 8,
-    name: 'Ken Bauer',
-    email: 'kenbauer@tec.mx',
-    team: 'LERT',
-    statusColor: 'orange',
-  },
-]
+import { useEffect, useRef, useState } from 'react'
+import api from '../api/api'
+import ModalAddModifyUser from '../Shared/Components/ModalAddModifyUser'
 
 export default function Home() {
+  // Data fetched from back states
+  const [managers, setManagers] = useState([])
+  const [operationMessage, setOperationMessage] = useState('')
+  const [dataReady, setDataReady] = useState(false)
+
+  // OPSManagers states
+  const [searchManager, setSearchManager] = useState('')
+  const [openManagerAddModify, setOpenManagerAddModify] = useState(false)
+  const cancelButtonRefManager = useRef(null)
+  const [first_name, setFirst_name] = useState('')
+  const [last_name, setLast_name] = useState('')
+  const [email, setEmail] = useState('')
+  const [modify_id, setModify_id] = useState('')
+  const [modify_manager, setModify_manager] = useState('')
+
+  /* Add-Modify delegate functions */
+  const populateFormForModify = (manager) => {
+    setFirst_name(manager.first_name)
+    setLast_name(manager.last_name)
+    setEmail(manager.email)
+  }
+
+  const unpopulateForm = () => {
+    setFirst_name('')
+    setLast_name('')
+    setEmail('')
+    setModify_id('')
+    setModify_manager('')
+  }
+
+  const createManagerForm = () => {
+    const bodyFormData = new FormData()
+    bodyFormData.append('first_name', first_name)
+    bodyFormData.append('last_name', last_name)
+    bodyFormData.append('email', email)
+
+    return bodyFormData
+  }
+
+  const handleSubmitAddManager = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createManagerForm()
+
+    try {
+      const response = await api.post('OPSManager/managers', bodyFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      setOperationMessage('Delegate added')
+      unpopulateForm()
+      fetchManagers()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        setOperationMessage('Manager already exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
+  const handleSubmitModifyManager = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createManagerForm()
+
+    try {
+      const response = await api.put(
+        '/OPSManager/managers/' + modify_id,
+        bodyFormData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      )
+      setOperationMessage('Delegate Modified')
+      fetchManagers()
+      unpopulateForm()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('Manager does not exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
+  const handleDeleteManager = async (id) => {
+    try {
+      const response = await api.delete('/OPSManager/managers/' + id)
+      fetchManagers()
+    } catch (err) {
+      if (!err?.response) {
+        console.log('Server error')
+      } else if (err.response?.status === 400) {
+        console.log('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        console.log('Manager already exists')
+      } else {
+        console.log('Operation failed')
+      }
+    }
+  }
+
+  /* Fetching functions */
+
+  const fetchManagers = async () => {
+    try {
+      const response = await api.get('/OPSManager/managers')
+      setManagers(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchData = async () => {
+    await fetchManagers()
+    setDataReady(true)
+  }
+
+  /* Effects */
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {}, [managers])
+
+  useEffect(() => {
+    if (modify_id === '') {
+      unpopulateForm()
+    } else {
+      populateFormForModify(modify_manager)
+    }
+  }, [modify_id])
+
   return (
     <div className='mt-16 ml-10 h-max'>
+      <div>
+        {dataReady && (
+          <ModalAddModifyUser
+            open={openManagerAddModify}
+            cancelButtonRef={cancelButtonRefManager}
+            setOpen={setOpenManagerAddModify}
+            formTitle={'Manager'}
+            handleSubmit={
+              modify_id === ''
+                ? handleSubmitAddManager
+                : handleSubmitModifyManager
+            }
+            first_name={first_name}
+            last_name={last_name}
+            email={email}
+            setFirst_name={setFirst_name}
+            setLast_name={setLast_name}
+            setEmail={setEmail}
+          />
+        )}
+      </div>
       <div className='flex items-center gap-7 justify-between'>
         <div className='text-2xl font-semibold text-gray-600'>Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
@@ -92,16 +204,24 @@ export default function Home() {
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3'>
           <div className='flex justify-center items-center'>
             <button>
-              <PlusCircleIcon className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
+              <PlusCircleIcon
+                className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center'
+                onClick={() => {
+                  setModify_id('')
+                  setModify_manager('')
+                  setOpenManagerAddModify(true)
+                }}
+              />
             </button>
           </div>
-          {TeamDD.map((data) => (
+          {managers.map((data) => (
             <ManagerCard
               key={data.id}
-              name={data.name}
-              email={data.email}
-              team={data.team}
-              statusColor={data.statusColor}
+              manager={data}
+              setOpenManagerAdd={setOpenManagerAddModify}
+              handleDeleteManager={handleDeleteManager}
+              setModify_id={setModify_id}
+              setModify_manager={setModify_manager}
             />
           ))}
         </div>
