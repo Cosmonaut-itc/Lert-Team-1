@@ -343,7 +343,7 @@ def manager_delegates(delegate_id=None):
         if request.method == 'POST':
             new_delegate = Delegate(first_name=first_name, last_name=last_name, email=email, user_id=current_user.id)
 
-            # Adds and commits the expense to the db
+            # Adds and commits the delegate to the db
             db.session.add(new_delegate)
             db.session.commit()
 
@@ -527,19 +527,31 @@ def bands():
     return jsonify(response)
 
 
-@app.route('/typesOfEmployee')
+@app.route('/typesOfEmployee', methods=['GET', 'POST'])
 @login_required
-def typesOfEmployee():
-    typesOfEmployee = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
-    db.session.commit()
-    if not typesOfEmployee:
-        return 204
+def types_of_employee():
+    if request.method == 'GET':
+        employee_type = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
+        db.session.commit()
 
-    response = []
-    for typeOfEmployee in typesOfEmployee:
-        response.append(typeOfEmployee.as_dict())
+        if not employee_type:
+            return "No employee type", 404
 
-    return jsonify(response)
+        response = []
+        for typeOfEmployee in employee_type:
+            response.append(typeOfEmployee.as_dict())
+
+        return jsonify(response[::-1]), 201
+
+    if request.method == 'POST':
+        name = request.form.get('type_of_employee')
+
+        new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
+
+        db.session.add(new_type_of_employee)
+        db.session.commit()
+
+        return "Type of employee added", 201
 
 
 @app.route('/logout')
