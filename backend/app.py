@@ -55,6 +55,22 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    ph = PasswordHasher()
+
+    email = request.form['email']
+    password = request.form['password']
+
+    user = User.query.filter_by(email=email).first()
+    db.session.commit()
+    if not user or not ph.verify(user.password, password):
+        return "Invalid password ", 401
+
+    login_user(user, remember=True, duration=timedelta(days=5))
+    return json.dumps({'role': user.role})
+
+
 @app.route('/signup', methods=['POST'])
 # @login_required
 # @admin_required
@@ -76,44 +92,12 @@ def signup():
     return "Added user", 201
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    ph = PasswordHasher()
-
-    email = request.form['email']
-    password = request.form['password']
-
-    user = User.query.filter_by(email=email).first()
-    db.session.commit()
-    if not user or not ph.verify(user.password, password):
-        return "Invalid password ", 401
-
-    login_user(user, remember=True, duration=timedelta(days=5))
-    return json.dumps({'role': user.role})
-
-
 @app.route('/isAuth', methods=['GET'])
 @login_required
 def isAuth():
     res = {'role': current_user.role}
     db.session.commit()
     return json.dumps(res)
-
-
-@app.route('/manager/status', methods=['GET', 'PUT'])
-@login_required
-def manager_status():
-    if request.method == 'GET':
-        return {'status_id': current_user.status}
-
-    new_status = request.form.get('status_id')
-    print(new_status)
-    user_exists = User.query.filter_by(id=current_user.id).first()
-    if not user_exists:
-        return "Error finding your user", 404
-    user_exists.status = new_status
-    db.session.commit()
-    return "User added"
 
 
 @app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -244,7 +228,7 @@ def manager_employees_recovery(employee_id):
 @app.route('/manager/expenses', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/expenses/<expense_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
-def expenses(expense_id=None):
+def manager_expenses(expense_id=None):
     if request.method == 'GET':
         manager_expenses = Expense.query.filter_by(user_id=current_user.id)
         db.session.commit()
@@ -318,6 +302,95 @@ def expenses(expense_id=None):
 
         return "Expense deleted"
 
+    @app.route('/manager/status', methods=['GET', 'PUT'])
+    @login_required
+    def manager_status():
+        if request.method == 'GET':
+            return {'status_id': current_user.status}
+
+        new_status = request.form.get('status_id')
+        print(new_status)
+        user_exists = User.query.filter_by(id=current_user.id).first()
+        if not user_exists:
+            return "Error finding your user", 404
+        user_exists.status = new_status
+        db.session.commit()
+        return "User added"
+
+
+@app.route('/manager/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@app.route('/manager/delegates/<delegate_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def manager_delegates(delegate_id=None):
+    if request.method == 'GET':
+        delegates = Delegate.query.filter_by(user_id=current_user.id)
+        db.session.commit()
+
+        if not delegates:
+            return 204
+
+        response = []
+        for delegate in delegates:
+            response.append(delegate.as_dict())
+
+        return jsonify(response[::-1])
+
+    if request.method == 'POST' or 'PUT':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+
+        if request.method == 'POST':
+            new_delegate = Delegate(first_name=first_name, last_name=last_name, email=email, user_id=current_user.id)
+
+            # Adds and commits the expense to the db
+            db.session.add(new_delegate)
+            db.session.commit()
+
+            return "Added delegate", 201
+
+        if request.method == 'PUT':
+            delegate_exists = Delegate.query.filter_by(id=delegate_id).first()
+
+            if not delegate_exists:
+                return "Delegate does not exist", 404
+            if delegate_exists.user_id != current_user.id:
+                return "Not your delegate", 401
+
+            delegate_exists.first_name = first_name
+            delegate_exists.last_name = last_name
+            delegate_exists.email = email
+
+            db.session.commit()
+            return "Delegate modified"
+
+    if request.method == 'DELETE':
+        delegate_exists = Delegate.query.filter_by(id=delegate_id).first()
+        if not delegate_exists:
+            return "Delegate does not exist", 404
+        if delegate_exists.user_id != current_user.id:
+            return "Not your delegate", 401
+
+        db.session.delete(delegate_exists)
+        db.session.commit()
+
+        return "Delegate deleted"
+
+    @app.route('/manager/status', methods=['GET', 'PUT'])
+    @login_required
+    def manager_status():
+        if request.method == 'GET':
+            return {'status_id': current_user.status}
+
+        new_status = request.form.get('status_id')
+        print(new_status)
+        user_exists = User.query.filter_by(id=current_user.id).first()
+        if not user_exists:
+            return "Error finding your user", 404
+        user_exists.status = new_status
+        db.session.commit()
+        return "User added"
+
 
 @app.route('/email', methods=['GET'])
 @login_required
@@ -326,7 +399,8 @@ def user_email():
     db.session.commit()
     return json.dumps(res)
 
-@app.route('/quarter')
+
+@app.route('/quarter', methods=['GET'])
 def quarter():
     months = {
         1: 'January',
@@ -372,7 +446,7 @@ def countries():
 @app.route('/ICAS')
 @login_required
 def ICAS():
-    ICAS = ICA.query.all()
+    ICAS = ICA.query.filter_by(country_id=current_user.country_id)
     db.session.commit()
     if not ICAS:
         return 204
@@ -387,7 +461,7 @@ def ICAS():
 @app.route('/bands')
 @login_required
 def bands():
-    bands = Band.query.all()
+    bands = Band.query.filter_by(country_id=current_user.country_id)
     db.session.commit()
     if not bands:
         return 204
@@ -417,7 +491,7 @@ def squads():
 @app.route('/typesOfEmployee')
 @login_required
 def typesOfEmployee():
-    typesOfEmployee = TypeOfEmployee.query.all()
+    typesOfEmployee = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
     db.session.commit()
     if not typesOfEmployee:
         return 204
@@ -436,41 +510,11 @@ def logout():
     return "Logged out"
 
 
-@app.route('/addDelegate', methods=['POST'])
-@login_required
-def add_delegate():
-    delegate_id = randint(0, 10000)
-    name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
-    mail = request.form.get('mail')
-
-    new_delegate = Delegate(delegate_id, name, last_name, mail)
-
-    db.session.add(new_delegate)
-    db.session.commit()
-
-    return "Added delegate", 201
-
-
-@app.route('/addSquad', methods=['POST'])
-@login_required
-def add_squad():
-    squad_id = randint(0, 10000)
-    squad_name = request.form.get('squad_name')
-
-    new_squad = Squad(squad_id, squad_name)
-
-    db.session.add(new_squad)
-    db.session.commit()
-
-    return "Added squad", 201
-
-
 @app.route('/typesOfExpenses', methods=['GET', 'POST'])
 @login_required
 def types_of_expenses():
     if request.method == 'GET':
-        type_expense = TypeOfExpense.query.all()
+        type_expense = TypeOfExpense.filter_by(country_id=current_user.country_id)
         db.session.commit()
 
         if not type_expense:
@@ -483,10 +527,9 @@ def types_of_expenses():
         return jsonify(response), 201
 
     if request.method == 'POST':
-        type_id = randint(0, 10000)
-        name_expense = request.form.get('type_of_expense')
+        name = request.form.get('name')
 
-        new_type_of_expense = TypeOfExpense(type_id, name_expense, current_user.country_id)
+        new_type_of_expense = TypeOfExpense(name=name, country_id=current_user.country_id)
 
         db.session.add(new_type_of_expense)
         db.session.commit()

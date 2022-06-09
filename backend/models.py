@@ -17,6 +17,8 @@ class User(UserMixin, db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     employees = db.relationship('Employee', backref='user')
     expenses = db.relationship('Expense', backref='user')
+    delegates = db.relationship('Delegate', backref='user')
+
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -28,6 +30,9 @@ class Country(db.Model):
     users = db.relationship('User', backref='country')
     employees = db.relationship('Employee', backref='country')
     bands = db.relationship('Band', backref='country')
+    ICAs = db.relationship('ICA', backref='country')
+    typeOfEmployees = db.relationship('TypeOfEmployee', backref='country')
+    typeOfExpenses = db.relationship('TypeOfExpense', backref='country')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -37,6 +42,7 @@ class TypeOfEmployee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True, unique=True)
     employees = db.relationship('Employee', backref='typeOfEmployee')
+    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -83,6 +89,7 @@ class Band(db.Model):
 class ICA(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
+    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     employees = db.relationship('Employee', backref='ICA')
     expenses = db.relationship('Expense', backref='ICA')
 
@@ -111,9 +118,11 @@ class TypeOfExpense(db.Model):
 
 class Delegate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, index=True)
+    first_name = db.Column(db.Text, index=True)
     last_name = db.Column(db.Text, index=True)
     email = db.Column(db.Text, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
