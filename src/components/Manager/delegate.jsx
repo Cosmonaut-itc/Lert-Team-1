@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import SearchBar from '../Shared/Components/SearchBar'
-import ModalAddModifyDelegate from './Components/ModalAddModifyDelegate'
+import ModalAddModifyUser from '../Shared/Components/ModalAddModifyUser'
 import DelegateCard from './Components/DelegateCard'
 import api from '../api/api'
 
@@ -165,9 +165,10 @@ export default function Delegate() {
         </div>
       </div>
       <div className='flex justify-center md:justify-start pt-3'>
-        <ModalAddModifyDelegate
+        <ModalAddModifyUser
           open={openDelegateAddModify}
           setOpen={setOpenDelegateAddModify}
+          formTitle={'Delegate'}
           handleSubmit={
             modify_id === ''
               ? handleSubmitAddDelegate
@@ -201,9 +202,7 @@ export default function Delegate() {
                 data.last_name
                   .toLowerCase()
                   .includes(searchDelegate.toLowerCase()) ||
-                data.email
-                  .toLowerCase()
-                  .includes(searchDelegate.toLowerCase())
+                data.email.toLowerCase().includes(searchDelegate.toLowerCase())
               ) {
                 return data
               }

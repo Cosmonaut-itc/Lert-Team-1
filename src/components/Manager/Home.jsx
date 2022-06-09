@@ -51,7 +51,7 @@ export default function Home() {
   const [typeOfEmployee_selection, setTypeOfEmployee_selection] =
     useState(defaultSelection)
   const [ICA_id, setICA_id] = useState('')
-  const [ICA_selection, setICA_selection] = useState({ id: 0, name: 'Select' })
+  const [ICA_selection, setICA_selection] = useState(defaultSelection)
   const [squad_id, setSquad_id] = useState('')
   const [squad_selection, setSquad_selection] = useState(defaultSelection)
   const [modify_id, setModify_id] = useState('')

@@ -10,11 +10,14 @@ ACCESS = {
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.Text, index=True)
+    last_name = db.Column(db.Text, index=True)
     email = db.Column(db.Text, index=True, unique=True)
     password = db.Column(db.Text)
     role = db.Column(db.Integer)
     status = db.Column(db.Integer, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
+
     employees = db.relationship('Employee', backref='user')
     expenses = db.relationship('Expense', backref='user')
     delegates = db.relationship('Delegate', backref='user')

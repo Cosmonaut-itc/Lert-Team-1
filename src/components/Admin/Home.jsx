@@ -2,7 +2,7 @@ import { PlusCircleIcon } from '@heroicons/react/solid'
 import { useState } from 'react'
 import SearchBar from '../Shared/Components/SearchBar'
 import OpsManagerCard from './Components/OpsManagerCard'
-import ModalAddModifyOpsManager from './Components/ModalAddModifyOpsManager'
+import ModalAddModifyUserCountry from '../Shared/Components/ModalAddModifyUserCountry'
 
 const OpsManagersDD = [
   {
@@ -61,15 +61,16 @@ export default function Home() {
   return (
     <div className='mt-16 ml-10 h-screen '>
       <div className='flex items-center gap-7'>
-        <div className='text-2xl font-semibold text-gray-600'>Ops Managers</div>
+        <div className='text-2xl font-semibold text-gray-600'>OPS Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
           <SearchBar />
         </div>
       </div>
       <div className='flex justify-center md:justify-start pt-3'>
-        <ModalAddModifyOpsManager
+        <ModalAddModifyUserCountry
           open={openAddModifyOpsManager}
           setOpen={setOpenAddModifyOpsManager}
+          formTitle={'OPS Manager'}
         />
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3'>
           <div className='flex justify-center items-center'>
