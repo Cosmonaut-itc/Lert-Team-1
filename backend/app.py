@@ -595,9 +595,10 @@ def bands():
     return jsonify(response)
 
 
-@app.route('/typesOfEmployee', methods=['GET', 'POST'])
+@app.route('OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
+@app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
-def types_of_employee():
+def types_of_employee(type_id=None):
     if request.method == 'GET':
         employee_type = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
         db.session.commit()
@@ -611,15 +612,41 @@ def types_of_employee():
 
         return jsonify(response[::-1]), 201
 
-    if request.method == 'POST':
+    if request.method == 'POST' or 'PUT':
         name = request.form.get('type_of_employee')
 
-        new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
+        if request.method == 'POST':
+            new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
 
-        db.session.add(new_type_of_employee)
+            db.session.add(new_type_of_employee)
+            db.session.commit()
+
+            return "Type of employee added", 201
+
+        if request.method == 'PUT':
+            type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
+
+            if not type_exists:
+                return "Type of employee does not exist", 404
+            if type_exists.user_id != current_user.id:
+                return "Not your type of employee", 401
+
+            type_exists.name = name
+
+            db.session.commit()
+            return "Type of employee modified"
+
+    if request.method == 'DELETE':
+        type_exists = Delegate.query.filter_by(id=type_id).first()
+        if not type_exists:
+            return "Employee type does not exist", 404
+        if type_exists.user_id != current_user.id:
+            return "Not your Employee type", 401
+
+        db.session.delete(type_exists)
         db.session.commit()
 
-        return "Type of employee added", 201
+        return "Delegate deleted"
 
 
 @app.route('/logout')
