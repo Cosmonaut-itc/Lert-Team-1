@@ -42,7 +42,6 @@ export default function Login() {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       const role = response?.data?.role
-      console.log(role)
       /*setAuth({ email, password, role })*/
       setAuth({ role })
       setEmail('')

@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     status = db.Column(db.Integer, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
     employees = db.relationship('Employee', backref='user')
+    expenses = db.relationship('Expense', backref='user')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -73,7 +74,7 @@ class Band(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    salary = db.Column(db.Integer)
+    salary = db.Column(db.Float)
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -83,6 +84,7 @@ class ICA(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
     employees = db.relationship('Employee', backref='ICA')
+    expenses = db.relationship('Expense', backref='ICA')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -101,6 +103,7 @@ class TypeOfExpense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
+    expenses = db.relationship('Expense', backref='type_of_expense')
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
@@ -116,19 +119,18 @@ class Delegate(db.Model):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 
-
-'''
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text, index=True)
-    employee_mail = db.Column(db.Text, index=True)
+    employee_email = db.Column(db.Text, index=True)
     cost = db.Column(db.Float, index=True)
-    type_id = db.Column(db.Text, db.ForeignKey('type_of_expense.id'))
+    typeOfExpense_id = db.Column(db.Integer, db.ForeignKey('type_of_expense.id'))
     ICA_id = db.Column(db.Integer, db.ForeignKey('ICA.id'))
-    ICA_mail = db.Column(db.Text, index=True)
-    admin_mail = db.Column(db.Text, index=True)
+    ICA_email = db.Column(db.Text, index=True)
+    admin_email = db.Column(db.Text, index=True)
     comments = db.Column(db.Text, index=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
-'''

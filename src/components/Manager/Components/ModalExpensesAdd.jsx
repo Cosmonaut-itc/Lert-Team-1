@@ -11,7 +11,26 @@ export default function ModalAddModifyExpenses({
   // Submit
   handleSubmit,
   // Fields
-
+  ICAS,
+  typeOfExpenses,
+  description,
+  employee_email,
+  cost,
+  typeOfExpense_selection,
+  expenseICA_selection,
+  ICA_email,
+  admin_email,
+  expenseComments,
+  setDescription,
+  setEmployee_email,
+  setCost,
+  setTypeOfExpense_id,
+  setTypeOfExpense_selection,
+  setExpenseICA_id,
+  setExpenseICA_selection,
+  setICA_email,
+  setAdmin_email,
+  setExpenseComments,
 }) {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -71,10 +90,12 @@ export default function ModalAddModifyExpenses({
                         <div className='mt-1'>
                           <input
                             type='text'
-                            name='text'
-                            id='text'
+                            name='description'
+                            id='description'
+                            defaultValue={description}
                             className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                             placeholder='Expenses description'
+                            onChange={(e) => setDescription(e.target.value)}
                           />
                         </div>
                       </div>
@@ -96,8 +117,10 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
+                            defaultValue={ICA_email}
                             className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
+                            onChange={(e) => setICA_email(e.target.value)}
                           />
                         </div>
                       </div>
@@ -119,8 +142,10 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
+                            defaultValue={employee_email}
                             className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
+                            onChange={(e) => setEmployee_email(e.target.value)}
                           />
                         </div>
                       </div>
@@ -142,8 +167,10 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
+                            defaultValue={admin_email}
                             className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
+                            onChange={(e) => setAdmin_email(e.target.value)}
                           />
                         </div>
                       </div>
@@ -165,6 +192,8 @@ export default function ModalAddModifyExpenses({
                             className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md'
                             placeholder='0.00'
                             aria-describedby='price-currency'
+                            defaultValue={cost}
+                            onChange={(e) => setCost(e.target.value)}
                           />
                           <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
                             <span
@@ -176,10 +205,10 @@ export default function ModalAddModifyExpenses({
                           </div>
                         </div>
                       </div>
-                      <div class='flex justify-center'>
-                        <div class='mb-3 xl:w-96'>
+                      <div className='flex justify-center'>
+                        <div className='mb-3 xl:w-96'>
                           <label
-                            for='exampleFormControlTextarea1'
+                            htmlFor='exampleFormControlTextarea1'
                             className='block text-sm font-medium text-gray-700'
                           >
                             Comments
@@ -206,27 +235,31 @@ export default function ModalAddModifyExpenses({
                             id='exampleFormControlTextarea1'
                             rows='3'
                             placeholder='Write your comments here'
+                            defaultValue={expenseComments}
+                            onChange={(e) => setExpenseComments(e.target.value)}
                           ></textarea>
                         </div>
                       </div>
                       <div>
                         <SelectMenu
                           label='Type of expenses'
-                          options={[
-                            { name: 'Wade Cooper' },
-                            { name: 'Arlene Mccoy' },
-                          ]}
-                          alreadySelected={0}
+                          options={typeOfExpenses}
+                          selected={typeOfExpense_selection}
+                          onChange={(e) => {
+                            setTypeOfExpense_selection(e)
+                            setTypeOfExpense_id(e.id)
+                          }}
                         />
                       </div>
                       <div>
                         <SelectMenu
                           label='ICA'
-                          options={[
-                            { name: 'Wade Cooper' },
-                            { name: 'Arlene Mccoy' },
-                          ]}
-                          alreadySelected={1}
+                          options={ICAS}
+                          selected={expenseICA_selection}
+                          onChange={(e) => {
+                            setExpenseICA_selection(e)
+                            setExpenseICA_id(e.id)
+                          }}
                         />
                       </div>
                     </div>
@@ -234,7 +267,7 @@ export default function ModalAddModifyExpenses({
                 </div>
                 <div className='mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense'>
                   <button
-                    type='button'
+                    type='submit'
                     className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm'
                     onClick={() => setOpen(false)}
                   >

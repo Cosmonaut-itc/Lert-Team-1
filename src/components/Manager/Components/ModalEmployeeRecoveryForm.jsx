@@ -1,8 +1,7 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { ArrowDownIcon } from '@heroicons/react/solid'
-import Button from '@mui/material/Button'
 import TextareaAutosize from '@mui/base/TextareaAutosize'
+import SelectMenu from '../../Shared/Components/SelectMenu'
 
 export default function ModalEmployeeRecoveryForm({
   open,
@@ -16,6 +15,9 @@ export default function ModalEmployeeRecoveryForm({
   last_name,
   email,
   bands,
+  setBand_id,
+  band_selection,
+  setBand_selection,
   month1Band_id,
   setMonth1Band_id,
   month1Band_selection,
@@ -87,12 +89,16 @@ export default function ModalEmployeeRecoveryForm({
 
                       <div className='flex items-center pb-10 md:p-4 mr-6'>
                         <div className='text-base font-base text-gray-600 invisible md:visible'>
-                          Modify Band / Status:{' '}
+                          Modify Band / Status: &nbsp;
                         </div>
-                        <div className='flex items-center px-5 py-1 ml-5 text-white font-bold bg-gray-400 rounded-lg whitespace-nowrap cursor-pointer'>
-                          <p>Temp Down</p>
-                          <ArrowDownIcon className='w-4 h-5 ml-2' />
-                        </div>
+                        <SelectMenu
+                          options={bands}
+                          selected={band_selection}
+                          onChange={(e) => {
+                            setBand_selection(e)
+                            setBand_id(e.id)
+                          }}
+                        />
                       </div>
                     </div>
 
@@ -133,80 +139,55 @@ export default function ModalEmployeeRecoveryForm({
                                     <div className='text-left'>
                                       Modify band:
                                     </div>
-                                    <Button
-                                      variant='contained'
-                                      sx={{
-                                        borderRadius: 2,
-                                        px: 8,
-                                        py: 0.1,
-                                        mx: 5,
-                                        textTransform: 'capitalize',
-                                        fontWeight: 700,
-                                        fontSize: 18,
-                                        mb: 2,
-                                        boxShadow: 3,
-                                        whiteSpace: 'nowrap',
-                                        display: 'block',
+                                    <SelectMenu
+                                      options={bands}
+                                      selected={month1Band_selection}
+                                      onChange={(e) => {
+                                        setMonth1Band_selection(e)
+                                        setMonth1Band_id(e.id)
                                       }}
-                                    >
-                                      Band 6
-                                    </Button>
+                                    />
                                     <div className='text-3xl'>
                                       <span className='text-blue-500'>$</span>
-                                      1000
+                                      {(
+                                        month1Band_selection.salary / 12
+                                      ).toFixed(2)}
                                     </div>
                                   </td>
                                   <td className='pl-6 py-4 border-r border-b whitespace-nowrap text-sm text-gray-900'>
                                     <div className='text-left'>
                                       Modify band:
                                     </div>
-                                    <Button
-                                      variant='contained'
-                                      sx={{
-                                        borderRadius: 2,
-                                        px: 8,
-                                        py: 0.1,
-                                        mx: 5,
-                                        textTransform: 'capitalize',
-                                        fontWeight: 700,
-                                        fontSize: 18,
-                                        mb: 2,
-                                        boxShadow: 3,
-                                        whiteSpace: 'nowrap',
-                                        display: 'block',
+                                    <SelectMenu
+                                      options={bands}
+                                      selected={month2Band_selection}
+                                      onChange={(e) => {
+                                        setMonth2Band_selection(e)
+                                        setMonth2Band_id(e.id)
                                       }}
-                                    >
-                                      Band 6
-                                    </Button>
+                                    />
                                     <div className='text-3xl'>
                                       <span className='text-blue-500'>$</span>
-                                      1500
+                                      {(
+                                        month2Band_selection.salary / 12
+                                      ).toFixed(2)}
                                     </div>
                                   </td>
                                   <td className='pl-6 py-4 border-b whitespace-nowrap text-sm text-gray-900'>
                                     <div className='text-left'>
                                       Modify band:
                                     </div>
-                                    <Button
-                                      variant='contained'
-                                      sx={{
-                                        borderRadius: 2,
-                                        px: 8,
-                                        py: 0.1,
-                                        mx: 5,
-                                        textTransform: 'capitalize',
-                                        fontWeight: 700,
-                                        fontSize: 18,
-                                        mb: 2,
-                                        boxShadow: 3,
-                                        whiteSpace: 'nowrap',
-                                        display: 'block',
+                                    <SelectMenu
+                                      options={bands}
+                                      selected={band_selection}
+                                      onChange={(e) => {
+                                        setBand_selection(e)
+                                        setBand_id(e.id)
                                       }}
-                                    >
-                                      Temp Down
-                                    </Button>
+                                    />
                                     <div className='text-3xl'>
-                                      <span className='text-blue-500'>$</span>0
+                                      <span className='text-blue-500'>$</span>
+                                      {(band_selection.salary / 12).toFixed(2)}
                                     </div>
                                   </td>
                                 </tr>

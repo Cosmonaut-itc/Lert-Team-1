@@ -1,6 +1,6 @@
 import { SearchIcon } from '@heroicons/react/solid'
 
-export default function SearchBar() {
+export default function SearchBar({ searchTerm, setSearchTerm, placeholder }) {
   return (
     <div className='mx-auto w-full lg:max-w-md'>
       <label htmlFor='search' className='sr-only'>
@@ -13,9 +13,13 @@ export default function SearchBar() {
         <input
           id='search'
           className='block w-full text-gray-600 bg-white py-2 pl-10 pr-3 border rounded-full leading-5 focus:text-gray-900 focus:placeholder-black focus:outline-none  border-transparent focus:border placeholder-gray-500 focus:ring-0 sm:text-sm'
-          placeholder='Search by name'
+          placeholder={placeholder}
           type='search'
           name='search'
+          defaultValue={searchTerm}
+          onChange={(e) => {
+              setSearchTerm(e.target.value)
+          }}
         />
       </div>
     </div>

@@ -5,11 +5,11 @@ import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
 
 export default function ExpensesCard({
   id,
-  item,
-  email,
-  date,
-  price,
-  section,
+  expense,
+  setOpenExpensesAdd,
+  handleDeleteExpense,
+  setModifyExpense_id,
+  setModifyExpense_expense,
 }) {
   return (
     <Card
@@ -20,20 +20,31 @@ export default function ExpensesCard({
     >
       <div className='flex justify-between'>
         <div className='text-left pl-6 pt-2'>
-          <h4 className='font-bold text-lg'>{item}</h4>
-          <p className='text-gray-500 text-sm'>{email}</p>
-          <p className='text-gray-500 text-xs'>{date}</p>
+          <h4 className='font-bold text-lg'>{expense.description}</h4>
+          <p className='text-gray-500 text-sm'>{expense.employee_email}</p>
           <div className='flex text-xl font-semibold pt-4'>
             <p className='text-blue-500'>$&nbsp;</p>
-            <p>{price}</p>
+            <p>{expense.cost}</p>
           </div>
         </div>
         <div className='p-2'>
           <button>
-            <PencilAltIcon className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1' />
+            <PencilAltIcon
+              className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
+              onClick={() => {
+                  setModifyExpense_id(expense.id)
+                  setModifyExpense_expense(expense)
+                  setOpenExpensesAdd(true)
+              }}
+            />
           </button>
           <button>
-            <TrashIcon className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1' />
+            <TrashIcon
+              className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1'
+              onClick={() => {
+                handleDeleteExpense(expense.id)
+              }}
+            />
           </button>
         </div>
       </div>
@@ -53,8 +64,9 @@ export default function ExpensesCard({
             boxShadow: 3,
             whiteSpace: 'nowrap',
           }}
+          disabled={true}
         >
-          {section}
+          {expense.typeOfExpense_name}
         </Button>
       </CardActions>
     </Card>

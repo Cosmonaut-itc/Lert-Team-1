@@ -90,12 +90,14 @@ const EMPLOYEES_URL = '/manager/employees'
 export default function Home() {
   // Data fetched from DB states
   const [team, setTeam] = useState([])
+  const [expenses, setExpenses] = useState([])
   const [countries, setCountries] = useState([])
   const [quarter, setQuarter] = useState([])
   const [bands, setBands] = useState([])
   const [ICAS, setICAS] = useState([])
   const [squads, setSquads] = useState([])
   const [typesOfEmployee, setTypesOfEmployee] = useState([])
+  const [typesOfExpenses, setTypesOfExpenses] = useState([])
   const [dataReady, setDataReady] = useState(false)
 
   // Status states
@@ -108,6 +110,7 @@ export default function Home() {
   const [statusId, setStatusId] = useState(0)
 
   // Add-modify employee states
+  const [searchEmployee, setSearchEmployee] = useState('')
   const defaultSelection = { id: 0, name: 'Select' }
   const [openTeamAdd, setOpenTeamAdd] = useState(false)
   const cancelButtonRefTeam = useRef(null)
@@ -147,12 +150,27 @@ export default function Home() {
   const [comment, setComment] = useState('')
 
   // Add-Modify expenses states
+  const [searchExpense, setSearchExpense] = useState('')
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)
+  const [description, setDescription] = useState('')
+  const [employee_email, setEmployee_email] = useState('')
+  const [cost, setCost] = useState(0)
+  const [typeOfExpense_id, setTypeOfExpense_id] = useState('')
+  const [typeOfExpense_selection, setTypeOfExpense_selection] =
+    useState(defaultSelection)
+  const [expenseICA_id, setExpenseICA_id] = useState('')
+  const [expenseICA_selection, setExpenseICA_selection] =
+    useState(defaultSelection)
+  const [ICA_email, setICA_email] = useState('')
+  const [admin_email, setAdmin_email] = useState('')
+  const [expenseComments, setExpenseComments] = useState('')
+  const [modifyExpense_id, setModifyExpense_id] = useState('')
+  const [modifyExpense_expense, setModifyExpense_expense] = useState('')
+  const [user_email, setUser_email] = useState('')
 
   /* Modify status functions */
   const handleSubmitModifyStatus = async () => {
-
     const bodyFormData = new FormData()
     bodyFormData.append('status_id', statusId)
 
@@ -161,7 +179,7 @@ export default function Home() {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       setOperationMessage('Sattus Modified')
-      fetchStatusId()
+      fetchStatus()
     } catch (err) {
       if (!err?.response) {
         setOperationMessage('Server error')
@@ -206,18 +224,21 @@ export default function Home() {
     setBand_selection({
       id: employee.band_id,
       name: employee.band_name,
+      salary: employee.month3_cost,
     })
 
     // Recovery
-    setMonth1Band_id(employee.month1_band_id)
+    setMonth1Band_id(employee.month1Band_id)
     setMonth1Band_selection({
       id: employee.month1Band_id,
       name: employee.month1Band_name,
+      salary: employee.month1_cost,
     })
-    setMonth2Band_id(employee.month2_band_id)
+    setMonth2Band_id(employee.month2Band_id)
     setMonth2Band_selection({
       id: employee.month2Band_id,
       name: employee.month2Band_name,
+      salary: employee.month2_cost,
     })
     setComment(employee.comment)
     setHour1(employee.hour1)
@@ -326,7 +347,6 @@ export default function Home() {
 
   const handleDeleteEmployee = async (id) => {
     try {
-      console.log(modify_id)
       const response = await api.delete(EMPLOYEES_URL + '/' + id)
       fetchTeam()
     } catch (err) {
@@ -371,9 +391,130 @@ export default function Home() {
     }
   }
 
+  /* Add-Modify expense functions */
+  const populateExpenseFormForModify = (expense) => {
+    setDescription(expense.description)
+    setEmployee_email(expense.employee_email)
+    setCost(expense.cost)
+    setTypeOfExpense_id(expense.typeOfExpense_id)
+    setTypeOfExpense_selection({
+      id: expense.typeOfExpense_id,
+      name: expense.typeOfExpense_name,
+    })
+    setExpenseICA_id(expense.ICA_id)
+    setExpenseICA_selection({
+      id: expense.ICA_id,
+      name: expense.ICA_name,
+    })
+    setICA_email(expense.ICA_email)
+    setAdmin_email(expense.admin_email)
+    setExpenseComments(expense.comments)
+  }
+
+  const unpopulateExpenseForm = (expense) => {
+    setDescription('')
+    setEmployee_email('')
+    setCost(0)
+    setTypeOfExpense_id('')
+    setTypeOfExpense_selection(defaultSelection)
+    setExpenseICA_id('')
+    setExpenseICA_selection(defaultSelection)
+    setICA_email(user_email)
+    setAdmin_email(user_email)
+    setExpenseComments('')
+  }
+
+  const createExpenseForm = () => {
+    const bodyFormData = new FormData()
+
+    bodyFormData.append('description', description)
+    bodyFormData.append('employee_email', employee_email)
+    bodyFormData.append('cost', cost)
+    bodyFormData.append('typeOfExpense_id', typeOfExpense_id)
+    bodyFormData.append('ICA_id', expenseICA_id)
+    bodyFormData.append('ICA_email', ICA_email)
+    bodyFormData.append('admin_email', admin_email)
+    bodyFormData.append('comments', expenseComments)
+
+    return bodyFormData
+  }
+
+  const handleSubmitAddExpense = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createExpenseForm()
+
+    console.log('Add')
+
+    try {
+      const response = await api.post('/manager/expenses', bodyFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      setOperationMessage('Expense added')
+      unpopulateExpenseForm()
+      fetchExpenses()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        setOperationMessage('Employee already exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
+  const handleSubmitModifyExpense = async (e) => {
+    e.preventDefault()
+
+    const bodyFormData = createExpenseForm()
+
+    try {
+      const response = await api.put(
+        '/manager/expenses/' + modifyExpense_id,
+        bodyFormData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      )
+      setOperationMessage('Status Modified')
+      fetchExpenses()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('User does not exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
+  const handleDeleteExpense = async (id) => {
+    try {
+      const response = await api.delete('/manager/expenses/' + id)
+      setOperationMessage('Expense deleted')
+      fetchExpenses()
+    } catch (err) {
+      if (!err?.response) {
+        setOperationMessage('Server error')
+      } else if (err.response?.status === 400) {
+        setOperationMessage('Incorrect inputs')
+      } else if (err.response?.status === 404) {
+        setOperationMessage('User does not exists')
+      } else {
+        setOperationMessage('Operation failed')
+      }
+    }
+  }
+
   /* Fetching functions */
 
-  const fetchStatusId = async () => {
+  const fetchStatus = async () => {
     try {
       const response = await api.get('/manager/status')
       setStatusId(response.data.status_id)
@@ -494,27 +635,82 @@ export default function Home() {
     }
   }
 
+  const fetchExpenses = async () => {
+    try {
+      const response = await api.get('/manager/expenses')
+      setExpenses(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchTypesOfExpenses = async () => {
+    try {
+      const response = await api.get('/typesOfExpenses')
+      setTypesOfExpenses(response.data)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
+  const fetchEmail = async () => {
+    try {
+      const response = await api.get('/email')
+      setUser_email(response.data.email)
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+      } else {
+        console.log(err.message)
+      }
+    }
+  }
+
   const fetchData = async () => {
-    await fetchStatusId()
+    await fetchStatus()
     await fetchTeam()
+    await fetchExpenses()
     await fetchCountries()
     await fetchBands()
     await fetchICAS()
     await fetchTypesOfEmployee()
+    await fetchTypesOfExpenses()
     await fetchSquads()
     await fetchQuarter()
+    await fetchEmail()
+
     setDataReady(true)
   }
 
   /* Effects */
   useEffect(() => {
     fetchData()
-    console.log(dataReady)
   }, [])
 
   useEffect(() => {}, [team])
 
-  useEffect(() => {handleSubmitModifyStatus()}, [statusId])
+  useEffect(() => {
+    setICA_email(user_email)
+    setAdmin_email(user_email)
+  }, [user_email])
+
+  useEffect(() => {
+    handleSubmitModifyStatus()
+  }, [statusId])
 
   useEffect(() => {
     if (modify_id === '') {
@@ -523,6 +719,14 @@ export default function Home() {
       populateFormForModify(modify_employee)
     }
   }, [modify_id])
+
+  useEffect(() => {
+    if (modifyExpense_id === '') {
+      unpopulateExpenseForm()
+    } else {
+      populateExpenseFormForModify(modifyExpense_expense)
+    }
+  }, [modifyExpense_id])
 
   return (
     <div className='pt-4 pl-10 w-full'>
@@ -575,7 +779,11 @@ export default function Home() {
               first_name={first_name}
               last_name={last_name}
               email={email}
+              bands={bands}
               handleSubmit={handleSubmitModifyRecovery}
+              setBand_id={setBand_id}
+              band_selection={band_selection}
+              setBand_selection={setBand_selection}
               month1Band_id={month1Band_id}
               setMonth1Band_id={setMonth1Band_id}
               month1Band_selection={month1Band_selection}
@@ -597,6 +805,31 @@ export default function Home() {
               open={openExpensesAdd}
               setOpen={setOpenExpensesAdd}
               cancelButtonRef={cancelButtonRefExpenses}
+              handleSubmit={
+                modifyExpense_id === ''
+                  ? handleSubmitAddExpense
+                  : handleSubmitModifyExpense
+              }
+              ICAS={ICAS}
+              typeOfExpenses={typesOfExpenses}
+              description={description}
+              employee_email={employee_email}
+              cost={cost}
+              typeOfExpense_selection={typeOfExpense_selection}
+              expenseICA_selection={expenseICA_selection}
+              ICA_email={ICA_email}
+              admin_email={admin_email}
+              expenseComments={expenseComments}
+              setDescription={setDescription}
+              setEmployee_email={setEmployee_email}
+              setCost={setCost}
+              setTypeOfExpense_id={setTypeOfExpense_id}
+              setTypeOfExpense_selection={setTypeOfExpense_selection}
+              setExpenseICA_id={setExpenseICA_id}
+              setExpenseICA_selection={setExpenseICA_selection}
+              setICA_email={setICA_email}
+              setAdmin_email={setAdmin_email}
+              setExpenseComments={setExpenseComments}
             />
           </>
         )}
@@ -623,7 +856,11 @@ export default function Home() {
           <div className='flex items-center gap-7 w-full'>
             <div className='text-2xl font-semibold text-gray-600'>Team</div>
             <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
-              <SearchBar />
+              <SearchBar
+                searchTerm={searchEmployee}
+                setSearchTerm={setSearchEmployee}
+                placeholder={'Search by name, email or band '}
+              />
             </div>
           </div>
         </div>
@@ -633,7 +870,6 @@ export default function Home() {
               <PlusCircleIcon
                 className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
                 onClick={() => {
-                  console.log('a')
                   setModify_id('')
                   setModify_employee('')
                   setOpenTeamAdd(true)
@@ -643,24 +879,49 @@ export default function Home() {
           </div>
           <div className='flex app'>
             <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-              {team.map((data) => (
-                <TeamCard
-                  key={data.id}
-                  employee={data}
-                  setOpenTeamAdd={setOpenTeamAdd}
-                  handleDeleteEmployee={handleDeleteEmployee}
-                  setModify_id={setModify_id}
-                  setModify_employee={setModify_employee}
-                  setOpenEmployeeRecovery={setOpenEmployeeRecovery}
-                />
-              ))}
+              {team
+                .filter((data) => {
+                  if (searchEmployee == '') {
+                    return data
+                  } else if (
+                    data.first_name
+                      .toLowerCase()
+                      .includes(searchEmployee.toLowerCase()) ||
+                    data.last_name
+                      .toLowerCase()
+                      .includes(searchEmployee.toLowerCase()) ||
+                    data.email
+                      .toLowerCase()
+                      .includes(searchEmployee.toLowerCase()) ||
+                    data.band_name
+                      .toLowerCase()
+                      .includes(searchEmployee.toLowerCase())
+                  ) {
+                    return data
+                  }
+                })
+                .map((data) => (
+                  <TeamCard
+                    key={data.id}
+                    employee={data}
+                    setOpenTeamAdd={setOpenTeamAdd}
+                    handleDeleteEmployee={handleDeleteEmployee}
+                    setModify_id={setModify_id}
+                    setModify_employee={setModify_employee}
+                    setOpenEmployeeRecovery={setOpenEmployeeRecovery}
+                  />
+                ))}
             </ScrollMenu>
           </div>
         </div>
         <div className='flex items-center gap-7 pt-16'>
           <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
           <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
-            <SearchBar />
+            <SearchBar
+              searchTerm={searchExpense}
+              setSearchTerm={setSearchExpense}
+              placeholder={'Search by name, email, cost or type '}
+            />
           </div>
         </div>
         <div className='flex'>
@@ -669,6 +930,8 @@ export default function Home() {
               <PlusCircleIcon
                 className='h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600'
                 onClick={() => {
+                  setModifyExpense_id('')
+                  setModifyExpense_expense('')
                   setOpenExpensesAdd(true)
                 }}
               />
@@ -677,16 +940,37 @@ export default function Home() {
 
           <div className='flex'>
             <ScrollMenu className='react-horizontal-scrolling-menu--scroll-container'>
-              {ExpensesDD.map((data) => (
-                <ExpensesCard
-                  key={data.id}
-                  item={data.item}
-                  email={data.email}
-                  date={data.date}
-                  price={data.price}
-                  section={data.section}
-                />
-              ))}
+              {expenses
+                .filter((data) => {
+                  if (searchExpense == '') {
+                    return data
+                  } else if (
+                    data.description
+                      .toLowerCase()
+                      .includes(searchExpense.toLowerCase()) ||
+                    data.cost
+                      .toLowerCase()
+                      .includes(searchExpense.toLowerCase()) ||
+                    data.employee_email
+                      .toLowerCase()
+                      .includes(searchExpense.toLowerCase()) ||
+                    data.typeOfExpense_name
+                      .toLowerCase()
+                      .includes(searchExpense.toLowerCase())
+                  ) {
+                    return data
+                  }
+                })
+                .map((data) => (
+                  <ExpensesCard
+                    key={data.id}
+                    expense={data}
+                    setOpenExpensesAdd={setOpenExpensesAdd}
+                    handleDeleteExpense={handleDeleteExpense}
+                    setModifyExpense_id={setModifyExpense_id}
+                    setModifyExpense_expense={setModifyExpense_expense}
+                  />
+                ))}
             </ScrollMenu>
           </div>
         </div>

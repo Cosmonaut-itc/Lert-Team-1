@@ -100,6 +100,22 @@ def isAuth():
     return json.dumps(res)
 
 
+@app.route('/manager/status', methods=['GET', 'PUT'])
+@login_required
+def manager_status():
+    if request.method == 'GET':
+        return {'status_id': current_user.status}
+
+    new_status = request.form.get('status_id')
+    print(new_status)
+    user_exists = User.query.filter_by(id=current_user.id).first()
+    if not user_exists:
+        return "Error finding your user", 404
+    user_exists.status = new_status
+    db.session.commit()
+    return "User added"
+
+
 @app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/manager/employees/<employee_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
@@ -121,13 +137,13 @@ def manager_employees(employee_id=None):
                 'month2Band_name': employee.month2Band.name,
                 'ICA_name': employee.ICA.name,
                 'squad_name': employee.squad.name,
-                'month1_cost': (employee.band.salary / 12),
-                'month2_cost': (employee.month1Band.salary / 12),
-                'month3_cost': (employee.month2Band.salary / 12),
+                'month3_cost': employee.band.salary,
+                'month2_cost': employee.month2Band.salary,
+                'month1_cost': employee.month1Band.salary,
             }
             response.append(employee.as_dict() | foreign_keys_names_dictionary)
 
-        return jsonify(response)
+        return jsonify(response[::-1])
 
     if request.method == 'DELETE':
         employee_exists = Employee.query.filter_by(id=employee_id).first()
@@ -197,8 +213,8 @@ def manager_employees(employee_id=None):
 @login_required
 def manager_employees_recovery(employee_id):
     band_id = request.form.get('band_id')
-    month1_band_id = request.form.get('month1_band_id')
-    month2_band_id = request.form.get('month2_band_id')
+    month1Band_id = request.form.get('month1Band_id')
+    month2Band_id = request.form.get('month2Band_id')
     hour1 = request.form.get('hour1')
     hour2 = request.form.get('hour2')
     hour3 = request.form.get('hour3')
@@ -212,8 +228,8 @@ def manager_employees_recovery(employee_id):
         return "Not your employee", 401
 
     employee_exists.band_id = band_id
-    employee_exists.month1_band_id = month1_band_id
-    employee_exists.month2_band_id = month2_band_id
+    employee_exists.month1Band_id = month1Band_id
+    employee_exists.month2Band_id = month2Band_id
 
     employee_exists.hour1 = hour1
     employee_exists.hour2 = hour2
@@ -224,6 +240,91 @@ def manager_employees_recovery(employee_id):
     db.session.commit()
     return "Recovery added"
 
+
+@app.route('/manager/expenses', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@app.route('/manager/expenses/<expense_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def expenses(expense_id=None):
+    if request.method == 'GET':
+        manager_expenses = Expense.query.filter_by(user_id=current_user.id)
+        db.session.commit()
+
+        if not manager_expenses:
+            return 204
+
+        response = []
+        for expense in manager_expenses:
+            foreign_keys_names_dictionary = {
+                'ICA_name': expense.ICA.name,
+                'typeOfExpense_name': expense.type_of_expense.name,
+                'user_email': expense.user.email
+            }
+            response.append(expense.as_dict() | foreign_keys_names_dictionary)
+
+        return jsonify(response[::-1])
+
+    if request.method == 'POST' or 'PUT':
+        description = request.form.get('description')
+        employee_email = request.form.get('employee_email')
+        cost = request.form.get('cost')
+        ICA_email = request.form.get('ICA_email')
+        ICA_id = request.form.get('ICA_id')
+        admin_email = request.form.get('admin_email')
+        comments = request.form.get('comments')
+        typeOfExpense_id = request.form.get('typeOfExpense_id')
+
+        if request.method == 'POST':
+            # Creates the new row by using the built-in model Expense
+            new_expense = Expense(description=description, employee_email=employee_email, cost=cost,
+                                  ICA_email=ICA_email,
+                                  ICA_id=ICA_id, typeOfExpense_id=typeOfExpense_id, admin_email=admin_email,
+                                  comments=comments, user_id=current_user.id)
+
+            # Adds and commits the expense to the db
+            db.session.add(new_expense)
+            db.session.commit()
+
+            return "Added expense", 201
+
+        if request.method == 'PUT':
+            expense_exists = Expense.query.filter_by(id=expense_id).first()
+
+            if not expense_exists:
+                return "Expense does not exist", 404
+            if expense_exists.user_id != current_user.id:
+                return "Not your expense", 401
+
+            expense_exists.description = description
+            expense_exists.employee_email = employee_email
+            expense_exists.cost = cost
+            expense_exists.typeOfExpense_id = typeOfExpense_id
+            expense_exists.ICA_id = ICA_id
+            expense_exists.ICA_email = ICA_email
+            expense_exists.admin_email = admin_email
+            expense_exists.comments = comments
+
+            db.session.commit()
+            return "Expense added"
+
+    if request.method == 'DELETE':
+        expense_exists = Expense.query.filter_by(id=expense_id).first()
+        if not expense_exists:
+            return "Expense does not exist", 404
+        if expense_exists.user_id != current_user.id:
+            return "Not your expense", 401
+
+        db.session.delete(expense_exists)
+        db.session.commit()
+
+        return "Expense deleted"
+
+
+@app.route('/email', methods=['GET'])
+@login_required
+def user_email():
+    res = {'email': current_user.email}
+    db.session.commit()
+    return json.dumps(res)
 
 @app.route('/quarter')
 def quarter():
@@ -251,22 +352,6 @@ def quarter():
         j = j + 1
 
     return result
-
-
-@app.route('/manager/status', methods=['GET', 'PUT'])
-@login_required
-def manager_status():
-    if request.method == 'GET':
-        return {'status_id': current_user.status}
-
-    new_status = request.form.get('status_id')
-    print(new_status)
-    user_exists = User.query.filter_by(id=current_user.id).first()
-    if not user_exists:
-        return "Error finding your user", 404
-    user_exists.status = new_status
-    db.session.commit()
-    return "User added"
 
 
 @app.route('/countries')
@@ -344,46 +429,11 @@ def typesOfEmployee():
     return jsonify(response)
 
 
-@app.route('/protected')
-@login_required
-@admin_required
-def protected():
-    return "Hello world" + " " + current_user.email
-
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return "Logged out"
-
-
-# TODO: Testing is missing on this endpoint
-@app.route('/expenses', methods=['POST'])
-@login_required
-def expenses():
-    expense_id = randint(0, 10000)  # Random function to create a random ID for every expense
-
-    # Creates the rest of the row by requesting the form
-    description = request.form.get('description')
-    employee_mail = request.form.get('employee_mail')
-    cost = request.form.get('cost')
-    # TODO: type of expense dropdown list
-    # TODO: ICA dropdown list
-    ica_mail = request.form.get('ica_manager_mail')
-    admin_mail = request.form.get('administrator_mail')
-    comments = request.form.get('comments')
-
-    # Creates the new row by using the built-in model Expense
-    new_expense = Expense(expense_id, description, employee_mail, cost, 'dummy expense', 'ica dummy', ica_mail,
-                          admin_mail,
-                          comments)
-
-    # Adds and commits the expense to the db
-    db.session.add(new_expense)
-    db.session.commit()
-
-    return "Added expense", 201
 
 
 @app.route('/addDelegate', methods=['POST'])
@@ -416,9 +466,9 @@ def add_squad():
     return "Added squad", 201
 
 
-@app.route('/typeOfExpense', methods=['GET', 'POST'])
+@app.route('/typesOfExpenses', methods=['GET', 'POST'])
 @login_required
-def type_of_expenses():
+def types_of_expenses():
     if request.method == 'GET':
         type_expense = TypeOfExpense.query.all()
         db.session.commit()
