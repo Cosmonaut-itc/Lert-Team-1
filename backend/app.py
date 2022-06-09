@@ -165,8 +165,8 @@ def manager_employees(employee_id=None):
 
             new_employee = Employee(first_name=first_name, last_name=last_name, email=email, country_id=int(country_id),
                                     typeOfEmployee_id=int(typeOfEmployee_id), band_id=int(band_id), ICA_id=int(ICA_id),
-                                    squad_id=int(squad_id), user_id=int(user_id), month1_band_id=int(band_id),
-                                    month2_band_id=int(band_id), comment="", hour1=0, hour2=0, hour3=0)
+                                    squad_id=int(squad_id), user_id=int(user_id), month1Band_id=int(band_id),
+                                    month2Band_id=int(band_id), comment="", hour1=0, hour2=0, hour3=0)
             db.session.add(new_employee)
             db.session.commit()
             return "Added Employee", 201
@@ -514,7 +514,7 @@ def logout():
 @login_required
 def types_of_expenses():
     if request.method == 'GET':
-        type_expense = TypeOfExpense.filter_by(country_id=current_user.country_id)
+        type_expense = TypeOfExpense.query.filter_by(country_id=current_user.country_id)
         db.session.commit()
 
         if not type_expense:

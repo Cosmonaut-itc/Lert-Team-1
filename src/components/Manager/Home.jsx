@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
+import { PlusCircleIcon } from '@heroicons/react/solid'
 import TeamCard from '../Shared/Components/TeamCard'
 import SearchBar from '../Shared/Components/SearchBar'
 import StatusDropdown from '../Shared/Components/StatusDropdown'
@@ -12,83 +12,10 @@ import api from '../api/api'
 import '../../styles/Home.css'
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 
-const ExpensesDD = [
-  {
-    id: 1,
-    item: 'Monitor',
-    email: 'kenbauer@tec.mx',
-    date: '14/03/2022',
-    price: '200',
-    section: 'Office Supplies',
-  },
-  {
-    id: 2,
-    item: 'Monitor',
-    email: 'kenbauer@tec.mx',
-    date: '14/03/2022',
-    price: '200',
-    section: 'Office Supplies',
-  },
-  {
-    id: 3,
-    item: 'Monitor',
-    email: 'kenbauer@tec.mx',
-    date: '14/03/2022',
-    price: '200',
-    section: 'Office Supplies',
-  },
-  {
-    id: 4,
-    item: 'Monitor',
-    email: 'kenbauer@tec.mx',
-    date: '14/03/2022',
-    price: '200',
-    section: 'Office Supplies',
-  },
-]
-
-const TeamDD = [
-  {
-    id: 1,
-    first_name: 'Ken',
-    last_name: 'Bauer',
-    email: 'kenbauer@ibm.com',
-    band_name: 'Band 1',
-  },
-  {
-    id: 2,
-    first_name: 'Ken',
-    last_name: 'Bauer',
-    email: 'kenbauer@ibm.com',
-    band_name: 'Band 1',
-  },
-  {
-    id: 3,
-    first_name: 'Ken',
-    last_name: 'Bauer',
-    email: 'kenbauer@ibm.com',
-    band_name: 'Band 1',
-  },
-  {
-    id: 4,
-    first_name: 'Ken',
-    last_name: 'Bauer',
-    email: 'kenbauer@ibm.com',
-    band_name: 'Band 1',
-  },
-  {
-    id: 5,
-    first_name: 'Ken',
-    last_name: 'Bauer',
-    email: 'kenbauer@ibm.com',
-    band_name: 'Band 1',
-  },
-]
-
 const EMPLOYEES_URL = '/manager/employees'
 
 export default function Home() {
-  // Data fetched from DB states
+  // Data fetched from back states
   const [team, setTeam] = useState([])
   const [expenses, setExpenses] = useState([])
   const [countries, setCountries] = useState([])
@@ -99,6 +26,7 @@ export default function Home() {
   const [typesOfEmployee, setTypesOfEmployee] = useState([])
   const [typesOfExpenses, setTypesOfExpenses] = useState([])
   const [dataReady, setDataReady] = useState(false)
+  const [operationMessage, setOperationMessage] = useState('')
 
   // Status states
   const statusOptions = [
@@ -109,12 +37,11 @@ export default function Home() {
   const [status, setStatus] = useState(statusOptions[0])
   const [statusId, setStatusId] = useState(0)
 
-  // Add-modify employee states
+  // Employee states
   const [searchEmployee, setSearchEmployee] = useState('')
   const defaultSelection = { id: 0, name: 'Select' }
   const [openTeamAdd, setOpenTeamAdd] = useState(false)
   const cancelButtonRefTeam = useRef(null)
-  const [operationMessage, setOperationMessage] = useState('')
   const [first_name, setFirst_name] = useState('')
   const [last_name, setLast_name] = useState('')
   const [email, setEmail] = useState('')
@@ -149,7 +76,7 @@ export default function Home() {
   const [hour3, setHour3] = useState(0)
   const [comment, setComment] = useState('')
 
-  // Add-Modify expenses states
+  // Expenses states
   const [searchExpense, setSearchExpense] = useState('')
   const [openExpensesAdd, setOpenExpensesAdd] = useState(false)
   const cancelButtonRefExpenses = useRef(null)

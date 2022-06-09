@@ -19,7 +19,6 @@ class User(UserMixin, db.Model):
     expenses = db.relationship('Expense', backref='user')
     delegates = db.relationship('Delegate', backref='user')
 
-
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
@@ -122,7 +121,6 @@ class Delegate(db.Model):
     last_name = db.Column(db.Text, index=True)
     email = db.Column(db.Text, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
