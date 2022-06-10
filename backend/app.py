@@ -17,7 +17,7 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 
-CORS(app, supports_credentials=True, resources={r'/*': {'origins': ["http://localhost:3000", "http://127.0.0.1:3000"]}})
+CORS(app, supports_credentials=True, resources={r'/*': {'origins': ["http://localhost:3000", 'http://127.0.0.1:3000']}})
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -572,7 +572,7 @@ def OPSManager_types_of_employee(type_id=None):
         return jsonify(response[::-1]), 201
 
     if request.method == 'POST' or 'PUT':
-        name = request.form.get('type_of_employee')
+        name = request.form.get('name')
 
         if request.method == 'POST':
             new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
@@ -587,7 +587,7 @@ def OPSManager_types_of_employee(type_id=None):
 
             if not type_exists:
                 return "Type of employee does not exist", 404
-            if type_exists.user_id != current_user.id:
+            if type_exists.country_id != current_user.country_id:
                 return "Not your type of employee", 401
 
             type_exists.name = name
@@ -596,10 +596,10 @@ def OPSManager_types_of_employee(type_id=None):
             return "Type of employee modified"
 
     if request.method == 'DELETE':
-        type_exists = Delegate.query.filter_by(id=type_id).first()
+        type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
         if not type_exists:
             return "Employee type does not exist", 404
-        if type_exists.user_id != current_user.id:
+        if type_exists.country_id != current_user.country_id:
             return "Not your Employee type", 401
 
         db.session.delete(type_exists)
@@ -607,13 +607,66 @@ def OPSManager_types_of_employee(type_id=None):
 
         return "Delegate deleted"
 
+
+@app.route('/OPSManager/typesOfExpense', methods=['GET', 'POST', 'PUT'])
+@app.route('/OPSManager/typesOfExpense/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def OPSManager_types_of_expense(type_id=None):
+    if request.method == 'GET':
+        expense_type = TypeOfExpense.query.filter_by(country_id=current_user.country_id)
+        db.session.commit()
+
+        if not expense_type:
+            return "No expense type", 404
+
+        response = []
+        for typeOfExpense in expense_type:
+            response.append(typeOfExpense.as_dict())
+
+        return jsonify(response[::-1]), 201
+
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('name')
+
+        if request.method == 'POST':
+            new_type_of_expense = TypeOfExpense(name=name, country_id=current_user.country_id)
+
+            db.session.add(new_type_of_expense)
+            db.session.commit()
+
+            return "Type of expense added", 201
+
+        if request.method == 'PUT':
+            type_exists = TypeOfExpense.query.filter_by(id=type_id).first()
+
+            if not type_exists:
+                return "Type of expense does not exist", 404
+            if type_exists.country_id != current_user.country_id:
+                return "Not your type of expense", 401
+
+            type_exists.name = name
+
+            db.session.commit()
+            return "Type of expense modified"
+
+    if request.method == 'DELETE':
+        type_exists = TypeOfExpense.query.filter_by(id=type_id).first()
+        if not type_exists:
+            return "Expense type does not exist", 404
+        if type_exists.country_id != current_user.country_id:
+            return "Not your expense type", 401
+
+        db.session.delete(type_exists)
+        db.session.commit()
+
+        return "Expense deleted"
+
+
 @app.route('/OPSManager/<manager_id>/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
-
-
 @app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
-def admin_OPSManager(OPSManager_id=None):
+def admin_OPSManagers(OPSManager_id=None):
     if request.method == 'GET':
         OPSManagers = User.query.filter_by(role=1)
         db.session.commit()
@@ -836,28 +889,17 @@ def logout():
 @app.route('/typesOfExpenses', methods=['GET', 'POST'])
 @login_required
 def types_of_expenses():
-    if request.method == 'GET':
-        type_expense = TypeOfExpense.query.filter_by(country_id=current_user.country_id)
-        db.session.commit()
+    type_expense = TypeOfExpense.query.filter_by(country_id=current_user.country_id)
+    db.session.commit()
 
-        if not type_expense:
-            return "No type of expense for your user", 404
+    if not type_expense:
+        return "No type of expense for your user", 404
 
-        response = []
-        for expense in type_expense:
-            response.append(expense.as_dict())
+    response = []
+    for expense in type_expense:
+        response.append(expense.as_dict())
 
-        return jsonify(response), 201
-
-    if request.method == 'POST':
-        name = request.form.get('name')
-
-        new_type_of_expense = TypeOfExpense(name=name, country_id=current_user.country_id)
-
-        db.session.add(new_type_of_expense)
-        db.session.commit()
-
-        return "Type of expense added", 201
+    return jsonify(response), 201
 
 
 if __name__ == '__main__':

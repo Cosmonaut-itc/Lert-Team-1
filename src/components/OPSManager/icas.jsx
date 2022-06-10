@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import SearchBar from '../Shared/Components/SearchBar'
-import ModalAddModifyIcas from './Components/ModalAddModifyIcas'
+import ModalSingleField from './Components/ModalSingleField'
 import IcasCard from './Components/IcasCard'
 import api from '../api/api'
 
@@ -157,7 +157,7 @@ export default function Icas() {
         </div>
       </div>
       <div className='flex justify-center md:justify-start pt-3'>
-        <ModalAddModifyIcas
+        <ModalSingleField
           open={openICAsAddModify}
           setOpen={setOpenICAsAddModify}
           name={name}
@@ -165,12 +165,17 @@ export default function Icas() {
           handleSubmit={
             modify_id === '' ? handleSubmitAddICA : handleSubmitModifyICA
           }
+
+          modalTitle={'ICA'}
+          fieldPlaceHolder={'ICA name'}
+
         />
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3'>
           <div className='flex justify-center items-center'>
             <button
               onClick={() => {
                 setOpenICAsAddModify(true)
+                setModify_id('')
               }}
             >
               <PlusCircleIcon className=' flex h-16 w-16 text-blue-400 hover:text-blue-500 active:text-blue-600 justify-center' />
