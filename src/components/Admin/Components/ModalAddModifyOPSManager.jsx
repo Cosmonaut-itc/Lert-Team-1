@@ -2,9 +2,9 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import MailIcon from '@heroicons/react/solid/MailIcon'
-import SelectMenu from './SelectMenu'
+import SelectMenu from '../../Shared/Components/SelectMenu'
 
-export default function ModalAddModifyUserCountry({
+export default function ModalAddModifyOPSManager({
   // Modal Options
   open,
   cancelButtonRef,

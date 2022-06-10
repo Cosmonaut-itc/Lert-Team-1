@@ -27,15 +27,27 @@ class User(UserMixin, db.Model):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 
+class CountryRef(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, index=True)
+    code = db.Column(db.Text, index=True)
+    countries = db.relationship('Country', backref='countryRef')
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+
+
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True, unique=True)
+
     users = db.relationship('User', backref='country')
     employees = db.relationship('Employee', backref='country')
     bands = db.relationship('Band', backref='country')
     ICAs = db.relationship('ICA', backref='country')
     typeOfEmployees = db.relationship('TypeOfEmployee', backref='country')
     typeOfExpenses = db.relationship('TypeOfExpense', backref='country')
+    countryRef_id = db.Column(db.Integer, db.ForeignKey('country_ref.id'))
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}

@@ -514,6 +514,70 @@ def OPSManager_managers(manager_id=None):
         return "User deleted"
 
 
+@app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def admin_OPSManager(OPSManager_id=None):
+    if request.method == 'GET':
+        OPSManagers = User.query.filter_by(role=1)
+        db.session.commit()
+
+        if not OPSManagers:
+            return 204
+
+        response = []
+        for OPSManager in OPSManagers:
+            foreign_keys_names_dictionary = {
+                'country_name': OPSManager.country.name,
+                'country_code': OPSManager.country.countryRef.code,
+            }
+            response.append(OPSManager.as_dict() | foreign_keys_names_dictionary)
+
+        return jsonify(response[::-1])
+
+    if request.method == 'POST' or 'PUT':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        country_id = request.form.get('country_id')
+
+        if request.method == 'POST':
+            ph = PasswordHasher()
+            user_exists = User.query.filter_by(email=email).first()
+            db.session.commit()
+            if user_exists:
+                return "User already exist", 409
+            new_user = User(first_name=first_name, last_name=last_name, email=email, password=ph.hash('password'),
+                            role=1, country_id=country_id, status=0)
+            db.session.add(new_user)
+            db.session.commit()
+            return "Added user", 201
+
+        if request.method == 'PUT':
+            user_exists = User.query.filter_by(id=OPSManager_id).first()
+
+            if not user_exists:
+                return "OPSManager does not exist", 404
+
+            user_exists.first_name = first_name
+            user_exists.last_name = last_name
+            user_exists.email = email
+            user_exists.country_id = country_id
+
+            db.session.commit()
+            return "OPSManager modified"
+
+    if request.method == 'DELETE':
+        user_exists = User.query.filter_by(id=OPSManager_id).first()
+        if not user_exists:
+            return "OPSManager does not exist", 404
+
+        db.session.delete(user_exists)
+        db.session.commit()
+
+        return "OPSManager deleted"
+
+
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():
@@ -560,6 +624,24 @@ def countries():
 
     response = []
     for country in countries:
+        foreign_keys_names_dictionary = {
+            'code': country.countryRef.code,
+        }
+        response.append(country.as_dict() | foreign_keys_names_dictionary)
+
+    return jsonify(response)
+
+
+@app.route('/countryRefs')
+@login_required
+def countryRefs():
+    countryRefs = CountryRef.query.all()
+    db.session.commit()
+    if not countryRefs:
+        return 204
+
+    response = []
+    for country in countryRefs:
         response.append(country.as_dict())
 
     return jsonify(response)
@@ -595,7 +677,7 @@ def bands():
     return jsonify(response)
 
 
-@app.route('OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
+@app.route('/OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
 @app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
 def types_of_employee(type_id=None):

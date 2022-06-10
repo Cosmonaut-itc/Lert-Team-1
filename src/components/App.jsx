@@ -59,8 +59,7 @@ function App() {
             </Route>
 
             {/* Admin routes */}
-            {/*<Route element={<RequireAuth allowedRole={2} />}>*/}
-            <Route>
+            <Route element={<RequireAuth allowedRole={2} />}>
               <Route element={<SidebarLayout role='admin' />}>
                 <Route path='/admin/home' element={<AdminHome />} />
                 <Route path='/admin/countries' element={<AdminCountries />} />
