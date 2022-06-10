@@ -105,7 +105,7 @@ export default function Home() {
       const response = await api.put('/manager/status', bodyFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
-      setOperationMessage('Sattus Modified')
+      setOperationMessage('Status Modified')
       fetchStatus()
     } catch (err) {
       if (!err?.response) {
