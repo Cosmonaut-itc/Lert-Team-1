@@ -2,18 +2,18 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
 
-export default function EmployeeCard({ id, employee }) {
+export default function TypesOfEmployeeCard({ typeOfEmployee }) {
   return (
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
       className='m-4 pt-1 relative shadow-lg  '
-      key={id}
+      key={typeOfEmployee.id}
     >
       <div className='text-left mb-10 pl-4'>
         <h4 className='text-gray-500 text-md mt-2'>Type of employee:</h4>
         <p className='text-gray-500 text-md font-medium mt-2'>
-          <span className='capitalize font-bold text-black'>{employee}</span>
+          <span className='capitalize font-bold text-black'>{typeOfEmployee.name}</span>
         </p>
       </div>
 

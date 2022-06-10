@@ -5,7 +5,7 @@ import SearchBar from '../Shared/Components/SearchBar'
 import ModalTypesOfEmployees from './Components/ModalTypesOfEmployees'
 import ModalTypesOfExpenses from './Components/ModalTypesOfExpenses'
 import ExpensesCard from './Components/ExpensesCard'
-import EmployeesCard from './Components/EmployeeCard'
+import EmployeesCard from './Components/TypesOfEmployeeCard'
 import api from '../api/api'
 // import '../../styles/Home.css'
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
@@ -31,7 +31,7 @@ const EmployeesDD = [
     id: 5,
     employee: 'Teacher',
   },
-  
+
 ]
 
 const ExpensesDD = [
@@ -96,7 +96,7 @@ export default function Types() {
     const bodyFormData = createTypeForm()
 
     try {
-      const response = await api.post('/OPSManager/typesOfEmployee', bodyFormData, {
+      const response = await api.post('/typesOfEmployee', bodyFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       setOperationMessage('Type of employee added')
@@ -165,7 +165,7 @@ export default function Types() {
 
   const fetchType = async () => {
     try {
-      const response = await api.get('/OPSManager/typesOfEmployee')
+      const response = await api.get('/typesOfEmployee')
       setTypes(response.data)
     } catch (err) {
       if (err.response) {
@@ -203,20 +203,6 @@ export default function Types() {
     <div className='pt-4 pl-10 w-full'>
       <div></div>
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
-        
-        {/* <div className='flex items-center align-middle pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'> */}
-        {/* <SelectMenu
-          options={[
-            {name: "Alexis"},
-            {name: "Diego"}
-          ]}
-          selected={inProgressBar}
-          border="border-none"
-          onChange={(e) => {
-            setTypeOfEmployee_selection(e)
-            setTypeOfEmployee_id(e.id)
-          }}
-            /> */}
 
       </div>
       <div className='flex flex-col justify-center h-3/4'>
@@ -316,11 +302,7 @@ export default function Types() {
               {types.map((data) => (
                 <EmployeesCard
                   key={data.id}
-                  //employee={data}
-                  //setOpenTypeAdd={setOpenTypeAddModify}
-                  handleDeleteType={handleDeleteType}
-                  setModify_id={setModify_id}
-                  setModify_type={setModify_type}
+                  typeOfEmployee={data}
                 />
               ))}
             </ScrollMenu>

@@ -607,6 +607,8 @@ def OPSManager_types_of_employee(type_id=None):
 
         return "Delegate deleted"
 
+@app.route('/OPSManager/<manager_id>/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
+
 
 @app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
