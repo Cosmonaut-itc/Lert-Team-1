@@ -504,7 +504,7 @@ export default function Home() {
 
   const fetchICAS = async () => {
     try {
-      const response = await api.get('/ICAS')
+      const response = await api.get('/ICAs')
       setICAS(response.data)
     } catch (err) {
       if (err.response) {
@@ -519,7 +519,7 @@ export default function Home() {
 
   const fetchSquads = async () => {
     try {
-      const response = await api.get('/squads')
+      const response = await api.get('/manager/squads')
       setSquads(response.data)
     } catch (err) {
       if (err.response) {

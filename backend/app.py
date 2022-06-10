@@ -514,6 +514,99 @@ def OPSManager_managers(manager_id=None):
         return "User deleted"
 
 
+@app.route('/OPSManager/ICAs', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/OPSManager/ICAs/<ICA_id>', methods=['POST', 'DELETE', 'PUT'])
+@login_required
+def OPSManager_ICAs(ICA_id=None):
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('name')
+
+        if request.method == 'POST':
+            new_ICA = ICA(name=name, country_id=current_user.country_id)
+            db.session.add(new_ICA)
+            db.session.commit()
+            return "ICA added", 201
+
+        if request.method == 'PUT':
+            ICA_exists = ICA.query.filter_by(id=ICA_id).first()
+
+            if not ICA_exists:
+                return "ICA does not exist", 404
+            if ICA_exists.country_id != current_user.country_id:
+                return 'Not your ICA', 401
+
+            ICA_exists.name = name
+
+            db.session.commit()
+            return "ICA modified"
+
+    if request.method == 'DELETE':
+        ICA_exists = ICA.query.filter_by(id=ICA_id).first()
+        if not ICA_exists:
+            return "ICA does not exist", 404
+        if ICA_exists.country_id != current_user.country_id:
+            return 'Not your ICA', 401
+
+        db.session.delete(ICA_exists)
+        db.session.commit()
+
+        return "ICA deleted"
+
+
+@app.route('/OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
+@app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
+@login_required
+def OPSManager_types_of_employee(type_id=None):
+    if request.method == 'GET':
+        employee_type = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
+        db.session.commit()
+
+        if not employee_type:
+            return "No employee type", 404
+
+        response = []
+        for typeOfEmployee in employee_type:
+            response.append(typeOfEmployee.as_dict())
+
+        return jsonify(response[::-1]), 201
+
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('type_of_employee')
+
+        if request.method == 'POST':
+            new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
+
+            db.session.add(new_type_of_employee)
+            db.session.commit()
+
+            return "Type of employee added", 201
+
+        if request.method == 'PUT':
+            type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
+
+            if not type_exists:
+                return "Type of employee does not exist", 404
+            if type_exists.user_id != current_user.id:
+                return "Not your type of employee", 401
+
+            type_exists.name = name
+
+            db.session.commit()
+            return "Type of employee modified"
+
+    if request.method == 'DELETE':
+        type_exists = Delegate.query.filter_by(id=type_id).first()
+        if not type_exists:
+            return "Employee type does not exist", 404
+        if type_exists.user_id != current_user.id:
+            return "Not your Employee type", 401
+
+        db.session.delete(type_exists)
+        db.session.commit()
+
+        return "Delegate deleted"
+
+
 @app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -615,6 +708,21 @@ def admin_Countries(country_id=None):
         return "Country deleted"
 
 
+@app.route('/typesOfEmployee')
+@login_required
+def typesOfEmployee():
+    typesOfEmployee = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
+    db.session.commit()
+    if not typesOfEmployee:
+        return 204
+
+    response = []
+    for typeOfEmployee in typesOfEmployee:
+        response.append(typeOfEmployee.as_dict())
+
+    return jsonify(response)
+
+
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():
@@ -685,9 +793,9 @@ def countryRefs():
     return jsonify(response)
 
 
-@app.route('/ICAS')
+@app.route('/ICAs')
 @login_required
-def ICAS():
+def ICAs():
     ICAS = ICA.query.filter_by(country_id=current_user.country_id)
     db.session.commit()
     if not ICAS:
@@ -713,60 +821,6 @@ def bands():
         response.append(band.as_dict())
 
     return jsonify(response)
-
-
-@app.route('/OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
-@app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
-@login_required
-def types_of_employee(type_id=None):
-    if request.method == 'GET':
-        employee_type = TypeOfEmployee.query.filter_by(country_id=current_user.country_id)
-        db.session.commit()
-
-        if not employee_type:
-            return "No employee type", 404
-
-        response = []
-        for typeOfEmployee in employee_type:
-            response.append(typeOfEmployee.as_dict())
-
-        return jsonify(response[::-1]), 201
-
-    if request.method == 'POST' or 'PUT':
-        name = request.form.get('type_of_employee')
-
-        if request.method == 'POST':
-            new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
-
-            db.session.add(new_type_of_employee)
-            db.session.commit()
-
-            return "Type of employee added", 201
-
-        if request.method == 'PUT':
-            type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
-
-            if not type_exists:
-                return "Type of employee does not exist", 404
-            if type_exists.user_id != current_user.id:
-                return "Not your type of employee", 401
-
-            type_exists.name = name
-
-            db.session.commit()
-            return "Type of employee modified"
-
-    if request.method == 'DELETE':
-        type_exists = Delegate.query.filter_by(id=type_id).first()
-        if not type_exists:
-            return "Employee type does not exist", 404
-        if type_exists.user_id != current_user.id:
-            return "Not your Employee type", 401
-
-        db.session.delete(type_exists)
-        db.session.commit()
-
-        return "Delegate deleted"
 
 
 @app.route('/logout')

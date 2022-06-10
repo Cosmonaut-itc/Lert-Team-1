@@ -181,7 +181,11 @@ export default function Home() {
       <div className='flex items-center gap-7 justify-between'>
         <div className='text-2xl font-semibold text-gray-600'>Managers</div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
-          <SearchBar />
+          <SearchBar
+            searchTerm={searchManager}
+            placeholder={'Search by name, email or status'}
+            setSearchTerm={setSearchManager}
+          />
         </div>
         <Button
           className=''
@@ -214,16 +218,35 @@ export default function Home() {
               />
             </button>
           </div>
-          {managers.map((data) => (
-            <ManagerCard
-              key={data.id}
-              manager={data}
-              setOpenManagerAdd={setOpenManagerAddModify}
-              handleDeleteManager={handleDeleteManager}
-              setModify_id={setModify_id}
-              setModify_manager={setModify_manager}
-            />
-          ))}
+          {managers
+            .filter((data) => {
+              if (searchManager == '') {
+                return data
+              } else if (
+                data.first_name
+                  .toLowerCase()
+                  .includes(searchManager.toLowerCase()) ||
+                data.last_name
+                  .toLowerCase()
+                  .includes(searchManager.toLowerCase()) ||
+                data.email
+                  .toLowerCase()
+                  .includes(searchManager.toLowerCase()) ||
+                data.status.toLowerCase().includes(searchManager.toLowerCase())
+              ) {
+                return data
+              }
+            })
+            .map((data) => (
+              <ManagerCard
+                key={data.id}
+                manager={data}
+                setOpenManagerAdd={setOpenManagerAddModify}
+                handleDeleteManager={handleDeleteManager}
+                setModify_id={setModify_id}
+                setModify_manager={setModify_manager}
+              />
+            ))}
         </div>
       </div>
     </div>
