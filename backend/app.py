@@ -572,7 +572,7 @@ def OPSManager_types_of_employee(type_id=None):
         return jsonify(response[::-1]), 201
 
     if request.method == 'POST' or 'PUT':
-        name = request.form.get('name')
+        name = request.form.get('type_of_employee')
 
         if request.method == 'POST':
             new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
@@ -587,7 +587,7 @@ def OPSManager_types_of_employee(type_id=None):
 
             if not type_exists:
                 return "Type of employee does not exist", 404
-            if type_exists.country_id != current_user.country_id:
+            if type_exists.user_id != current_user.id:
                 return "Not your type of employee", 401
 
             type_exists.name = name
@@ -596,10 +596,10 @@ def OPSManager_types_of_employee(type_id=None):
             return "Type of employee modified"
 
     if request.method == 'DELETE':
-        type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
+        type_exists = Delegate.query.filter_by(id=type_id).first()
         if not type_exists:
             return "Employee type does not exist", 404
-        if type_exists.country_id != current_user.country_id:
+        if type_exists.user_id != current_user.id:
             return "Not your Employee type", 401
 
         db.session.delete(type_exists)
@@ -663,6 +663,8 @@ def OPSManager_types_of_expense(type_id=None):
 
 
 @app.route('/OPSManager/<manager_id>/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
+
+
 @app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -886,7 +888,7 @@ def logout():
     return "Logged out"
 
 
-@app.route('/typesOfExpenses', methods=['GET', 'POST'])
+@app.route('/typesOfExpenses', methods=['GET'])
 @login_required
 def types_of_expenses():
     type_expense = TypeOfExpense.query.filter_by(country_id=current_user.country_id)
