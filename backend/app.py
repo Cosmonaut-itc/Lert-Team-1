@@ -890,5 +890,55 @@ def ops_manager_type_of_expenses(type_id=None):
         return "Delegate deleted"
 
 
+@app.route('/OPSManager/recovery', methods=['GET'])
+@app.route('/OPSManager/recovery/<manager_id>', methods=['GET'])
+def ops_manager_recovery(manager_id=None):
+    if request.method == 'GET':
+        if manager_id:
+            recovery_manager_id_expenses = Expense.query.filter_by(user_id=manager_id)
+            recovery_manager_id_employees = Employee.query.filter_by(user_id=manager_id)
+            db.session.commit()
+
+            if not recovery_manager_id_expenses:
+                return "No expenses can be recovered for this manager", 401
+
+            if not recovery_manager_id_employees:
+                return "No employees can be recovered for this manager", 401
+
+            response_expense = []
+            response_employee = []
+            for expense in recovery_manager_id_expenses:
+                response_expense.append(expense.as_dict())
+
+            for employee in recovery_manager_id_employees:
+                response_employee.append(employee.as_dict())
+
+            return jsonify(response_expense), jsonify(response_employee)
+
+        else:
+            recovery_all_expenses = Expense.query.all()
+            recovery_all_employees = Employee.query.all()
+            db.session.commit()
+
+            if not recovery_all_expenses:
+                return "There are no expenses to recover", 401
+
+            if not recovery_all_employees:
+                return "There are no employees to recover", 401
+
+            response_expense = []
+            response_employee = []
+            for expense in recovery_all_expenses:
+                response_expense.append(expense.as_dict())
+
+            for employee in recovery_all_employees:
+                response_employee.append(employee.as_dict())
+
+            return jsonify(response_expense), jsonify(response_employee)
+
+    else:
+        return "This method is not allowed on this route", 401
+
+
 if __name__ == '__main__':
     app.run()
