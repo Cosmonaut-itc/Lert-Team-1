@@ -578,6 +578,43 @@ def admin_OPSManager(OPSManager_id=None):
         return "OPSManager deleted"
 
 
+@app.route('/admin/countries', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/admin/countries/<country_id>', methods=['POST', 'DELETE', 'PUT'])
+@login_required
+def admin_Countries(country_id=None):
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('name')
+        countryRef_id = request.form.get('countryRef_id')
+
+        if request.method == 'POST':
+            new_country = Country(name=name, countryRef_id=countryRef_id)
+            db.session.add(new_country)
+            db.session.commit()
+            return "Country added", 201
+
+        if request.method == 'PUT':
+            country_exists = Country.query.filter_by(id=country_id).first()
+
+            if not country_exists:
+                return "Country does not exist", 404
+
+            country_exists.name = name
+            country_exists.countryRef_id = countryRef_id
+
+            db.session.commit()
+            return "Country modified"
+
+    if request.method == 'DELETE':
+        country_exists = Country.query.filter_by(id=country_id).first()
+        if not country_exists:
+            return "Country does not exist", 404
+
+        db.session.delete(country_exists)
+        db.session.commit()
+
+        return "Country deleted"
+
+
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():
@@ -626,6 +663,7 @@ def countries():
     for country in countries:
         foreign_keys_names_dictionary = {
             'code': country.countryRef.code,
+            'countryRef_name': country.countryRef.name,
         }
         response.append(country.as_dict() | foreign_keys_names_dictionary)
 

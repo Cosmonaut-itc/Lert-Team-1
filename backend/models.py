@@ -40,6 +40,7 @@ class CountryRef(db.Model):
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True, unique=True)
+    countryRef_id = db.Column(db.Integer, db.ForeignKey('country_ref.id'))
 
     users = db.relationship('User', backref='country')
     employees = db.relationship('Employee', backref='country')
@@ -47,7 +48,7 @@ class Country(db.Model):
     ICAs = db.relationship('ICA', backref='country')
     typeOfEmployees = db.relationship('TypeOfEmployee', backref='country')
     typeOfExpenses = db.relationship('TypeOfExpense', backref='country')
-    countryRef_id = db.Column(db.Integer, db.ForeignKey('country_ref.id'))
+
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
