@@ -15,7 +15,7 @@ export default function TeamCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg overflow-visible'
+      className='m-6 pt-1 relative shadow-lg overflow-visible'
       key={employee.id}
     >
       <div className='flex justify-between'>

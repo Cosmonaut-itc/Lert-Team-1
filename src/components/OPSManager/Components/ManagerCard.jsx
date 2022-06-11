@@ -38,7 +38,7 @@ export default function ManagerCard({
         style={{ backgroundColor: color }}
       />
       <div className='flex justify-between'>
-        <div className='text-left pb-10'>
+        <div className='text-left pb-10 pl-5'>
           <h4 className='font-bold text-lg pt-2'>
             {manager.first_name + ' ' + manager.last_name}
           </h4>
