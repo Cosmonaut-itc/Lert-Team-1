@@ -96,7 +96,7 @@ class Band(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, index=True)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    salary = db.Column(db.Float)
+    salary = db.Column(db.Numeric)
 
     def as_dict(self):
         return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}

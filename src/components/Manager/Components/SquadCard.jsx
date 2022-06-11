@@ -19,7 +19,7 @@ export default function SquadCard({
       <div className='text-left mb-10 pl-4'>
         <h4 className='text-gray-500 text-md mt-2'>Squad:</h4>
         <p className='text-gray-500 text-md font-medium mt-2'>
-          <span className='uppercase font-bold text-black'>{squad.name}</span>
+          <span className='font-bold text-black'>{squad.name}</span>
         </p>
       </div>
 

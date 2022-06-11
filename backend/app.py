@@ -554,6 +554,47 @@ def OPSManager_ICAs(ICA_id=None):
         return "ICA deleted"
 
 
+@app.route('/OPSManager/bands', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/OPSManager/bands/<band_id>', methods=['POST', 'DELETE', 'PUT'])
+@login_required
+def OPSManager_bands(band_id=None):
+    if request.method == 'POST' or 'PUT':
+        name = request.form.get('name')
+        salary = request.form.get('salary')
+
+        if request.method == 'POST':
+            new_band = Band(name=name, salary=salary, country_id=current_user.country_id)
+            db.session.add(new_band)
+            db.session.commit()
+            return "Band added", 201
+
+        if request.method == 'PUT':
+            band_exists = Band.query.filter_by(id=band_id).first()
+
+            if not band_exists:
+                return "Band does not exist", 404
+            if band_exists.country_id != current_user.country_id:
+                return 'Not your Band', 401
+
+            band_exists.name = name
+            band_exists.salary = salary
+
+            db.session.commit()
+            return "Band modified"
+
+    if request.method == 'DELETE':
+        band_exists = Band.query.filter_by(id=band_id).first()
+        if not band_exists:
+            return "Band does not exist", 404
+        if band_exists.country_id != current_user.country_id:
+            return 'Not your ICA', 401
+
+        db.session.delete(band_exists)
+        db.session.commit()
+
+        return "Band deleted"
+
+
 @app.route('/OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
 @app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -572,7 +613,7 @@ def OPSManager_types_of_employee(type_id=None):
         return jsonify(response[::-1]), 201
 
     if request.method == 'POST' or 'PUT':
-        name = request.form.get('type_of_employee')
+        name = request.form.get('name')
 
         if request.method == 'POST':
             new_type_of_employee = TypeOfEmployee(name=name, country_id=current_user.country_id)
@@ -587,7 +628,7 @@ def OPSManager_types_of_employee(type_id=None):
 
             if not type_exists:
                 return "Type of employee does not exist", 404
-            if type_exists.user_id != current_user.id:
+            if type_exists.country_id != current_user.country_id:
                 return "Not your type of employee", 401
 
             type_exists.name = name
@@ -596,16 +637,16 @@ def OPSManager_types_of_employee(type_id=None):
             return "Type of employee modified"
 
     if request.method == 'DELETE':
-        type_exists = Delegate.query.filter_by(id=type_id).first()
+        type_exists = TypeOfEmployee.query.filter_by(id=type_id).first()
         if not type_exists:
             return "Employee type does not exist", 404
-        if type_exists.user_id != current_user.id:
+        if type_exists.country_id != current_user.country_id:
             return "Not your Employee type", 401
 
         db.session.delete(type_exists)
         db.session.commit()
 
-        return "Delegate deleted"
+        return "Type deleted"
 
 
 @app.route('/OPSManager/typesOfExpense', methods=['GET', 'POST', 'PUT'])
@@ -663,8 +704,6 @@ def OPSManager_types_of_expense(type_id=None):
 
 
 @app.route('/OPSManager/<manager_id>/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
-
-
 @app.route('/admin/OPSManagers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/admin/OPSManagers/<OPSManager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
