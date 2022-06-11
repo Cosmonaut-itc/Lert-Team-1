@@ -29,7 +29,7 @@ app.secret_key = secrets.token_urlsafe(16)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
+# Function for the admin_required
 def admin_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
@@ -39,7 +39,7 @@ def admin_required(func):
 
     return decorated_view
 
-
+# Function for the ops_manager_required
 def ops_manager_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
@@ -49,12 +49,12 @@ def ops_manager_required(func):
 
     return decorated_view
 
-
+# Function for the login_manager.user_loader
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
-
+# Login endpoint 
 @app.route('/login', methods=['POST'])
 def login():
     ph = PasswordHasher()
@@ -70,7 +70,7 @@ def login():
     login_user(user, remember=True, duration=timedelta(days=5))
     return json.dumps({'role': user.role})
 
-
+# Sign up endpoint
 @app.route('/signup', methods=['POST'])
 # @login_required
 # @admin_required
@@ -91,7 +91,7 @@ def signup():
     db.session.commit()
     return "Added user", 201
 
-
+# is Auth endpoint
 @app.route('/isAuth', methods=['GET'])
 @login_required
 def isAuth():
@@ -99,7 +99,7 @@ def isAuth():
     db.session.commit()
     return json.dumps(res)
 
-
+# manager/employees endpoint
 @app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/manager/employees/<employee_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
@@ -192,7 +192,7 @@ def manager_employees(employee_id=None):
             return "User added"
     return 400
 
-
+# manager/employees/recovery endpoint
 @app.route('/manager/employees/<employee_id>/recovery', methods=['PUT'])
 @login_required
 def manager_employees_recovery(employee_id):
@@ -224,7 +224,7 @@ def manager_employees_recovery(employee_id):
     db.session.commit()
     return "Recovery added"
 
-
+# manager/expenses endpoint
 @app.route('/manager/expenses', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/expenses/<expense_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -302,7 +302,7 @@ def manager_expenses(expense_id=None):
 
         return "Expense deleted"
 
-
+# manager/status endpoint
 @app.route('/manager/status', methods=['GET', 'PUT'])
 @login_required
 def manager_status():
@@ -318,7 +318,7 @@ def manager_status():
     db.session.commit()
     return "Status added"
 
-
+# manager/delegates endpoint
 @app.route('/manager/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/delegates/<delegate_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -392,7 +392,7 @@ def manager_delegates(delegate_id=None):
         db.session.commit()
         return "User added"
 
-
+# manager/squads endpoint
 @app.route('/manager/squads', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/squads/<squad_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -446,7 +446,7 @@ def manager_squads(squad_id=None):
 
         return "Squad deleted"
 
-
+# OPSManager/managers endpoint
 @app.route('/OPSManager/managers', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/OPSManager/managers/<manager_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -514,7 +514,7 @@ def OPSManager_managers(manager_id=None):
 
         return "User deleted"
 
-
+# OPSManager/ICAs endpoint
 @app.route('/OPSManager/ICAs', methods=['POST', 'DELETE', 'PUT'])
 @app.route('/OPSManager/ICAs/<ICA_id>', methods=['POST', 'DELETE', 'PUT'])
 @login_required
@@ -553,7 +553,7 @@ def OPSManager_ICAs(ICA_id=None):
 
         return "ICA deleted"
 
-
+# OPSManager/typesOfEmployee endpoint
 @app.route('/OPSManager/typesOfEmployee', methods=['GET', 'POST', 'PUT'])
 @app.route('/OPSManager/typesOfEmployee/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -607,7 +607,7 @@ def OPSManager_types_of_employee(type_id=None):
 
         return "Delegate deleted"
 
-
+# OPSManager/typesOfExpense endpoint
 @app.route('/OPSManager/typesOfExpense', methods=['GET', 'POST', 'PUT'])
 @app.route('/OPSManager/typesOfExpense/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @login_required
@@ -728,7 +728,7 @@ def admin_OPSManagers(OPSManager_id=None):
 
         return "OPSManager deleted"
 
-
+# admin/countries endpoint
 @app.route('/admin/countries', methods=['POST', 'DELETE', 'PUT'])
 @app.route('/admin/countries/<country_id>', methods=['POST', 'DELETE', 'PUT'])
 @login_required
@@ -765,7 +765,7 @@ def admin_Countries(country_id=None):
 
         return "Country deleted"
 
-
+# Types of employee endpoint
 @app.route('/typesOfEmployee')
 @login_required
 def typesOfEmployee():
@@ -780,7 +780,7 @@ def typesOfEmployee():
 
     return jsonify(response)
 
-
+# Email endpoint
 @app.route('/email', methods=['GET'])
 @login_required
 def user_email():
@@ -788,7 +788,7 @@ def user_email():
     db.session.commit()
     return json.dumps(res)
 
-
+# Quarter endpoint
 @app.route('/quarter', methods=['GET'])
 def quarter():
     months = {
@@ -816,7 +816,7 @@ def quarter():
 
     return result
 
-
+# Countries endpoint
 @app.route('/countries')
 @login_required
 def countries():
@@ -835,7 +835,7 @@ def countries():
 
     return jsonify(response)
 
-
+# CountryRefs endpoint
 @app.route('/countryRefs')
 @login_required
 def countryRefs():
@@ -850,7 +850,7 @@ def countryRefs():
 
     return jsonify(response)
 
-
+# ICAs endpoint
 @app.route('/ICAs')
 @login_required
 def ICAs():
@@ -865,7 +865,7 @@ def ICAs():
 
     return jsonify(response)
 
-
+# Bands endpoint
 @app.route('/bands')
 @login_required
 def bands():
@@ -880,7 +880,7 @@ def bands():
 
     return jsonify(response)
 
-
+# Logout endpoint
 @app.route('/logout')
 @login_required
 def logout():
@@ -890,7 +890,7 @@ def logout():
     flash('You have successfully logged out.')
     return redirect('/login')
 
-
+# Types of expenses endpoint
 @app.route('/typesOfExpenses', methods=['GET'])
 @login_required
 def types_of_expenses():
@@ -906,7 +906,7 @@ def types_of_expenses():
 
     return jsonify(response), 201
 
-
+# OPSManager/recovery endpoint
 @app.route('/OPSManager/recovery', methods=['GET'])
 @app.route('/OPSManager/recovery/<manager_id>', methods=['GET'])
 def ops_manager_recovery(manager_id=None):
