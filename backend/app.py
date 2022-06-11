@@ -4,7 +4,7 @@ import datetime
 from functools import wraps
 
 from argon2 import PasswordHasher
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session, flash, redirect
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_migrate import Migrate
@@ -885,7 +885,10 @@ def bands():
 @login_required
 def logout():
     logout_user()
-    return "Logged out"
+    if session.get('was_once_logged_in'):
+        del session['was_once_logged_in']
+    flash('You have successfully logged out.')
+    return redirect('/login')
 
 
 @app.route('/typesOfExpenses', methods=['GET'])
