@@ -10,5 +10,5 @@ test("Email form should be in the document", () => {
 test("Email field should have label", () => {
     const component = render( < Login / > );
     const emailInputNode = component.getByLabelText("Email:");
-    expect(emailInputNode.getAttribute("name")).toBe("email");
+    expect(emailInputNode.getAttribute("email")).toBe("email");
 });
