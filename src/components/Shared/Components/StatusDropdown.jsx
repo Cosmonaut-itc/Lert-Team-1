@@ -11,7 +11,7 @@ export default function SelectMenu({ options, selected, onChange }) {
 
   switch (selected.id) {
     case 0:
-      color = 'bg-red-600 opacity-90'
+      color = 'bg-gradient-to-r from-[#e52d27] to-[#b31217]'
       break
     case 1:
       color = 'bg-gradient-to-b from-orange-400 to-yellow-300'

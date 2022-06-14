@@ -22,13 +22,15 @@ export default function OpsManagerCard({
           {OPSManager.first_name + ' ' + OPSManager.last_name}
         </h4>
         <p className='underline text-gray-500 text-sm'>{OPSManager.email}</p>
-        <div className='flex items-center mt-1'>
+        <div className='flex flex-row'>
           <p className='text-gray-500 text-sm'>Country: &nbsp; </p>
-
-          <p className='text-sm'>
-            {' '}
-            {OPSManager.country_name} <Flag code={OPSManager.country_code} />{' '}
-          </p>
+          <p className='text-sm'> {OPSManager.country_name} </p>
+          <div className='w-10 h-5 pl-2'>
+            <Flag
+              className='rounded-sm drop-shadow'
+              code={OPSManager.country_code}
+            />
+          </div>
         </div>
       </div>
 

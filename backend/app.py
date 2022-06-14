@@ -29,6 +29,7 @@ app.secret_key = secrets.token_urlsafe(16)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 # Function for the admin_required
 def admin_required(func):
     @wraps(func)
@@ -38,6 +39,7 @@ def admin_required(func):
         return func(*args, **kwargs)
 
     return decorated_view
+
 
 # Function for the ops_manager_required
 def ops_manager_required(func):
@@ -49,12 +51,19 @@ def ops_manager_required(func):
 
     return decorated_view
 
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
+
+
 # Function for the login_manager.user_loader
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
-# Login endpoint 
+
+# Login endpoint
 @app.route('/login', methods=['POST'])
 def login():
     ph = PasswordHasher()
@@ -69,6 +78,7 @@ def login():
 
     login_user(user, remember=True, duration=timedelta(days=5))
     return json.dumps({'role': user.role})
+
 
 # Sign up endpoint
 @app.route('/signup', methods=['POST'])
@@ -91,13 +101,14 @@ def signup():
     db.session.commit()
     return "Added user", 201
 
+
 # is Auth endpoint
 @app.route('/isAuth', methods=['GET'])
 @login_required
 def isAuth():
     res = {'role': current_user.role}
-    db.session.commit()
     return json.dumps(res)
+
 
 # manager/employees endpoint
 @app.route('/manager/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -114,16 +125,16 @@ def manager_employees(employee_id=None):
         response = []
         for employee in manager_team:
             foreign_keys_names_dictionary = {
-                'country_name': employee.country.name,
-                'typeOfEmployee_name': employee.typeOfEmployee.name,
-                'band_name': employee.band.name,
-                'month1Band_name': employee.month1Band.name,
-                'month2Band_name': employee.month2Band.name,
-                'ICA_name': employee.ICA.name,
-                'squad_name': employee.squad.name,
-                'month3_cost': employee.band.salary,
-                'month2_cost': employee.month2Band.salary,
-                'month1_cost': employee.month1Band.salary,
+                'country_name': employee.country.name if hasattr(employee.country, 'name') else '',
+                'typeOfEmployee_name': employee.typeOfEmployee.name if hasattr(employee.typeOfEmployee, 'name') else '',
+                'band_name': employee.band.name if hasattr(employee.band, 'name') else '',
+                'month1Band_name': employee.month1Band.name if hasattr(employee.month1Band, 'name') else '',
+                'month2Band_name': employee.month2Band.name if hasattr(employee.month2Band, 'name') else '',
+                'ICA_name': employee.ICA.name if hasattr(employee.ICA, 'name') else '',
+                'squad_name': employee.squad.name if hasattr(employee.squad, 'name') else '',
+                'month3_cost': employee.band.salary if hasattr(employee.band, 'salary') else '',
+                'month1_cost': employee.month1Band.salary if hasattr(employee.month1Band, 'salary') else '',
+                'month2_cost': employee.month2Band.salary if hasattr(employee.month2Band, 'salary') else '',
             }
             response.append(employee.as_dict() | foreign_keys_names_dictionary)
 
@@ -192,6 +203,7 @@ def manager_employees(employee_id=None):
             return "User added"
     return 400
 
+
 # manager/employees/recovery endpoint
 @app.route('/manager/employees/<employee_id>/recovery', methods=['PUT'])
 @login_required
@@ -224,6 +236,7 @@ def manager_employees_recovery(employee_id):
     db.session.commit()
     return "Recovery added"
 
+
 # manager/expenses endpoint
 @app.route('/manager/expenses', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/expenses/<expense_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
@@ -239,9 +252,9 @@ def manager_expenses(expense_id=None):
         response = []
         for expense in manager_expenses:
             foreign_keys_names_dictionary = {
-                'ICA_name': expense.ICA.name,
-                'typeOfExpense_name': expense.type_of_expense.name,
-                'user_email': expense.user.email
+                'ICA_name': expense.ICA.name if hasattr(expense.ICA, 'name') else '',
+                'typeOfExpense_name': expense.type_of_expense.name if hasattr(expense.type_of_expense, 'name') else '',
+                'user_email': expense.user.email if hasattr(expense.user, 'email') else ''
             }
             response.append(expense.as_dict() | foreign_keys_names_dictionary)
 
@@ -302,6 +315,7 @@ def manager_expenses(expense_id=None):
 
         return "Expense deleted"
 
+
 # manager/status endpoint
 @app.route('/manager/status', methods=['GET', 'PUT'])
 @login_required
@@ -317,6 +331,7 @@ def manager_status():
     user_exists.status = new_status
     db.session.commit()
     return "Status added"
+
 
 # manager/delegates endpoint
 @app.route('/manager/delegates', methods=['POST', 'GET', 'DELETE', 'PUT'])
@@ -392,6 +407,7 @@ def manager_delegates(delegate_id=None):
         db.session.commit()
         return "User added"
 
+
 # manager/squads endpoint
 @app.route('/manager/squads', methods=['POST', 'GET', 'DELETE', 'PUT'])
 @app.route('/manager/squads/<squad_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
@@ -445,6 +461,7 @@ def manager_squads(squad_id=None):
         db.session.commit()
 
         return "Squad deleted"
+
 
 # OPSManager/managers endpoint
 @app.route('/OPSManager/managers', methods=['POST', 'GET', 'DELETE', 'PUT'])
@@ -513,6 +530,7 @@ def OPSManager_managers(manager_id=None):
         db.session.commit()
 
         return "User deleted"
+
 
 # OPSManager/ICAs endpoint
 @app.route('/OPSManager/ICAs', methods=['POST', 'DELETE', 'PUT'])
@@ -649,6 +667,7 @@ def OPSManager_types_of_employee(type_id=None):
 
         return "Type deleted"
 
+
 # OPSManager/typesOfExpense endpoint
 @app.route('/OPSManager/typesOfExpense', methods=['GET', 'POST', 'PUT'])
 @app.route('/OPSManager/typesOfExpense/<type_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
@@ -719,8 +738,8 @@ def admin_OPSManagers(OPSManager_id=None):
         response = []
         for OPSManager in OPSManagers:
             foreign_keys_names_dictionary = {
-                'country_name': OPSManager.country.name,
-                'country_code': OPSManager.country.countryRef.code,
+                'country_name':  OPSManager.country.name if hasattr(OPSManager.country, 'name') else '',
+                'country_code': OPSManager.country.countryRef.code if hasattr(OPSManager.country, 'countryRef') else '',
             }
             response.append(OPSManager.as_dict() | foreign_keys_names_dictionary)
 
@@ -768,6 +787,7 @@ def admin_OPSManagers(OPSManager_id=None):
 
         return "OPSManager deleted"
 
+
 # admin/countries endpoint
 @app.route('/admin/countries', methods=['POST', 'DELETE', 'PUT'])
 @app.route('/admin/countries/<country_id>', methods=['POST', 'DELETE', 'PUT'])
@@ -805,6 +825,7 @@ def admin_Countries(country_id=None):
 
         return "Country deleted"
 
+
 # Types of employee endpoint
 @app.route('/typesOfEmployee')
 @login_required
@@ -820,6 +841,7 @@ def typesOfEmployee():
 
     return jsonify(response)
 
+
 # Email endpoint
 @app.route('/email', methods=['GET'])
 @login_required
@@ -827,6 +849,7 @@ def user_email():
     res = {'email': current_user.email}
     db.session.commit()
     return json.dumps(res)
+
 
 # Quarter endpoint
 @app.route('/quarter', methods=['GET'])
@@ -856,6 +879,7 @@ def quarter():
 
     return result
 
+
 # Countries endpoint
 @app.route('/countries')
 @login_required
@@ -868,12 +892,13 @@ def countries():
     response = []
     for country in countries:
         foreign_keys_names_dictionary = {
-            'code': country.countryRef.code,
-            'countryRef_name': country.countryRef.name,
+            'code': country.countryRef.code if hasattr(country.countryRef, 'code') else '',
+            'countryRef_name': country.countryRef.name if hasattr(country.countryRef, 'name') else '',
         }
         response.append(country.as_dict() | foreign_keys_names_dictionary)
 
     return jsonify(response)
+
 
 # CountryRefs endpoint
 @app.route('/countryRefs')
@@ -890,6 +915,7 @@ def countryRefs():
 
     return jsonify(response)
 
+
 # ICAs endpoint
 @app.route('/ICAs')
 @login_required
@@ -904,6 +930,7 @@ def ICAs():
         response.append(ica.as_dict())
 
     return jsonify(response)
+
 
 # Bands endpoint
 @app.route('/bands')
@@ -920,6 +947,7 @@ def bands():
 
     return jsonify(response)
 
+
 # Logout endpoint
 @app.route('/logout')
 @login_required
@@ -929,6 +957,7 @@ def logout():
         del session['was_once_logged_in']
     flash('You have successfully logged out.')
     return redirect('/login')
+
 
 # Types of expenses endpoint
 @app.route('/typesOfExpenses', methods=['GET'])
@@ -945,6 +974,7 @@ def types_of_expenses():
         response.append(expense.as_dict())
 
     return jsonify(response), 201
+
 
 # OPSManager/recovery endpoint
 @app.route('/OPSManager/recovery', methods=['GET'])

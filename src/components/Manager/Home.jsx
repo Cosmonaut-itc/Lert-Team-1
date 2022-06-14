@@ -97,10 +97,9 @@ export default function Home() {
   const [user_email, setUser_email] = useState('')
 
   /* Modify status functions */
-  const handleSubmitModifyStatus = async () => {
+  const handleSubmitModifyStatus = async (id) => {
     const bodyFormData = new FormData()
-    bodyFormData.append('status_id', statusId)
-
+    bodyFormData.append('status_id', id)
     try {
       const response = await api.put('/manager/status', bodyFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -636,10 +635,6 @@ export default function Home() {
   }, [user_email])
 
   useEffect(() => {
-    handleSubmitModifyStatus()
-  }, [statusId])
-
-  useEffect(() => {
     if (modify_id === '') {
       unpopulateForm()
     } else {
@@ -773,6 +768,7 @@ export default function Home() {
           onChange={(e) => {
             setStatus(e)
             setStatusId(e.id)
+            handleSubmitModifyStatus(e.id)
           }}
         />
       </div>

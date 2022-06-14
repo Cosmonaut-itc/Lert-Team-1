@@ -10,32 +10,25 @@ export default function ManagerCard({
   setModify_id,
   setModify_manager,
 }) {
-  let color = ''
-
-  switch (manager.status) {
-    case 0:
-      color = 'bg-red-600 opacity-90'
-      break
-    case 1:
-      color = 'bg-gradient-to-b from-orange-400 to-yellow-300'
-      break
-    case 2:
-      color = 'bg-gradient-to-r from-emerald-500 to-lime-600'
-      break
-
-    default:
-      break
+  const colorOfStatus = (id) => {
+    const colors = {
+      0: 'bg-gradient-to-r from-[#e52d27] to-[#b31217]',
+      1: 'bg-gradient-to-b from-orange-400 to-yellow-300',
+      2: 'bg-gradient-to-r from-emerald-500 to-lime-600',
+    }
+    return colors[id] ? colors[id] : ''
   }
+
   return (
-    <Card
-      sx={{ borderRadius: 3 }}
-      variant='outlined'
-      className='m-4 pt-1 relative shadow-lg overflow-visible'
-      key={manager.id}
+    <div
+        className='m-4 pt-1 pl-2 relative shadow-lg border overflow-visible bg-white rounded-xl'
+        key={manager.id}
     >
       <div
-        className='rounded-full absolute p-4 -top-2 -right-2'
-        style={{ backgroundColor: color }}
+        className={
+          'rounded-full absolute pin-t pin-r p-4 -top-2 -right-2 ' +
+          colorOfStatus(manager.status)
+        }
       />
       <div className='flex justify-between'>
         <div className='text-left pb-10 pl-5'>
@@ -44,7 +37,7 @@ export default function ManagerCard({
           </h4>
           <p className='underline text-gray-500 text-sm'>{manager.email}</p>
         </div>
-        <div className='p-2'>
+        <div className='pt-4 pr-4'>
           <button>
             <PencilAltIcon
               className='h-6 w-6 text-blue-400 hover:text-blue-500 active:text-blue-600 mr-1'
@@ -84,6 +77,6 @@ export default function ManagerCard({
           Download
         </Button>
       </CardActions>
-    </Card>
+    </div>
   )
 }

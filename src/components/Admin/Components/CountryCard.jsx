@@ -17,13 +17,17 @@ export default function CountryCard({
       className='m-4 pt-1 relative shadow-lg  '
       key={country.id}
     >
-      <div className='text-left pt-2 pb-10 pl-4  '>
+      <div className='text-left p-5'>
         <p className='text-gray-500 text-sm'>Country: </p>
-        <p className='font-bold mt-2'>{country.name}</p>
-        <Flag code={country.code} />
+        <div className='flex flex-row'>
+          <p className='font-bold mt-2'>{country.name}</p>
+          <div className=' flex w-12 pl-2 items-center'>
+            <Flag className='rounded-sm drop-shadow' code={country.code} />
+          </div>
+        </div>
       </div>
 
-      <CardActions className='flex justify-center'>
+      <CardActions className='flex justify-center p-4'>
         <button
           className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
