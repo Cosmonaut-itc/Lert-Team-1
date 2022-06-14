@@ -10,4 +10,3 @@ Flask-Migrate
 datetime
 psycopg2-binary
 flask-login
-flask-testing
