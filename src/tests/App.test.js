@@ -1,8 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import App from "../components/App";
+import Login from "../components/Shared/Login";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("Email form should be in the document", () => {
+    const component = render( < Login / > );
+    const inputNode = component.getByText("Email:");
+    expect(inputNode).toBeInTheDocument();
+});
+
+test("Email field should have label", () => {
+    const component = render( < Login / > );
+    const emailInputNode = component.getByLabelText("Email:");
+    expect(emailInputNode.getAttribute("name")).toBe("email");
 });
