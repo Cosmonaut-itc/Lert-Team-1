@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import api from '../api/api'
+import DarkMode from './Components/DarkMode'
 
 const LOGIN_URL = '/login'
 
@@ -72,10 +73,11 @@ export default function Login() {
         {errMsg}
       </p>
       <div className='max-w-md w-full space-y-8 bg-white dark:bg-black rounded-xl shadow-lg px-6 pb-6'>
-        <div>
-          <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900'>
+        <div className='flex justify-between items-center'>
+          <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900 dark:text-white'>
             Log in to IBM
           </h2>
+          <DarkMode />
         </div>
         <form
           className='mt-2 space-y-6'
