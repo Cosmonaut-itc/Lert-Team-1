@@ -13,19 +13,21 @@ export default function IcasCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black '
       key={ICA.id}
     >
       <div className='text-left mb-10 pl-4'>
         <h4 className='text-gray-500 text-md mt-2'>ICA:</h4>
         <p className='text-gray-500 text-md font-medium mt-2'>
-          <span className='capitalize font-bold text-black'>{ICA.name}</span>
+          <span className='capitalize font-bold text-black dark:text-white'>
+            {ICA.name}
+          </span>
         </p>
       </div>
 
       <CardActions className='flex justify-center'>
         <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
+          className='rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDeleteICA(ICA.id)
           }}
@@ -39,7 +41,6 @@ export default function IcasCard({
         <button
           className='border border-blue-400 rounded-md mx-10 px-4 py-1 text-blue-600 hover:opacity-70 active:opacity-50 active:bg-blue-50 text-sm'
           onClick={() => {
-
             setModify_id(ICA.id)
             setModify_ICA(ICA)
             setOpenICAAdd(true)

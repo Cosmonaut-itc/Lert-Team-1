@@ -13,21 +13,25 @@ export default function BandsCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black '
       key={band.id}
     >
       <div className='text-left pb-10 pl-6'>
-        <p className='text-sm mt-2 opacity-70 font-medium'>Band name:</p>
-        <h4 className='font-bold text-lg pt-1'>{band.name}</h4>
+        <p className='text-sm mt-2 text-gray-600 dark:text-gray-400 font-medium'>
+          Band name:
+        </p>
+        <h4 className='font-bold text-lg pt-1 text-black dark:text-white'>
+          {band.name}
+        </h4>
         <h4 className='text-2xl pt-2'>
           <span className='text-blue-600'>$&nbsp;</span>
-          {band.salary}
+          <span className='text-black dark:text-white'>{band.salary}</span>
         </h4>
       </div>
 
       <CardActions className='flex justify-center'>
         <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
+          className='rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDelete(band.id)
           }}

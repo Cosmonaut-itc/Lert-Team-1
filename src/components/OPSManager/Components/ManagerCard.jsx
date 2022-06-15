@@ -21,7 +21,7 @@ export default function ManagerCard({
 
   return (
     <div
-      className='m-4 pt-1 pl-2 relative shadow-lg border overflow-visible bg-white dark:bg-black rounded-xl'
+      className='m-4 pt-1 pl-2 relative shadow-lg  overflow-visible bg-white dark:bg-black rounded-xl'
       key={manager.id}
     >
       <div
@@ -31,8 +31,8 @@ export default function ManagerCard({
         }
       />
       <div className='flex justify-between'>
-        <div className='text-left pb-10 pl-5'>
-          <h4 className='font-bold text-lg pt-2'>
+        <div className='text-left pb-10 pl-4'>
+          <h4 className='font-bold text-lg text-black dark:text-white pt-2'>
             {manager.first_name + ' ' + manager.last_name}
           </h4>
           <p className='underline text-gray-500 text-sm'>{manager.email}</p>

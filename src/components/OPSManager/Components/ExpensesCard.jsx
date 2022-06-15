@@ -13,13 +13,13 @@ export default function ExpensesCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black '
       key={expense.id}
     >
       <div className='text-left mb-10 pl-4'>
         <h4 className='text-gray-500 text-md mt-2'>Types of expense:</h4>
         <p className='text-gray-500 text-md font-medium mt-4'>
-          <span className='capitalize font-bold text-black'>
+          <span className='capitalize font-bold text-black dark:text-white'>
             {expense.name}
           </span>
         </p>
@@ -27,7 +27,7 @@ export default function ExpensesCard({
 
       <CardActions className='flex justify-center'>
         <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
+          className=' rounded-md mx-10 px-4 py-1  bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDeleteExpense(expense.id)
           }}
