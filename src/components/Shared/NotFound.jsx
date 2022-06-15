@@ -30,7 +30,7 @@ export default function NotFound() {
         <nav className='flex justify-center space-x-4'>
           <a
             href='#'
-            className='text-sm font-medium text-gray-500 hover:text-gray-600'
+            className='text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-200'
           >
             Contact Support
           </a>
@@ -40,7 +40,7 @@ export default function NotFound() {
           />
           <a
             href='#'
-            className='text-sm font-medium text-gray-500 hover:text-gray-600'
+            className='text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-200'
           >
             Status
           </a>
@@ -50,7 +50,7 @@ export default function NotFound() {
           />
           <a
             href='#'
-            className='text-sm font-medium text-gray-500 hover:text-gray-600'
+            className='text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-200'
           >
             Termns and Conditions
           </a>

@@ -103,7 +103,7 @@ export default function Home() {
   const cancelButtonRefTeam = useRef(null)
 
   const defaultSelection = { id: 0, name: 'Select' }
-  const inProgressBar = { id: 0, name: "In Progress", color: "bg-orange-400" }
+  const inProgressBar = { id: 0, name: 'In Progress', color: 'bg-orange-400' }
 
   const [operationMessage, setOperationMessage] = useState('')
   const [first_name, setFirst_name] = useState('')
@@ -378,8 +378,6 @@ export default function Home() {
     }
   }
 
-
-
   const fetchBands = async () => {
     try {
       const response = await api.get('/bands')
@@ -482,12 +480,11 @@ export default function Home() {
     }
   }, [modify_id])
 
-
   return (
     <div className='pt-4 pl-10 w-full'>
       <div></div>
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
-        <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
+        <div className='text-xl font-semibold text-gray-600 dark:text-gray-200 invisible md:visible mr-4'>
           Status:{' '}
         </div>
         {/* <div className='flex items-center align-middle pl-5 px-2 ml-5 text-white font-bold bg-orange-400 rounded-full whitespace-nowrap'> */}
@@ -504,33 +501,35 @@ export default function Home() {
           }}
             /> */}
 
-            <StatusDropdown
-              selected={status}
-              options = {[
-                {
-                  id: 1,
-                  name: "Red"
-                },
-                {
-                  id: 2,
-                  name: "Yellow"
-                },
-                {
-                  id: 3,
-                  name: "Green"
-                },
-              ]}
-              onChange={(e) => {
-                setStatus(e)
-                setStatusId(e.id)
-              }}
-            />
+        <StatusDropdown
+          selected={status}
+          options={[
+            {
+              id: 1,
+              name: 'Red',
+            },
+            {
+              id: 2,
+              name: 'Yellow',
+            },
+            {
+              id: 3,
+              name: 'Green',
+            },
+          ]}
+          onChange={(e) => {
+            setStatus(e)
+            setStatusId(e.id)
+          }}
+        />
         {/* </div> */}
       </div>
       <div className='flex flex-col justify-center h-3/4'>
         <div className='flex justify-around'>
           <div className='flex items-center gap-7 w-full'>
-            <div className='text-2xl font-semibold text-gray-600'>Team</div>
+            <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
+              Team
+            </div>
             <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
               <SearchBar />
             </div>
@@ -634,7 +633,9 @@ export default function Home() {
           </div>
         </div>
         <div className='flex items-center gap-7 pt-16'>
-          <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
+          <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
+            Expenses
+          </div>
           <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
             <SearchBar />
           </div>

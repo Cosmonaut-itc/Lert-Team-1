@@ -71,7 +71,7 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <div className='max-w-md w-full space-y-8 bg-white rounded-xl shadow-lg px-6 pb-6'>
+      <div className='max-w-md w-full space-y-8 bg-white dark:bg-black rounded-xl shadow-lg px-6 pb-6'>
         <div>
           <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900'>
             Log in to IBM
@@ -92,7 +92,10 @@ export default function Login() {
               Forgot IBMid?
             </a>
             <div>
-              <label htmlFor='email-address' className='text-sm text-gray-600'>
+              <label
+                htmlFor='email-address'
+                className='text-sm text-gray-600 dark:text-gray-200'
+              >
                 IBMid
               </label>
               <input
@@ -108,7 +111,10 @@ export default function Login() {
               />
             </div>
             <div className='pt-4'>
-              <label htmlFor='password' className='text-sm text-gray-600'>
+              <label
+                htmlFor='password'
+                className='text-sm text-gray-600 dark:text-gray-200'
+              >
                 Password
               </label>
               <input

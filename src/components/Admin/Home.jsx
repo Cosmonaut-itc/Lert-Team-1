@@ -184,7 +184,9 @@ export default function Home() {
   return (
     <div className='mt-16 ml-10 h-screen '>
       <div className='flex items-center gap-7'>
-        <div className='text-2xl font-semibold text-gray-600'>OPS Managers</div>
+        <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
+          OPS Managers
+        </div>
         <div className='w-8/12 sm:w-5/12 md:w-4/12 lg:w-3/12'>
           <SearchBar
             placeholder={'Search by name, email or country'}

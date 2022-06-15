@@ -13,11 +13,11 @@ export default function DelegateCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black'
       key={delegate.id}
     >
       <div className='text-left pb-10 pl-4  '>
-        <h4 className='font-bold text-lg pt-2'>
+        <h4 className='font-bold text-lg text-black dark:text-white pt-2'>
           {delegate.first_name + ' ' + delegate.last_name}
         </h4>
         <p className='underline text-gray-500 text-sm'>{delegate.email}</p>
@@ -25,7 +25,7 @@ export default function DelegateCard({
 
       <CardActions className='flex justify-center'>
         <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
+          className='dark:border-red-500 border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDeleteDelegate(delegate.id)
           }}

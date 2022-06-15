@@ -21,8 +21,8 @@ export default function ManagerCard({
 
   return (
     <div
-        className='m-4 pt-1 pl-2 relative shadow-lg border overflow-visible bg-white rounded-xl'
-        key={manager.id}
+      className='m-4 pt-1 pl-2 relative shadow-lg border overflow-visible bg-white dark:bg-black rounded-xl'
+      key={manager.id}
     >
       <div
         className={

@@ -70,7 +70,7 @@ export default function ModalEmployeeRecoveryForm({
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
-              <div className='inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6'>
+              <div className='inline-block align-bottom bg-white dark:bg-black rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6'>
                 <div>
                   <div className='mt-3 text-left sm:mt-5'>
                     <div className='flex flex-row justify-between'>
@@ -85,7 +85,7 @@ export default function ModalEmployeeRecoveryForm({
                       </Dialog.Title>
 
                       <div className='flex items-center pb-10 md:p-4 mr-6'>
-                        <div className='text-base font-base text-gray-600 invisible md:visible'>
+                        <div className='text-base font-base text-gray-600 dark:text-gray-200 invisible md:visible'>
                           Modify Band / Status:{' '}
                         </div>
                         <div className='flex items-center px-5 py-1 ml-5 text-white font-bold bg-gray-400 rounded-lg whitespace-nowrap cursor-pointer'>
@@ -258,7 +258,7 @@ export default function ModalEmployeeRecoveryForm({
                       </div>
                     </div>
 
-                    <h6 className='font-bold text-gray-600 px-2 pt-4 text-xl'>
+                    <h6 className='font-bold text-gray-600 dark:text-gray-200 px-2 pt-4 text-xl'>
                       Comments
                     </h6>
 
@@ -285,7 +285,7 @@ export default function ModalEmployeeRecoveryForm({
                   </button>
                   <button
                     type='button'
-                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm'
+                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white dark:bg-black text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm'
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

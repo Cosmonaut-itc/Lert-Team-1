@@ -19,6 +19,7 @@ import { NavLink } from 'react-router-dom'
 
 import Logo from './Logo'
 import { Fragment, useState } from 'react'
+import DarkMode from './DarkMode'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -33,7 +34,7 @@ function NavLinksMobile({ item }) {
         classNames(
           isActive
             ? 'bg-gray-200 text-gray-900 hover:text-gray-900 hover:bg-gray-200'
-            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+            : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50',
           'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
         )
       }
@@ -130,7 +131,7 @@ export default function SideMenu({ role }) {
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-full'
           >
-            <div className='relative flex-1 flex flex-col max-w-xs w-full bg-white z-50'>
+            <div className='relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-black z-50'>
               <Transition.Child
                 as={Fragment}
                 enter='ease-in-out duration-300'
@@ -155,7 +156,7 @@ export default function SideMenu({ role }) {
                   <Logo />
                 </div>
                 <nav
-                  className='mt-5 flex-1 px-2 bg-white space-y-10'
+                  className='mt-5 flex-1 px-2 bg-white dark:bg-black space-y-10'
                   aria-label='Sidebar'
                 >
                   {navigation[role].map((item) => (
@@ -199,68 +200,63 @@ export default function SideMenu({ role }) {
       </Transition.Root>
       <div className='fixed top-0 left-0 z-50'>
         <div
-          className={`hidden md:flex h-screen flex-1 flex-col border-r border-gray-200 bg-white ${
+          className={`hidden md:flex h-screen flex-1 flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-black ${
             isSideMenuClose ? 'w-26' : 'w-56'
           }  `}
         >
           <div className='flex-1 flex flex-col mt-5 mb-4 overflow-y-auto'>
-            <div className='flex border-b pb-4 border-gray-200 items-center flex-shrink-0 px-4 justify-center'>
+            <div className='flex border-b pb-4 border-gray-200 dark:border-gray-700 items-center flex-shrink-0 px-4 justify-center'>
               <button onClick={() => CloseMenu()}>
                 <Logo />
               </button>
             </div>
             <nav
-              className='mt-5 flex-1 px-2 bg-white space-y-10'
+              className='mt-5 flex-1 px-2 bg-white dark:bg-black space-y-10 flex flex-col justify-between'
               aria-label='Sidebar'
             >
-              {navigation[role].map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    classNames(
-                      isActive
-                        ? 'bg-gray-200 text-gray-900 hover:text-gray-900 hover:bg-gray-200'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
-                    )
-                  }
-                >
-                  {isSideMenuClose ? (
-                    <Tooltip content={item.name} placement='right'>
+              <div className='space-y-10 flex flex-col'>
+                {navigation[role].map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                      classNames(
+                        isActive
+                          ? 'text-blue-700 dark:text-blue-500'
+                          : 'text-blue-400 dark:text-blue-300 hover:bg-gray-50  dark:hover:bg-gray-900',
+                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
+                      )
+                    }
+                  >
+                    {isSideMenuClose ? (
+                      <Tooltip content={item.name} placement='right'>
+                        <item.icon
+                          className='flex-shrink-0 h-6 w-6'
+                          aria-hidden='true'
+                        />
+                      </Tooltip>
+                    ) : (
                       <item.icon
-                        className={classNames(
-                          item.current
-                            ? 'text-blue-500'
-                            : 'text-blue-400 group-hover:text-blue-500',
-                          'flex-shrink-0 h-6 w-6'
-                        )}
+                        className='flex-shrink-0 h-6 w-6'
                         aria-hidden='true'
                       />
-                    </Tooltip>
-                  ) : (
-                    <item.icon
-                      className={classNames(
-                        item.current
-                          ? 'text-blue-500'
-                          : 'text-blue-400 group-hover:text-blue-500',
-                        'flex-shrink-0 h-6 w-6'
-                      )}
-                      aria-hidden='true'
-                    />
-                  )}
+                    )}
 
-                  {!isSideMenuClose ? (
-                    <span className='flex-1 ml-2'>{item.name}</span>
-                  ) : (
-                    ''
-                  )}
-                </NavLink>
-              ))}
+                    {!isSideMenuClose ? (
+                      <span className='flex-1 ml-2 text-black dark:text-white'>
+                        {item.name}
+                      </span>
+                    ) : (
+                      ''
+                    )}
+                  </NavLink>
+                ))}
+              </div>
+              <DarkMode isSideMenuClose={isSideMenuClose} />
             </nav>
           </div>
           <div
-            className={`border-t border-gray-200 p-4 w-full ${
+            className={`border-t border-gray-200 dark:border-gray-700 p-4 w-full ${
               isSideMenuClose
                 ? 'flex-col text-center gap-y-5'
                 : 'flex flex-shrink-0'
@@ -281,17 +277,17 @@ export default function SideMenu({ role }) {
                 </a>
               </div>
               <a href='#' className={`${isSideMenuClose ? 'hidden' : 'ml-3'}`}>
-                <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>
+                <p className='text-sm font-medium text-gray-700 dark:text-white whitespace-nowrap'>
                   Diego Mojarro
                 </p>
-                <div className='text-xs font-medium text-gray-500 '>
+                <div className='text-xs font-medium text-gray-500 dark:text-gray-400'>
                   View profile
                 </div>
               </a>
             </div>
             <button>
               <LogoutIcon
-                className={`text-gray-500 hover:text-black w-6 ${
+                className={`text-gray-500 hover:text-black dark:hover:text-white w-6 ${
                   isSideMenuClose ? 'mt-5' : ''
                 }`}
               />

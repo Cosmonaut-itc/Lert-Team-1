@@ -56,12 +56,12 @@ export default function ModalAddModifyUser({
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
-              <div className='inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6'>
+              <div className='inline-block align-bottom bg-white dark:bg-black rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6'>
                 <div>
                   <div className='mt-3 sm:mt-5'>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl leading-6 font-semibold text-gray-900'
+                      className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                     >
                       {formTitle}
                     </Dialog.Title>
@@ -69,7 +69,7 @@ export default function ModalAddModifyUser({
                       <div>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           First name
                         </label>
@@ -78,7 +78,7 @@ export default function ModalAddModifyUser({
                             type='text'
                             name='first_name'
                             id='first_name'
-                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                             placeholder='First name(s)'
                             defaultValue={first_name}
                             onChange={(e) => setFirst_name(e.target.value)}
@@ -88,7 +88,7 @@ export default function ModalAddModifyUser({
                       <div>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Last name
                         </label>
@@ -97,7 +97,7 @@ export default function ModalAddModifyUser({
                             type='text'
                             name='last_name'
                             id='last_name'
-                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                             placeholder='Last name(s)'
                             defaultValue={last_name}
                             onChange={(e) => setLast_name(e.target.value)}
@@ -108,7 +108,7 @@ export default function ModalAddModifyUser({
                       <div>
                         <label
                           htmlFor='email'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Mail
                         </label>
@@ -123,7 +123,7 @@ export default function ModalAddModifyUser({
                             type='email'
                             name='email'
                             id='email'
-                            className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                             defaultValue={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -143,7 +143,7 @@ export default function ModalAddModifyUser({
                   </button>
                   <button
                     type='button'
-                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm'
+                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white dark:bg-black text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm'
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

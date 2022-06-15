@@ -16,7 +16,7 @@ export default function Footer() {
           className='-mx-5 -my-2 flex flex-wrap justify-center'
           aria-label='Footer'
         >
-          <div className='flex flex-wrap justify-center bg-white rounded-xl shadow-md mx-3'>
+          <div className='flex flex-wrap justify-center bg-white dark:bg-black rounded-xl shadow-md mx-3'>
             {navigation.main.map((item) => (
               <div key={item.name} className='px-5 py-3'>
                 <a

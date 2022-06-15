@@ -284,7 +284,7 @@ export default function Types() {
       <div className='flex flex-col justify-center h-3/4'>
         <div className='flex justify-around'>
           <div className='flex items-center gap-7 w-full'>
-            <div className='text-2xl font-semibold text-gray-600'>
+            <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
               Types of Employees
             </div>
             <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
@@ -344,7 +344,9 @@ export default function Types() {
                   if (searchTypeOfEmployee == '') {
                     return data
                   } else if (
-                    data.name.toLowerCase().includes(searchTypeOfEmployee.toLowerCase())
+                    data.name
+                      .toLowerCase()
+                      .includes(searchTypeOfEmployee.toLowerCase())
                   ) {
                     return data
                   }
@@ -363,7 +365,7 @@ export default function Types() {
           </div>
         </div>
         <div className='flex items-center gap-7 pt-16'>
-          <div className='text-2xl font-semibold text-gray-600'>
+          <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
             Types of expenses
           </div>
           <div className='w-2/4 sm:w-6/12 lg:w-3/12'>

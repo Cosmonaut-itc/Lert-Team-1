@@ -16,7 +16,7 @@ export default function LiveDemo() {
   return (
     <>
       <button
-        className=' p-2 sm:px-8 text-blue-600 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md  bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
+        className=' p-2 sm:px-8 text-blue-600 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md  bg-white dark:bg-black hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
         type='button'
         onClick={openModal}
       >
@@ -58,7 +58,7 @@ export default function LiveDemo() {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <div className='inline-block h-96 w-3/6 overflow-hidden text-center align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
+              <div className='inline-block h-96 w-3/6 overflow-hidden text-center align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-2xl'>
                 <ReactPlayer
                   url='https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley'
                   width='100%'

@@ -759,7 +759,7 @@ export default function Home() {
 
       {/* Status Bar  */}
       <div className='flex items-center justify-end pb-10 md:m-4 mr-6'>
-        <div className='text-xl font-semibold text-gray-600 invisible md:visible mr-4'>
+        <div className='text-xl font-semibold text-gray-600 dark:text-gray-200 invisible md:visible mr-4'>
           Status:{' '}
         </div>
         <StatusDropdown
@@ -777,7 +777,9 @@ export default function Home() {
       <div className='flex flex-col justify-center h-3/4'>
         <div className='flex justify-around'>
           <div className='flex items-center gap-7 w-full'>
-            <div className='text-2xl font-semibold text-gray-600'>Team</div>
+            <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
+              Team
+            </div>
             <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
               <SearchBar
                 searchTerm={searchEmployee}
@@ -839,7 +841,9 @@ export default function Home() {
           </div>
         </div>
         <div className='flex items-center gap-7 pt-16'>
-          <div className='text-2xl font-semibold text-gray-600'>Expenses</div>
+          <div className='text-2xl font-semibold text-gray-600 dark:text-gray-200'>
+            Expenses
+          </div>
           <div className='w-2/4 sm:w-6/12 lg:w-3/12'>
             <SearchBar
               searchTerm={searchExpense}

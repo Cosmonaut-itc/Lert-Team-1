@@ -13,19 +13,19 @@ export default function SquadCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black'
       key={squad.id}
     >
       <div className='text-left mb-10 pl-4'>
         <h4 className='text-gray-500 text-md mt-2'>Squad:</h4>
-        <p className='text-gray-500 text-md font-medium mt-2'>
-          <span className='font-bold text-black'>{squad.name}</span>
+        <p className='font-bold text-black dark:text-white text-md mt-2'>
+          {squad.name}
         </p>
       </div>
 
       <CardActions className='flex justify-center'>
         <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
+          className='dark:border-gray-900 border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDeleteSquad(squad.id)
           }}

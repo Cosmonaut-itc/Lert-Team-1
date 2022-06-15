@@ -30,7 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className='md:flex bg-slate-100 h-screen'>
+        <div className='md:flex bg-slate-100 dark:bg-zinc-700 h-screen'>
           <Routes>
             {/* Public routes */}
             <Route path='*' element={<NotFound />} />

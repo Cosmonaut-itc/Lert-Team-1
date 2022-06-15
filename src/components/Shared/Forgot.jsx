@@ -71,7 +71,7 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <div className='max-w-md w-full space-y-2 bg-white rounded-xl shadow-lg px-6 pb-6'>
+      <div className='max-w-md w-full space-y-2 bg-white dark:bg-black rounded-xl shadow-lg px-6 pb-6'>
         <div>
           <h2 className='mt-6 text-left text-3xl font-semibold text-gray-900'>
             Forgot your password?
@@ -90,7 +90,10 @@ export default function Login() {
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <div>
-              <label htmlFor='email-address' className='text-sm text-gray-600'>
+              <label
+                htmlFor='email-address'
+                className='text-sm text-gray-600 dark:text-gray-200'
+              >
                 IBMid
               </label>
               <input
