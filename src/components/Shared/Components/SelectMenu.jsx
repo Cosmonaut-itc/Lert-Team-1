@@ -16,7 +16,7 @@ export default function SelectMenu({ label, options, selected, onChange }) {
           </Listbox.Label>
           <div className='mt-1 relative'>
             <Listbox.Button
-              className={`relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-black
+              className={`relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-black
           border border-gray-300 dark:text-gray-300`}
             >
               <span className='block truncate'>
@@ -46,7 +46,7 @@ export default function SelectMenu({ label, options, selected, onChange }) {
                         active
                           ? 'text-white bg-blue-600'
                           : 'text-gray-900 dark:text-gray-500',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        ' select-none relative py-2 pl-3 pr-9'
                       )
                     }
                     value={person}

@@ -15,17 +15,19 @@ export default function ExpensesCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg overflow-visible'
+      className='m-4 pt-1 relative shadow-lg overflow-visible bg-white dark:bg-black'
       id={id}
     >
       <div className='flex justify-between'>
         <div className='text-left pl-6 pt-2'>
-          <h4 className='font-bold text-lg'>{item}</h4>
+          <h4 className='font-bold text-lg text-black dark:text-white'>
+            {item}
+          </h4>
           <p className='text-gray-500 text-sm'>{email}</p>
-          <p className='text-gray-500 text-xs'>{date}</p>
+          <p className='text-gray-500 dark:text-gray-300 text-xs'>{date}</p>
           <div className='flex text-xl font-semibold pt-4'>
             <p className='text-blue-500'>$&nbsp;</p>
-            <p>{price}</p>
+            <p className='text-black dark:text-white'>{price}</p>
           </div>
         </div>
         <div className='p-2'>

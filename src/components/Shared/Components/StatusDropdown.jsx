@@ -33,7 +33,7 @@ export default function SelectMenu({ options, selected, onChange }) {
           </Listbox.Label> */}
           <div className='mt-1 relative mr-4'>
             <Listbox.Button
-              className={`relative w-full rounded-md shadow-sm px-7 font-bold  py-2 text-center cursor-default focus:outline-none  sm:text-sm ${
+              className={`relative w-full rounded-md shadow-sm px-7 font-bold  py-2 text-center  focus:outline-none  sm:text-sm ${
                 color ? `${color}` : 'bg-black'
               }`}
             >
@@ -62,7 +62,7 @@ export default function SelectMenu({ options, selected, onChange }) {
                     className={({ active }) =>
                       classNames(
                         active ? 'text-white bg-blue-600' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        ' select-none relative py-2 pl-3 pr-9'
                       )
                     }
                     value={person}

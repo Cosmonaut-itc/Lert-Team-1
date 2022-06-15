@@ -84,7 +84,7 @@ export default function ModalAddModifyEmployeeForm({
                   <div className='mt-3 text-left sm:mt-5'>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl leading-6 font-semibold text-gray-900'
+                      className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                     >
                       Employee Information
                     </Dialog.Title>
@@ -92,7 +92,7 @@ export default function ModalAddModifyEmployeeForm({
                       <div>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           First Name(s)
                         </label>
@@ -102,7 +102,7 @@ export default function ModalAddModifyEmployeeForm({
                             name='first_name'
                             id='first_name'
                             defaultValue={first_name}
-                            className='bg-white dark:bg-black relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                             placeholder='First name'
                             onChange={(e) => setFirst_name(e.target.value)}
                           />
@@ -122,7 +122,7 @@ export default function ModalAddModifyEmployeeForm({
                       <div>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Last Name(s)
                         </label>
@@ -132,7 +132,7 @@ export default function ModalAddModifyEmployeeForm({
                             name='text'
                             id='Last_name'
                             defaultValue={last_name}
-                            className='bg-white dark:bg-black relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                             placeholder='Last name'
                             onChange={(e) => setLast_name(e.target.value)}
                           />
@@ -152,7 +152,7 @@ export default function ModalAddModifyEmployeeForm({
                       <div>
                         <label
                           htmlFor='email'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Email
                         </label>
@@ -168,7 +168,7 @@ export default function ModalAddModifyEmployeeForm({
                             name='email'
                             id='Email'
                             defaultValue={email}
-                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                             onChange={(e) => setEmail(e.target.value)}
                           />

@@ -55,7 +55,7 @@ export default function ModalAddModifyExpenses({
                   <div className='mt-3 text-left sm:mt-5'>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl leading-6 font-semibold text-gray-900'
+                      className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                     >
                       Expense
                     </Dialog.Title>
@@ -63,7 +63,7 @@ export default function ModalAddModifyExpenses({
                       <div>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Description
                         </label>
@@ -72,7 +72,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='text'
                             id='text'
-                            className='bg-white dark:bg-black relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                             placeholder='Expenses description'
                           />
                         </div>
@@ -80,7 +80,7 @@ export default function ModalAddModifyExpenses({
                       <div>
                         <label
                           htmlFor='email'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           ICA Manager email
                         </label>
@@ -95,7 +95,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
-                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                           />
                         </div>
@@ -103,7 +103,7 @@ export default function ModalAddModifyExpenses({
                       <div>
                         <label
                           htmlFor='email'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Employee email
                         </label>
@@ -118,7 +118,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
-                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                           />
                         </div>
@@ -126,7 +126,7 @@ export default function ModalAddModifyExpenses({
                       <div>
                         <label
                           htmlFor='email'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Administrator email
                         </label>
@@ -141,7 +141,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='email'
                             id='email'
-                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                             placeholder='examplemail@ibm.com'
                           />
                         </div>
@@ -149,7 +149,7 @@ export default function ModalAddModifyExpenses({
                       <div>
                         <label
                           htmlFor='price'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Price
                         </label>
@@ -161,7 +161,7 @@ export default function ModalAddModifyExpenses({
                             type='text'
                             name='price'
                             id='price'
-                            className='focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md'
                             placeholder='0.00'
                             aria-describedby='price-currency'
                           />
@@ -179,13 +179,12 @@ export default function ModalAddModifyExpenses({
                         <div class='mb-3 xl:w-96'>
                           <label
                             for='exampleFormControlTextarea1'
-                            className='block text-sm font-medium text-gray-700'
+                            className='block text-sm font-medium text-gray-700 dark:text-white'
                           >
                             Comments
                           </label>
                           <textarea
                             className='
-
                                 form-control
                                 block
                                 w-full
@@ -194,7 +193,8 @@ export default function ModalAddModifyExpenses({
                                 sm:text-sm
                                 font-normal
                                 text-gray-700
-                                bg-white dark:bg-black bg-clip-padding
+                                dark:text-white
+                                bg-white  bg-clip-padding
                                 border border-solid border-gray-300
                                 rounded
                                 transition

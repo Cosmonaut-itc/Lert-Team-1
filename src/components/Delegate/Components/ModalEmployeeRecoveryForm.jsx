@@ -76,7 +76,7 @@ export default function ModalEmployeeRecoveryForm({
                     <div className='flex flex-row justify-between'>
                       <Dialog.Title
                         as='h3'
-                        className='text-2xl leading-6 font-semibold text-gray-900'
+                        className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                       >
                         {first_name + ' ' + last_name}
                         <p className='text-gray-500 mt-2 text-sm font-light underline'>
@@ -98,25 +98,25 @@ export default function ModalEmployeeRecoveryForm({
                     <div className='flex flex-col'>
                       <div className='justify-center'>
                         <div className='py-2  align-middle'>
-                          <div className='shadow sm:rounded-2xl border-b border-gray-200'>
+                          <div className='shadow border-b border-gray-200'>
                             <table className='w-full justify-center divide-y divide-x divide-gray-200'>
-                              <thead className='bg-gray-50'>
+                              <thead className='bg-slate-50 dark:bg-zinc-900'>
                                 <tr>
                                   <th
                                     scope='col'
-                                    className=' py-3 border-r text-xl text-center font-bold  capitalize leading-7'
+                                    className=' py-3 border-r text-xl text-black dark:text-white text-center font-bold  capitalize leading-7'
                                   >
                                     February
                                   </th>
                                   <th
                                     scope='col'
-                                    className=' py-3 border-r text-xl text-center font-bold  capitalize leading-7'
+                                    className=' py-3 border-r text-xl text-black dark:text-white text-center font-bold  capitalize leading-7'
                                   >
                                     January
                                   </th>
                                   <th
                                     scope='col'
-                                    className=' py-3  text-xl text-center font-bold  capitalize leading-7'
+                                    className=' py-3  text-xl text-center text-black dark:text-white font-bold  capitalize leading-7'
                                   >
                                     March
                                   </th>
@@ -129,7 +129,7 @@ export default function ModalEmployeeRecoveryForm({
                               <tbody className='text-center '>
                                 <tr>
                                   <td className='pl-6 py-4 border-r border-b whitespace-nowrap text-sm text-gray-900'>
-                                    <div className='text-left'>
+                                    <div className='text-left text-white dark:text-gray-300'>
                                       Modify band:
                                     </div>
                                     <Button
@@ -152,11 +152,13 @@ export default function ModalEmployeeRecoveryForm({
                                     </Button>
                                     <div className='text-3xl'>
                                       <span className='text-blue-500'>$</span>
-                                      1000
+                                      <span className='text-black dark:text-white'>
+                                        1000
+                                      </span>
                                     </div>
                                   </td>
                                   <td className='pl-6 py-4 border-r border-b whitespace-nowrap text-sm text-gray-900'>
-                                    <div className='text-left'>
+                                    <div className='text-left text-white dark:text-gray-300'>
                                       Modify band:
                                     </div>
                                     <Button
@@ -179,11 +181,13 @@ export default function ModalEmployeeRecoveryForm({
                                     </Button>
                                     <div className='text-3xl'>
                                       <span className='text-blue-500'>$</span>
-                                      1500
+                                      <span className='text-black dark:text-white'>
+                                        1500
+                                      </span>
                                     </div>
                                   </td>
-                                  <td className='pl-6 py-4 border-b whitespace-nowrap text-sm text-gray-900'>
-                                    <div className='text-left'>
+                                  <td className='pl-6 py-4 border-r border-b whitespace-nowrap text-sm text-gray-900'>
+                                    <div className='text-left text-white dark:text-gray-300'>
                                       Modify band:
                                     </div>
                                     <Button
@@ -205,7 +209,10 @@ export default function ModalEmployeeRecoveryForm({
                                       Temp Down
                                     </Button>
                                     <div className='text-3xl'>
-                                      <span className='text-blue-500'>$</span>0
+                                      <span className='text-blue-500'>$</span>
+                                      <span className='text-black dark:text-white'>
+                                        0
+                                      </span>
                                     </div>
                                   </td>
                                 </tr>
@@ -214,7 +221,7 @@ export default function ModalEmployeeRecoveryForm({
                                   <td className='px-6 py-4 border-r whitespace-nowrap text-sm text-gray-500 text-left'>
                                     Extra hours:
                                     <input
-                                      className='block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
+                                      className='text-black dark:text-white dark:bg-zinc-900 block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
                                       type='number'
                                       name='hour1'
                                       id='hour1'
@@ -227,7 +234,7 @@ export default function ModalEmployeeRecoveryForm({
                                   <td className='px-6 py-4 border-r whitespace-nowrap text-sm text-gray-500 text-left'>
                                     Extra hours:
                                     <input
-                                      className='block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
+                                      className='text-black dark:text-white dark:bg-zinc-900 block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
                                       type='number'
                                       name='hour2'
                                       id='hour2'
@@ -240,7 +247,7 @@ export default function ModalEmployeeRecoveryForm({
                                   <td className='px-6 py-4 border-r whitespace-nowrap text-sm text-gray-500 text-left'>
                                     Extra hours:
                                     <input
-                                      className='block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
+                                      className='text-black dark:text-white dark:bg-zinc-900 block shadow-lg rounded-xl border border-gray-100 outline-none focus-none pl-4 capitalize ml-8 mt-2'
                                       type='number'
                                       name='hour3'
                                       id='hour3'
@@ -268,7 +275,7 @@ export default function ModalEmployeeRecoveryForm({
                       placeholder='Write your comments here'
                       defaultValue={comment}
                       style={{ width: '100%', borderRadius: '20px' }}
-                      className='border-gray-200 shadow-xl p-4 shadow-slate-300 bg-gray-50	focus:border-gray-200 focus:ring-0'
+                      className='text-black dark:text-white dark:bg-zinc-900 border-gray-200 dark:border-gray-700 shadow-xl dark:shadow-gray-800 p-4 shadow-slate-300 bg-gray-50	focus:border-gray-200 focus:ring-0'
                       name='comment'
                       id='comment'
                       onChange={(e) => setComment(e.target.value)}
