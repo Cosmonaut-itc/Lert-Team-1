@@ -2,6 +2,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
 import Flag from 'react-world-flags'
+import DeleteModal from '../../Shared/Components/DeleteModal'
 
 export default function CountryCard({
   country,
@@ -30,17 +31,7 @@ export default function CountryCard({
       </div>
 
       <CardActions className='flex justify-center p-4'>
-        <button
-          className='border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
-          onClick={() => {
-            handleDeleteCountry(country.id)
-          }}
-        >
-          <div className='flex items-center'>
-            <TrashIcon className='h-4 w-4 text-white' />
-            <span className='ml-1'>Delete</span>
-          </div>
-        </button>
+        <DeleteModal handleDelete={() => handleDeleteCountry(country.id)} />
 
         <button
           className='border border-blue-400 rounded-md mx-10 px-4 py-1 text-blue-600 hover:opacity-70 active:opacity-50 active:bg-blue-50 text-sm'

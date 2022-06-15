@@ -1,7 +1,8 @@
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
-import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
+import { PencilAltIcon } from '@heroicons/react/outline'
+import DeleteModal from '../../Shared/Components/DeleteModal'
 
 export default function ExpensesCard({
   id,
@@ -42,14 +43,11 @@ export default function ExpensesCard({
               }}
             />
           </button>
-          <button>
-            <TrashIcon
-              className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1'
-              onClick={() => {
-                handleDeleteExpense(expense.id)
-              }}
-            />
-          </button>
+
+          <DeleteModal
+            isIcon
+            handleDelete={() => handleDeleteExpense(expense.id)}
+          />
         </div>
       </div>
 
