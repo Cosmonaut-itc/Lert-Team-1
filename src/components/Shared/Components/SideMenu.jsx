@@ -223,7 +223,7 @@ export default function SideMenu({ role }) {
                       classNames(
                         isActive
                           ? 'text-blue-700 dark:text-blue-500'
-                          : 'text-blue-400 dark:text-blue-300 hover:bg-gray-50  dark:hover:bg-gray-900',
+                          : 'text-blue-400 dark:text-blue-200 hover:bg-gray-50  dark:hover:bg-gray-900',
                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md justify-center'
                       )
                     }
