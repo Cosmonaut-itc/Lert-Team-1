@@ -14,13 +14,15 @@ export default function CountryCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black '
       key={country.id}
     >
       <div className='text-left p-5'>
         <p className='text-gray-500 text-sm'>Country: </p>
         <div className='flex flex-row'>
-          <p className='font-bold mt-2'>{country.name}</p>
+          <p className='text-black dark:text-white font-bold mt-2'>
+            {country.name}
+          </p>
           <div className=' flex w-12 pl-2 items-center'>
             <Flag className='rounded-sm drop-shadow' code={country.code} />
           </div>

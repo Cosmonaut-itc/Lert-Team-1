@@ -14,17 +14,19 @@ export default function OpsManagerCard({
     <Card
       sx={{ borderRadius: 3 }}
       variant='outlined'
-      className='m-4 pt-1 relative shadow-lg  '
+      className='m-4 pt-1 relative shadow-lg bg-white dark:bg-black  '
       key={OPSManager.id}
     >
       <div className='text-left pb-10 pl-4  '>
-        <h4 className='font-bold text-lg pt-2'>
+        <h4 className='text-black dark:text-white font-bold text-lg pt-2'>
           {OPSManager.first_name + ' ' + OPSManager.last_name}
         </h4>
         <p className='underline text-gray-500 text-sm'>{OPSManager.email}</p>
         <div className='flex flex-row'>
-          <p className='text-gray-500 text-sm'>Country: &nbsp; </p>
-          <p className='text-sm'> {OPSManager.country_name} </p>
+          <p className='text-gray-500 dark:text-gray-600 text-sm'>
+            Country: &nbsp;{' '}
+          </p>
+          <p className='text-sm dark:text-white'> {OPSManager.country_name} </p>
           <div className='w-10 h-5 pl-2'>
             <Flag
               className='rounded-sm drop-shadow'

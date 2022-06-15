@@ -55,12 +55,12 @@ export default function ModalAddModifyCountry({
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
-              <div className='inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6'>
+              <div className='inline-block align-bottom bg-white dark:bg-black rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6'>
                 <div>
                   <div className='mt-3 sm:mt-5'>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl leading-6 font-semibold text-gray-900'
+                      className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                     >
                       Country
                     </Dialog.Title>
@@ -68,7 +68,7 @@ export default function ModalAddModifyCountry({
                       <div className='w-full'>
                         <label
                           htmlFor='text'
-                          className='block text-sm font-medium text-gray-700'
+                          className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
                           Country Name
                         </label>
@@ -77,7 +77,7 @@ export default function ModalAddModifyCountry({
                             type='text'
                             name='name'
                             id='name'
-                            className='bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                            className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                             placeholder='Country name'
                             defaultValue={name}
                             onChange={(e) => setName(e.target.value)}
