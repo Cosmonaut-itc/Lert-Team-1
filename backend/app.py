@@ -738,7 +738,7 @@ def admin_OPSManagers(OPSManager_id=None):
         response = []
         for OPSManager in OPSManagers:
             foreign_keys_names_dictionary = {
-                'country_name':  OPSManager.country.name if hasattr(OPSManager.country, 'name') else '',
+                'country_name': OPSManager.country.name if hasattr(OPSManager.country, 'name') else '',
                 'country_code': OPSManager.country.countryRef.code if hasattr(OPSManager.country, 'countryRef') else '',
             }
             response.append(OPSManager.as_dict() | foreign_keys_names_dictionary)
