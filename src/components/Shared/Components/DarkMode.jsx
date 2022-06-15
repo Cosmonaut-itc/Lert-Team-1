@@ -13,7 +13,7 @@ function DarkMode({ isSideMenuClose }) {
     >
       <button onClick={() => setTheme(colorTheme)}>
         {colorTheme === 'light' ? (
-          <IoSunnyOutline className='text-white h-6 w-6' />
+          <IoSunnyOutline className='text-white  h-6 w-6' />
         ) : (
           <IoMoon className='text-blue-500 hover:opacity-80 h-6 w-6' />
         )}
