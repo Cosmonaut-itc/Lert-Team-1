@@ -88,7 +88,7 @@ export default function Login() {
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <a
-              className='flex flex-row-reverse font-base text-sm text-blue-600 cursor-pointer'
+              className='flex flex-row-reverse font-base text-sm text-blue-600 cursor-pointer dark:text-white'
               href='/forgot'
             >
               Forgot IBMid?
@@ -136,7 +136,7 @@ export default function Login() {
             <div className='text-sm'>
               <a
                 href='/register'
-                className='font-base text-blue-600 cursor-pointer'
+                className='font-base text-blue-600 cursor-pointer dark:text-white'
               >
                 Create new account
               </a>

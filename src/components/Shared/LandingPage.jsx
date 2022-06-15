@@ -3,6 +3,7 @@ import LiveDemo from './Components/LiveDemo'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import Footer from './Components/Footer'
+import DarkMode from './Components/DarkMode'
 
 function LandingPage() {
   const { auth } = useAuth()
@@ -30,11 +31,11 @@ function LandingPage() {
       <main className='lg:relative'>
         <div className='mx-auto max-w-7xl w-full pt-16 pb-10 text-center lg:py-48 lg:text-left'>
           <div className='px-4 lg:w-1/2 sm:px-8 xl:pr-16'>
-            <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl'>
+            <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-200 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl'>
               <p>Data to enrich</p>
-              <p className='text-blue-700'>your finance</p>
+              <p className='text-blue-700 dark:text-blue-400'>your finance</p>
             </h1>
-            <p className='mt-3 max-w-md mx-auto text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
+            <p className='mt-3 max-w-md mx-auto text-lg text-gray-500 sm:text-xl dark:text-gray-300 md:mt-5 md:max-w-3xl'>
               LERT - labor expenses recovery tool is an aid in the finances of
               the manager, it manages squad, employees and create the fall plan
               planning expenses and financial recoveries.
@@ -43,13 +44,13 @@ function LandingPage() {
               <div className='rounded-md shadow'>
                 <button
                   onClick={navigateToPage}
-                  className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10'
+                  className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white dark:text-gray-200 bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10'
                 >
                   Get started
                 </button>
               </div>
               <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3'>
-                <LiveDemo />
+                <LiveDemo/>
               </div>
             </div>
           </div>

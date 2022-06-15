@@ -1,3 +1,4 @@
+import DarkMode from './DarkMode'
 const navigation = {
   main: [
     { name: 'Contact IBM', href: '#' },
@@ -21,12 +22,13 @@ export default function Footer() {
               <div key={item.name} className='px-5 py-3'>
                 <a
                   href={item.href}
-                  className='font-semibold text-blue-500 p-2 hover:text-blue-700'
+                  className='font-semibold text-blue-500 dark:text-gray-200 p-2 hover:text-blue-700'
                 >
                   {item.name}
                 </a>
               </div>
             ))}
+            <DarkMode/>
           </div>
         </nav>
 

@@ -130,7 +130,7 @@ export default function ModalAddModifyOPSManager({
                             type='email'
                             name='email'
                             id='email'
-                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
+                            className='bg-white dark:bg-black text-black dark:text-white focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md placeholder-white'
                             placeholder='examplemail@ibm.com'
                             defaultValue={email}
                             onChange={(e) => setEmail(e.target.value)}

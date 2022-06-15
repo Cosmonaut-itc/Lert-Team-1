@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import DarkMode from './DarkMode'
 
 export default function LiveDemo() {
   let [isOpen, setIsOpen] = useState(false)
@@ -16,7 +17,7 @@ export default function LiveDemo() {
   return (
     <>
       <button
-        className=' p-2 sm:px-8 text-blue-600 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md  bg-white dark:bg-black hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
+        className=' p-2 sm:px-8 text-blue-600 dark:text-gray-200 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md  bg-white dark:bg-black hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
         type='button'
         onClick={openModal}
       >
