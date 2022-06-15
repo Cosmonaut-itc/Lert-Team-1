@@ -2,6 +2,7 @@ import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
+import DeleteModal from '../../Shared/Components/DeleteModal'
 
 export default function ManagerCard({
   manager,
@@ -48,14 +49,10 @@ export default function ManagerCard({
               }}
             />
           </button>
-          <button>
-            <TrashIcon
-              className='h-6 w-6 text-red-400 hover:text-red-500 active:text-red-600 ml-1'
-              onClick={() => {
-                handleDeleteManager(manager.id)
-              }}
-            />
-          </button>
+          <DeleteModal
+            isIcon
+            handleDelete={() => handleDeleteManager(manager.id)}
+          />
         </div>
       </div>
 

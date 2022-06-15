@@ -1,6 +1,7 @@
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import { TrashIcon, PencilAltIcon } from '@heroicons/react/outline'
+import DeleteModal from '../../Shared/Components/DeleteModal'
 
 export default function SquadCard({
   squad,
@@ -24,7 +25,7 @@ export default function SquadCard({
       </div>
 
       <CardActions className='flex justify-center'>
-        <button
+        {/* <button
           className='dark:border-gray-900 border rounded-md mx-10 px-4 py-1 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm'
           onClick={() => {
             handleDeleteSquad(squad.id)
@@ -34,7 +35,8 @@ export default function SquadCard({
             <TrashIcon className='h-4 w-4 text-white' />
             <span className='ml-1'>Delete</span>
           </div>
-        </button>
+        </button> */}
+        <DeleteModal handleDelete={() => handleDeleteSquad(squad.id)} />
 
         <button
           className='border border-blue-400 rounded-md mx-10 px-4 py-1 text-blue-600 hover:opacity-70 active:opacity-50 active:bg-blue-50 text-sm'
