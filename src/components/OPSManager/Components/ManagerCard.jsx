@@ -8,6 +8,7 @@ export default function ManagerCard({
   manager,
   setOpenManagerAdd,
   handleDeleteManager,
+    handleRecovery,
   setModify_id,
   setModify_manager,
 }) {
@@ -69,6 +70,9 @@ export default function ManagerCard({
             fontSize: 18,
             mb: 2,
             boxShadow: 3,
+          }}
+          onClick={() => {
+              handleRecovery(manager.id, `${manager.first_name} ${manager.last_name}`)
           }}
         >
           Download

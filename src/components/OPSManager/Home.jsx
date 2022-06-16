@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useRef, useState } from 'react'
 import api from '../api/api'
 import ModalAddModifyUser from '../Shared/Components/ModalAddModifyUser'
+import * as XLSX from 'xlsx'
 
 export default function Home() {
   // Data fetched from back states
@@ -45,6 +46,16 @@ export default function Home() {
     bodyFormData.append('email', email)
 
     return bodyFormData
+  }
+
+  const downloadExcel = (data, name) => {
+    console.log(data)
+    const worksheetExpense = XLSX.utils.json_to_sheet(data[0]);
+    const worksheetEmployee = XLSX.utils.json_to_sheet(data[1]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheetEmployee, "Employees");
+    XLSX.utils.book_append_sheet(workbook, worksheetExpense, "Expenses");
+    XLSX.writeFile(workbook, `Recovery${name}.xlsx`);
   }
 
   const handleSubmitAddManager = async (e) => {
@@ -105,6 +116,40 @@ export default function Home() {
     try {
       const response = await api.delete('/OPSManager/managers/' + id)
       fetchManagers()
+    } catch (err) {
+      if (!err?.response) {
+        console.log('Server error')
+      } else if (err.response?.status === 400) {
+        console.log('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        console.log('Manager already exists')
+      } else {
+        console.log('Operation failed')
+      }
+    }
+  }
+
+  const handleDownloadRecoveryManager = async (id, managerName) => {
+    try {
+      const response = await api.get('/OPSManager/recovery/' + id)
+      downloadExcel(response.data, managerName )
+    } catch (err) {
+      if (!err?.response) {
+        console.log('Server error')
+      } else if (err.response?.status === 400) {
+        console.log('Incorrect inputs')
+      } else if (err.response?.status === 409) {
+        console.log('Manager already exists')
+      } else {
+        console.log('Operation failed')
+      }
+    }
+  }
+
+  const handleDownloadRecoveryAll = async () => {
+    try {
+      const response = await api.get('/OPSManager/recovery')
+      downloadExcel(response.data, 'Collective')
     } catch (err) {
       if (!err?.response) {
         console.log('Server error')
@@ -202,6 +247,9 @@ export default function Home() {
             fontSize: 18,
             boxShadow: 3,
           }}
+          onClick={() => {
+            handleDownloadRecoveryAll()
+          }}
         >
           Collective Download
         </Button>
@@ -247,6 +295,7 @@ export default function Home() {
                 handleDeleteManager={handleDeleteManager}
                 setModify_id={setModify_id}
                 setModify_manager={setModify_manager}
+                handleRecovery={handleDownloadRecoveryManager}
               />
             ))}
         </div>

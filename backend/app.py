@@ -980,51 +980,86 @@ def types_of_expenses():
 @app.route('/OPSManager/recovery', methods=['GET'])
 @app.route('/OPSManager/recovery/<manager_id>', methods=['GET'])
 def ops_manager_recovery(manager_id=None):
+    recovery_expenses = None
+    recovery_employees = None
+
     if request.method == 'GET':
         if manager_id:
-            recovery_manager_id_expenses = Expense.query.filter_by(user_id=manager_id)
-            recovery_manager_id_employees = Employee.query.filter_by(user_id=manager_id)
+            recovery_expenses = Expense.query.filter_by(user_id=manager_id)
+            recovery_employees = Employee.query.filter_by(user_id=manager_id)
             db.session.commit()
-
-            if not recovery_manager_id_expenses:
+            if not recovery_expenses:
                 return "No expenses can be recovered for this manager", 401
 
-            if not recovery_manager_id_employees:
+            if not recovery_employees:
                 return "No employees can be recovered for this manager", 401
-
-            response_expense = []
-            response_employee = []
-            for expense in recovery_manager_id_expenses:
-                response_expense.append(expense.as_dict())
-
-            for employee in recovery_manager_id_employees:
-                response_employee.append(employee.as_dict())
-
-            return jsonify(response_expense), jsonify(response_employee)
-
         else:
-            recovery_all_expenses = Expense.query.all()
-            recovery_all_employees = Employee.query.all()
+            recovery_expenses = Expense.query.all()
+            recovery_employees = Employee.query.all()
             db.session.commit()
 
-            if not recovery_all_expenses:
+            if not recovery_expenses:
                 return "There are no expenses to recover", 401
 
-            if not recovery_all_employees:
+            if not recovery_employees:
                 return "There are no employees to recover", 401
 
-            response_expense = []
-            response_employee = []
-            for expense in recovery_all_expenses:
-                response_expense.append(expense.as_dict())
+        months = {
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December'
+        }
+        months_quarter = {}
+        current_time = datetime.datetime.now()
+        current_q = (current_time.month // 3)
+        j = 0
 
-            for employee in recovery_all_employees:
-                response_employee.append(employee.as_dict())
+        for i in range(current_q * 3 - 2, current_q * 3 + 1):
+            months_quarter[j] = months[i]
+            j = j + 1
 
-            return jsonify(response_expense), jsonify(response_employee)
+        response = []
+        employee_res = []
+        expense_res = []
 
-    else:
-        return "This method is not allowed on this route", 401
+        for expense in recovery_expenses:
+            expense_res.append(expense.as_dict())
+
+        for employee in recovery_employees:
+            salary_band = employee.band.salary if hasattr(employee.band, 'salary') else 0.0
+            salary1 = employee.month1Band.salary if hasattr(employee.month1Band, 'salary') else 0.0
+            salary2 = employee.month2Band.salary if hasattr(employee.month2Band, 'salary') else 0.0
+
+            foreign_keys_names_dictionary = {
+                'country_name': employee.country.name if hasattr(employee.country, 'name') else '',
+                'typeOfEmployee_name': employee.typeOfEmployee.name if hasattr(employee.typeOfEmployee,
+                                                                               'name') else '',
+                'band_name': employee.band.name if hasattr(employee.band, 'name') else '',
+                'month1Band_name': employee.month1Band.name if hasattr(employee.month1Band, 'name') else '',
+                'month2Band_name': employee.month2Band.name if hasattr(employee.month2Band, 'name') else '',
+                'ICA_name': employee.ICA.name if hasattr(employee.ICA, 'name') else '',
+                'squad_name': employee.squad.name if hasattr(employee.squad, 'name') else '',
+                'yearly_rate': salary_band,
+                f'{months_quarter[0]}': round(salary1 / 12, 2),
+                f'{months_quarter[1]}': round(salary2 / 12, 2),
+                f'{months_quarter[2]}': round(salary_band / 12, 2),
+                'Total Q': round(salary1 / 12, 2) + round(salary2 / 12, 2) + round(salary_band / 12, 2),
+            }
+            employee_res.append(employee.as_dict() | foreign_keys_names_dictionary)
+
+        response.append(expense_res)
+        response.append(employee_res)
+
+        return jsonify(response), 200
 
 
 if __name__ == '__main__':
