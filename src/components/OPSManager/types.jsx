@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-
+import '../../styles/Home.css'
 import { PlusCircleIcon, ArrowDownIcon } from '@heroicons/react/solid'
 import SearchBar from '../Shared/Components/SearchBar'
 import ExpensesCard from './Components/ExpensesCard'
