@@ -59,7 +59,7 @@ export default function ModalAddModifyCountry({
                       as='h3'
                       className='text-2xl leading-6 font-semibold text-gray-900 dark:text-white'
                     >
-                      Country
+                      Band
                     </Dialog.Title>
                     <div className='my-16 center w-full md:w-6/12 mx-auto'>
                       <div className='w-full'>
@@ -67,7 +67,7 @@ export default function ModalAddModifyCountry({
                           htmlFor='text'
                           className='block text-sm font-medium text-gray-700 dark:text-white'
                         >
-                          Country Name
+                          Band Name
                         </label>
                         <div className='mt-1'>
                           <input
@@ -75,7 +75,7 @@ export default function ModalAddModifyCountry({
                             name='name'
                             id='name'
                             className='bg-white dark:bg-black text-black dark:text-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-                            placeholder='Country name'
+                            placeholder='Band name'
                             defaultValue={name}
                             onChange={(e) => setName(e.target.value)}
                           />
